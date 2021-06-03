@@ -5,6 +5,9 @@ import LoginForm from "./login_form";
 import SignupForm from "./signup_form";
 
 export default class extends React.Component {
+  componentDidMount() {
+    this.props.clearErrors();
+  }
   render() {
     const { login, signup } = this.props;
     return (
@@ -15,7 +18,7 @@ export default class extends React.Component {
               myFB
             </div>
             <LoginForm processForm={login} />
-          </div>       
+          </div>
         </div>
         <div className="page-main">
           <div>Create a New Account</div>
@@ -25,7 +28,7 @@ export default class extends React.Component {
         </div>
         <div className='page-footer'>
           <div className='page-footer-links'>
-            <Link to="/signup">Sign up</Link>
+            {/* <Link to="/signup">Sign up</Link> */}
             <Link to="/login">Log In</Link>
           </div>
         </div>

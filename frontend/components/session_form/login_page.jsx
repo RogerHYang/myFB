@@ -5,6 +5,9 @@ import LoginForm from "./login_form";
 import DemoLoginForm from "./demo_login_form";
 
 export default class extends React.Component {
+  componentDidMount() {
+    this.props.clearErrors();
+  }
   render() {
     const { login } = this.props;
     return (
@@ -20,12 +23,12 @@ export default class extends React.Component {
           </div>
           <Link to="/signup">Sign up for myFB</Link>
         </div>
-        <div className='page-footer'>
+        {/* <div className='page-footer'>
           <div className='page-footer-links'>
             <Link to="/signup">Sign up</Link>
             <Link to="/signup">Log In</Link>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }
