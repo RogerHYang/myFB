@@ -13,7 +13,7 @@ export default class extends React.Component {
     return (
       <div className="login-page">
         <div className='page-header'>
-          
+          <Link className="logo" to="/">myFB</Link>
         </div>
         <div className="page-main">
           <LoginForm processForm={login} />

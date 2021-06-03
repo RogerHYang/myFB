@@ -5,7 +5,7 @@ export default class extends React.Component {
   render() {
     const { logout, user } = this.props;
     return (
-      <div>
+      <div className='testing-dummy'>
         <div>Welcome to myFB, {user.first_name} {user.last_name}!</div>
         <br/>
         <button onClick={logout}>Log Out</button>

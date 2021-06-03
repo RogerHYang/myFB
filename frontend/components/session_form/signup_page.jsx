@@ -14,9 +14,7 @@ export default class extends React.Component {
       <div className="signup-page">
         <div className="page-header">
           <div className="menu-bar">
-            <div className="logo">
-              myFB
-            </div>
+            <Link className="logo" to="/">myFB</Link>
             <LoginForm processForm={login} />
           </div>
         </div>
