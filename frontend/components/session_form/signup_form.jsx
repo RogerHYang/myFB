@@ -25,7 +25,6 @@ export default class extends React.Component {
       const user = Object.assign({}, this.state);
       const { birth_year, birth_month, birth_day } = user;
       user.birth_date = `${birth_year}-${birth_month.padStart(2, '0')}-${birth_day.padStart(2, '0')}`;
-      console.log(user)
       this.props.processForm(user);
   }
 
