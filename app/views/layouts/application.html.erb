@@ -7,6 +7,13 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-no-turbolink': 'reload' %>
     <%= javascript_include_tag 'application', 'data-no-turbolink': 'reload' %>
+
+    <% if logged_in? %>
+      <script type="text/javascript">
+          window.currentUser =
+            <%= render("api/users/user.json.jbuilder", user: current_user).html_safe %>
+      </script>
+    <% end %>
   </head>
 
   <body>

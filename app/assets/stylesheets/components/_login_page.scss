@@ -1,0 +1,48 @@
+.login-page {
+  .page-header {
+    height: 82px;
+  }
+
+  .page-main {
+    .session-errors {
+      border: 1px solid #ccd0d5;
+      border-radius: 5px;
+      padding: 0.5rem 0.625rem;
+      font-size: 1.125rem;
+    }
+
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: auto;
+    
+    * + * {
+      margin-top: 10px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    input[type=text],
+    input[type=password] {
+      border: 1px solid #ccd0d5;
+      border-radius: 5px;
+      padding: 0.5rem 0.625rem;
+      font-size: 1.125rem;
+    }
+  }
+  .page-footer {
+    display: flex;
+    justify-content: center;
+
+    .page-footer-links {
+      width: 980px;
+
+      > * + * {
+        margin-left: 10px;
+      }
+    }
+  }
+}

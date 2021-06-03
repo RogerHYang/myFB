@@ -8,6 +8,18 @@
 
 User.delete_all
 
+User.create(
+  email: 'demo@user.com',
+  password: 123456,
+  first_name: 'Demo',
+  last_name: 'User',
+  birth_date: Faker::Date.birthday(min_age: 18, max_age: 65),
+  gender: Faker::Gender.binary_type,
+  work: Faker::Company.name,
+  school: Faker::University.name,
+  biography: Faker::Job.title
+)
+
 users = []
 
 10.times do

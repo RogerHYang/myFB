@@ -1,0 +1,83 @@
+.signup-page {
+  display: flex;
+  flex-direction: column;
+
+  > .page-header {
+    height: 82px;
+    background-color: #4267B2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .menu-bar {
+      width: 980px;
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      align-items: center;
+
+      .logo {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 1000;
+      }
+    }
+
+  }
+
+  .page-main {
+    .session-errors {
+      border: 1px solid #ccd0d5;
+      border-radius: 5px;
+      padding: 0.5rem 0.625rem;
+      font-size: 1.125rem;
+    }
+
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: auto;
+    
+    * + * {
+      margin-top: 10px;
+    }
+
+    > .signup-form-header {
+      padding: 20px 0;
+    }
+    
+    input[type=text],
+    input[type=password] {
+      border: 1px solid #ccd0d5;
+      border-radius: 5px;
+      padding: 0.5rem 0.625rem;
+      font-size: 1.125rem;
+    }
+    
+    .signup-form-fullname {
+      display: flex;
+      justify-content: space-between;
+      
+      input {
+        width: 172px;
+      }
+
+      * {
+        margin: 0;
+      }
+    }
+  }
+
+  .page-footer {
+    display: flex;
+    justify-content: center;
+
+    .page-footer-links {
+      width: 980px;
+
+      > * + * {
+        margin-left: 10px;
+      }
+    }
+  }
+}
