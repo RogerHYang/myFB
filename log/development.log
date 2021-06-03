@@ -4850,3 +4850,4 @@ Processing by Api::SessionsController#destroy as */*
 Completed 200 OK in 14ms (Views: 6.1ms | ActiveRecord: 3.9ms)
 
 
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
