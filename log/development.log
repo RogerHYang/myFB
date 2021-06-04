@@ -4885,3 +4885,32 @@ FOREIGN KEY ("blob_id")
   ↳ bin/rails:9
   [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
   ↳ bin/rails:9
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT  "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 62], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+[36m  S3 Storage (88.4ms) [0m[32mUploaded file to key: FxfTShK9SmBCw53CrtiQSnrd (checksum: IYJu43Kv/kZ5pnIcbQaKtA==)[0m
+[36m  S3 Storage (66.4ms) [0m[32mUploaded file to key: cSwHzGUmA1iYF63XnPaAVy56 (checksum: IYJu43Kv/kZ5pnIcbQaKtA==)[0m
+[36m  S3 Storage (43.1ms) [0m[32mUploaded file to key: sFZPGp5w8agFwyki1bZB67fD (checksum: IYJu43Kv/kZ5pnIcbQaKtA==)[0m
+[36m  S3 Storage (43.3ms) [0m[32mUploaded file to key: TBLEupEXiFjXui11SKM1e2Mx (checksum: IYJu43Kv/kZ5pnIcbQaKtA==)[0m
+[36m  S3 Storage (111.0ms) [0m[32mUploaded file to key: 4QG4fGeZQL9vrd3krfc7AExa (checksum: IYJu43Kv/kZ5pnIcbQaKtA==)[0m
+[36m  S3 Storage (68.1ms) [0m[32mUploaded file to key: c1uN9fkbL3XJTeDXkCGwZ5WB (checksum: IYJu43Kv/kZ5pnIcbQaKtA==)[0m
+[36m  S3 Storage (58.2ms) [0m[32mUploaded file to key: tC6kkfPDCdj8UyP4E8rjQAMq (checksum: IYJu43Kv/kZ5pnIcbQaKtA==)[0m
+[36m  S3 Storage (69.3ms) [0m[32mUploaded file to key: Gr4zZPFB8KESKaK6Q3iRKcKJ (checksum: IYJu43Kv/kZ5pnIcbQaKtA==)[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT  "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 62], ["record_type", "User"], ["name", "profile_picture"], ["LIMIT", 1]]
+[36m  S3 Storage (220.2ms) [0m[32mUploaded file to key: wdKXwkFr9SwmGUCUpirzHZ5f (checksum: IYJu43Kv/kZ5pnIcbQaKtA==)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveStorage::Blob Create (3.4ms)[0m  [1m[32mINSERT INTO "active_storage_blobs" ("key", "filename", "content_type", "metadata", "byte_size", "checksum", "created_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["key", "wdKXwkFr9SwmGUCUpirzHZ5f"], ["filename", "sennacy.jpg"], ["content_type", "image/jpeg"], ["metadata", "{\"identified\":true}"], ["byte_size", 45205], ["checksum", "IYJu43Kv/kZ5pnIcbQaKtA=="], ["created_at", "2021-06-04 18:17:16.828574"]]
+  [1m[35m (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveStorage::Attachment Create (1.3ms)[0m  [1m[32mINSERT INTO "active_storage_attachments" ("name", "record_type", "record_id", "blob_id", "created_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "profile_picture"], ["record_type", "User"], ["record_id", 62], ["blob_id", 1], ["created_at", "2021-06-04 18:17:16.853656"]]
+  [1m[36mUser Update (1.1ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = $1 WHERE "users"."id" = $2[0m  [["updated_at", "2021-06-04 18:17:16.857242"], ["id", 62]]
+  [1m[35m (1.2ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] Enqueued ActiveStorage::AnalyzeJob (Job ID: c3d7653f-0af6-4c81-8d1b-f136eb192650) to Async(default) with arguments: #<GlobalID:0x000055797cd6fe70 @uri=#<URI::GID gid://my-fb/ActiveStorage::Blob/1>>
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT  "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [c3d7653f-0af6-4c81-8d1b-f136eb192650] Performing ActiveStorage::AnalyzeJob (Job ID: c3d7653f-0af6-4c81-8d1b-f136eb192650) from Async(default) with arguments: #<GlobalID:0x000055797c0ca710 @uri=#<URI::GID gid://my-fb/ActiveStorage::Blob/1>>
+[ActiveJob] [ActiveStorage::AnalyzeJob] [c3d7653f-0af6-4c81-8d1b-f136eb192650] [36m  S3 Storage (80.8ms) [0m[34mDownloaded file from key: wdKXwkFr9SwmGUCUpirzHZ5f[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [c3d7653f-0af6-4c81-8d1b-f136eb192650] Skipping image analysis because the mini_magick gem isn't installed
+[ActiveJob] [ActiveStorage::AnalyzeJob] [c3d7653f-0af6-4c81-8d1b-f136eb192650]   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [c3d7653f-0af6-4c81-8d1b-f136eb192650]   [1m[36mActiveStorage::Blob Update (0.6ms)[0m  [1m[33mUPDATE "active_storage_blobs" SET "metadata" = $1 WHERE "active_storage_blobs"."id" = $2[0m  [["metadata", "{\"identified\":true,\"analyzed\":true}"], ["id", 1]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [c3d7653f-0af6-4c81-8d1b-f136eb192650]   [1m[35m (1.2ms)[0m  [1m[35mCOMMIT[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [c3d7653f-0af6-4c81-8d1b-f136eb192650] Performed ActiveStorage::AnalyzeJob (Job ID: c3d7653f-0af6-4c81-8d1b-f136eb192650) from Async(default) in 354.13ms
