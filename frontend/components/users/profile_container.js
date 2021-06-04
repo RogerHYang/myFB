@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
-import HomePage from './home_page';
+import Profile from './profile';
 
 const mSTP = ({ errors, session: { id }, entities: { users } }) => {
   return {
@@ -15,4 +15,4 @@ const mDTP = dispatch => {
   };
 };
 
-export default connect(mSTP, mDTP)(HomePage);
+export default connect(mSTP, mDTP)(Profile);

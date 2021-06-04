@@ -3,11 +3,14 @@ import React from "react";
 export default class extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-        email: "",
-        password: "",
-    };
+    this.state = this.props.user;
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  getDerivedStateFromProps(props, state) {
+    if (props.user.id !== state.id) {
+      return props.user;
+    }
   }
 
   update(field) {
@@ -22,10 +25,10 @@ export default class extends React.Component {
 
   render() {
     return (
-      <form className='login-form' onSubmit={this.handleSubmit}>        
-        <input type="text" value={this.state.email} onChange={this.update("email")} placeholder="Email or Phone Number" />        
-        <input type="password" value={this.state.password} onChange={this.update("password")} placeholder="Password" />
-        <button type="submit">Log In</button>
+      <form className='edit-details-form' onSubmit={this.handleSubmit}>
+        <input value={this.state.work} onChange={this.update("work")} value={this.state.work} />
+        <input value={this.state.school} onChange={this.update("school")} value={this.state.school} />
+        <button type="submit">Save</button>
       </form>
     );
   }
