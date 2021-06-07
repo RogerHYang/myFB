@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
+
+import { profileSections } from "./profile_utils";
 
 const Button = styled.div`
   padding: 0 16px;
@@ -12,6 +15,7 @@ const Button = styled.div`
   font-size: 1rem;
   border-radius: 10px;
   color: #1876f2;
+  text-transform: capitalize;
   ${(props) =>
     !props.selected &&
     css`
@@ -43,18 +47,23 @@ const StyledMenuItem = styled(MenuItem)`
 `;
 
 const Menu = ({ className }) => {
-  const itemNames = ["Posts", "About", "Friends", "Photos"];
+  const history = useHistory();
+  let { section } = useParams();
 
-  const [selectedIdx, setSelectedIdx] = useState(0);
+  if (!section) {
+    section = profileSections[0];
+  } else {
+    section = section.toLowerCase();
+  }
 
   return (
     <div className={className}>
-      {itemNames.map((name, i) => (
+      {profileSections.map((name, i) => (
         <StyledMenuItem
           key={i}
           name={name}
-          handleClick={() => setSelectedIdx(i)}
-          selected={i === selectedIdx}
+          handleClick={() => history.push(name)}
+          selected={name === section}
         />
       ))}
     </div>

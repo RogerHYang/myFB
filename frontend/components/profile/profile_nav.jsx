@@ -14,7 +14,7 @@ const Nav = ({ className }) => {
 export default styled(Nav)`
   display: flex;
   height: 60px;
-  width: 908px;
+  width: 876px;
   border-top: 1px solid #ccc;
-  padding: 3px;
+  padding: 0 3px;
 `;

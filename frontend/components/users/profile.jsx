@@ -12,6 +12,8 @@ import ProfileNav from "../profile/profile_nav";
 
 import NameAndBio from "../profile/name_and_bio";
 
+import ProfileBottom from "../profile/profile_bottom";
+
 const StyledBanner = styled(Banner)`
   display: flex;
   height: 56px;
@@ -52,15 +54,6 @@ const StyledCoverPhoto = styled.div`
   align-items: center;
 `;
 
-const ProfileBottom = styled.div`
-  background-color: #eee;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export default class extends React.Component {
   componentDidMount() {
     this.props.requestUser(this.props.match.params.userId);
@@ -90,18 +83,7 @@ export default class extends React.Component {
             <div className="divider"></div>
             <ProfileNav />
           </StyledProfileTop>
-          <ProfileBottom>
-            <div className="profile-bottom-left">
-              <div className="profile-intro tile">
-                <div>Intro</div>
-              </div>
-              <div className="profile-photos tile"></div>
-              <div className="profile-friends tile"></div>
-            </div>
-            <div className="profile-bottom-right">
-              <div className="profile-posts"></div>
-            </div>
-          </ProfileBottom>
+          <ProfileBottom />
         </div>
       </div>
     );

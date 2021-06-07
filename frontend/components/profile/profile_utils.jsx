@@ -1,0 +1,1 @@
+export const profileSections = ["posts", "about", "friends", "photos"];
