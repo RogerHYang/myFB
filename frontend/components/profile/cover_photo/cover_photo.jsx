@@ -2,35 +2,65 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import EditCoverPhoto from "./edit_cover_photo";
+import Button from "../../utils/button";
 
-const EditButton = styled(EditCoverPhoto)`
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+const Label = styled.div`
+  font-weight: 900;
+  * + * {
+    margin-left: 7px;
+  }
 `;
 
-const CoverPhoto = ({ isEditable, className }) => {
-  const { userId } = useParams();
-  const user = useSelector(({ entities }) => entities.users[userId]);
-  const sessionUserId = useSelector((state) => state.session.id);
+const EditButton = styled(Button)`
+  position: absolute;
+  right: 32px;
+  bottom: 17px;
+`;
+
+const CoverPhoto = ({ user, isEditable, className }) => {
+  if (!user) {
+    const { userId } = useParams();
+    user = useSelector(({ entities }) => entities.users[userId]);
+  }
+
+  const sessionUserId = useSelector(({ session }) => session.id);
   const isLoggedIn = user && user.id == sessionUserId;
+
+  const { cover_photo } = user;
+
+  const handleClick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      console.log(file);
+    };
+    input.click();
+  };
+
   return (
     <div className={className}>
-      <div style={{ position: "relative" }}>
-        <img src={user.cover_photo} style={{ width: "100%" }} />
-        {isEditable && isLoggedIn && <EditButton />}
-      </div>
+      {cover_photo && <img src={cover_photo} style={{ width: "100%" }} />}
+      {isEditable && isLoggedIn && (
+        <EditButton onClick={handleClick} color={{ bg: "#fff", hover: "#eee" }}>
+          <Label>
+            <FontAwesomeIcon icon="camera" />
+            <span>{cover_photo ? "Edit Cover Photo" : "Add Cover Photo"}</span>
+          </Label>
+        </EditButton>
+      )}
     </div>
   );
 };
 
 export default styled(CoverPhoto)`
+  position: relative;
   width: 940px;
-  height: 349px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  height: 348.141px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   overflow: hidden;
   display: flex;
   justify-content: center;

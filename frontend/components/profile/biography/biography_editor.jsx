@@ -47,9 +47,11 @@ const Controls = styled.div`
   }
 `;
 
-export default ({ closeEditor, className }) => {
-  const { userId } = useParams();
-  const user = useSelector(({ entities }) => entities.users[userId]);
+export default ({ user, closeEditor, className }) => {
+  if (!user) {
+    const { userId } = useParams();
+    user = useSelector(({ entities }) => entities.users[userId]);
+  }
 
   const [biography, setBiography] = useState(
     () => (user && user.biography) || ""

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import styled from "styled-components";
 
-import BioEditor from "./biography_editor";
 import BioDisplay from "./biography_display";
+import BioEditor from "./biography_editor";
 
 const Bio = ({ isEditable, className }) => {
   const [editorIsOpen, setEditorIsOpen] = useState(false);

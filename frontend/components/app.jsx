@@ -20,6 +20,7 @@ import {
   faGraduationCap,
   faBriefcase,
   faPencilAlt,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -30,6 +31,7 @@ library.add(
   faGraduationCap,
   faBriefcase,
   faPencilAlt,
+  faTimes
 );
 
 const App = () => (
