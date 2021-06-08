@@ -1,23 +1,31 @@
 import React from "react";
-import styled from "styled-components";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
 
-const FullName = ({ className }) => {
+const Span = styled.span`
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+`;
+
+const NameAndBio = ({ className }) => {
   const { userId } = useParams();
-  const { first_name, last_name } = useSelector(
-    (state) => state.entities.users[userId]
-  );
+  const user = useSelector(({ entities }) => entities.users[userId]);
+
   return (
-    <h1 className={className}>
-      {first_name} {last_name}
-    </h1>
+    <div className={className}>
+      <Span>
+        {user.first_name} {user.last_name}
+      </Span>
+    </div>
   );
 };
 
-export default styled(FullName)`
-  font-size: 2rem;
-  font-family: sans-serif;
-  font-weight: 700;
-  margin: 16px;
+export default styled(NameAndBio)`
+  padding: 24px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;

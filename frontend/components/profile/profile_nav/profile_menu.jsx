@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { profileSections } from "./profile_utils";
+import { profileSections } from "../profile_utils";
 
 const Button = styled.div`
   padding: 0 16px;
@@ -10,7 +10,6 @@ const Button = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  font-family: sans-serif;
   font-weight: 600;
   font-size: 1rem;
   border-radius: 10px;
@@ -37,6 +36,7 @@ const MenuItem = ({ name, className, selected, handleClick }) => {
 };
 
 const StyledMenuItem = styled(MenuItem)`
+  border-top: 3px solid white;
   border-bottom: 3px solid white;
   ${(props) =>
     props.selected &&
@@ -71,5 +71,6 @@ const Menu = ({ className }) => {
 };
 
 export default styled(Menu)`
+  height: 100%;
   display: flex;
 `;

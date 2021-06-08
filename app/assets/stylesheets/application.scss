@@ -13,14 +13,26 @@
  *= require_self
  */
 
- // CSS Reset
- @import "base/reset.scss";
- 
- // Core
- @import "base/colors.scss";
- @import "base/fonts.scss";
- @import "base/layout.scss";
- 
- // Components
- @import "components/*";
- 
+// CSS Reset
+@import "base/reset.scss";
+
+// Core
+@import "base/colors.scss";
+@import "base/fonts.scss";
+@import "base/layout.scss";
+
+// Components
+@import "components/*";
+
+.logo {
+  background-image: asset-url("myFB.svg");
+  background-position: center bottom;
+  background-size: cover;
+  overflow: hidden;
+}
+.profile-picture {
+  background-image: asset-url("blank-profile-picture-973460.svg");
+  background-position: center bottom;
+  background-size: cover;
+  overflow: hidden;
+}

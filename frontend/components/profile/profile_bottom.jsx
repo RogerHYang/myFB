@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
+import { profileSections } from "./profile_utils";
+
 import Posts from "./profile_bottom/sections/posts";
 import About from "./profile_bottom/sections/about";
 import Friends from "./profile_bottom/sections/friends";

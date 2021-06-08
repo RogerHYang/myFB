@@ -1,24 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-import LogOut from "../buttons/logout";
+import LogOut from "../menu_buttons/logout";
+import SeeProfile from "../menu_buttons/see_profile";
 
-const StyledLogOut = styled(LogOut)`
-  padding: 0 8px;
-  font-size: 1.1rem;
-  height: 52px;
-  &:hover {
-    background-color: rgb(0, 0, 0, 0.1);
-  }
-  display: flex;
-  align-items: center;
-  margin: 8px;
-  border-radius: 10px;
+const Hr = styled.div`
+  border-top: 1px solid #ddd;
+  width: 100%;
+  margin: 8px 0;
 `;
-const Menu = ({ className }) => {
+
+const Menu = ({ closeMenu, className }) => {
   return (
     <div className={className}>
-      <StyledLogOut />
+      <SeeProfile closeMenu={closeMenu} />
+      <Hr />
+      <LogOut />
     </div>
   );
 };
@@ -26,6 +23,7 @@ const Menu = ({ className }) => {
 export default styled(Menu)`
   width: 360px;
   margin: 5px 0 0 0;
+  padding: 10px;
   background-color: white;
   position: absolute;
   right: 0;

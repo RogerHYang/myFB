@@ -1,37 +1,29 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import AccountMenu from "./account_menu";
 
-const Button = ({ className }) => {
-  const [isOpen, toggleIsOpen] = useState(false);
+import DropdownButton from "../../utils/dropdown_menu_button";
+
+export default ({ className }) => {
+  const [menuIsOpen, toggleMenuIsOpen] = useState(false);
   const handleClick = (e) => {
-    e.stopPropagation();
-    toggleIsOpen((open) => !open);
+    toggleMenuIsOpen((open) => !open);
+  };
+  const closeMenu = () => {
+    toggleMenuIsOpen(false);
   };
   return (
     <div style={{ position: "relative" }}>
-      <div className={className} onClick={handleClick}>
-        <FontAwesomeIcon
-          icon="caret-down"
-          style={{ color: "#1877F2", fontSize: "1.5em" }}
-        ></FontAwesomeIcon>
-      </div>
-      {isOpen && <AccountMenu />}
+      <DropdownButton
+        className={className}
+        onClick={handleClick}
+        menuIsOpen={menuIsOpen}
+      >
+        <FontAwesomeIcon icon="caret-down" style={{ fontSize: "1.4em" }} />
+      </DropdownButton>
+      {menuIsOpen && <AccountMenu closeMenu={closeMenu} />}
     </div>
   );
 };
-
-export default styled(Button)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  background-color: #e7f3ff;
-  &:hover {
-    background-color: #aac9ff;
-  }
-`;
