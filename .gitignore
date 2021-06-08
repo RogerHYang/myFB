@@ -9,6 +9,7 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/log/*.log
 /node_modules/
 bundle.js
 bundle.js.map
