@@ -28,8 +28,8 @@ export default () => {
     <Container>
       <Column>
         <Intro user={user} />
-        <Photos user={user} small={true} />
         <Friends user={user} small={true} />
+        <Photos user={user} small={true} />
       </Column>
       <Column>
         <Posts user={user} />

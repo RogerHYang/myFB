@@ -11,12 +11,12 @@ const FriendCount = () => {
     ({ entities: { users }, session }) => [users[userId], users[session.id]]
   );
   const isOwner = sessionUser && sessionUser.id === user.id;
-  const areFriends = sessionUser.friends.includes(user.id);
+  const areFriends = sessionUser.friends?.hasOwnProperty(user.id);
   return (
     <>
-      {(isOwner || areFriends) && (
-        <span style={{ fontWeight: "100", marginLeft: "7px" }}>
-          {sessionUser.friends.length}
+      {(isOwner || areFriends) && user.friends && (
+        <span style={{ fontWeight: "100", fontSize: "0.9rem" }}>
+          {Object.keys(user.friends).length}
         </span>
       )}
     </>
@@ -48,7 +48,9 @@ const MenuItem = ({ name, className, selected, handleClick }) => {
   return (
     <div className={className}>
       <Button selected={selected} onClick={handleClick}>
-        {name} {name === "friends" && <FriendCount />}
+        <div>
+          {name} {name === "friends" && <FriendCount />}
+        </div>
       </Button>
     </div>
   );

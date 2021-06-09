@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { useParams, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Tile from "./tile";
-import Collage from "./photos/collage";
-import Album from "./photos/album";
+import Small from "./friends/small";
 
 import SeeAll from "./utils/see_all";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-function Friends({ user, small, preview, className }) {
-  const { work, school } = user;
+function Friends({ small, preview, className }) {
+  const { userId } = useParams();
+  const [user, sessionUser] = useSelector(
+    ({ entities: { users }, session }) => [users[userId], users[session.id]]
+  );
   return (
     <Tile className={className}>
       <h3>Friends</h3>
+      {small && <Small />}
       {preview && <SeeAll route="friends" />}
     </Tile>
   );

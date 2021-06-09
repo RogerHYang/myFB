@@ -15,7 +15,9 @@ const Container = styled.div`
 
 export default () => {
   const { userId } = useParams();
-  const user = useSelector((state) => state.entities.users[userId]);
+  const [user, sessionUser] = useSelector(
+    ({ entities: { users }, session }) => [users[userId], users[session.id]]
+  );
 
   return (
     <Container>

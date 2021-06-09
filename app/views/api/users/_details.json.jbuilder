@@ -8,5 +8,13 @@ json.set! :received_friend_requests do
   json.array! user.received_friend_requests.pluck(:from_user_id)
 end
 json.set! :friends do
-  json.array! user.friends.pluck(:to_user_id)
+  user.friends.includes(:friends).map do |friend|
+    json.set! friend.id do 
+      json.extract! friend, :id, :first_name, :last_name
+      json.profile_picture url_for(friend.profile_picture) if friend.profile_picture.attached?
+      json.set! :friends do
+        json.array! friend.friends.pluck(:id)
+      end
+    end
+  end
 end

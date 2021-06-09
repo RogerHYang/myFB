@@ -14,11 +14,11 @@ export default ({ className }) => {
     ({ entities: { users }, session }) => [users[userId], users[session.id]]
   );
   switch (true) {
-    case sessionUser.friends.includes(user.id):
+    case sessionUser.friends?.hasOwnProperty(user.id):
       return <Accepted />;
-    case sessionUser.sent_friend_requests.includes(user.id):
+    case sessionUser.sent_friend_requests?.includes(user.id):
       return <Requested />;
-    case sessionUser.received_friend_requests.includes(user.id):
+    case sessionUser.received_friend_requests?.includes(user.id):
       return <Received />;
     default:
       return <Unconnected />;

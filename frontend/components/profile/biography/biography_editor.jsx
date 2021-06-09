@@ -1,8 +1,7 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
-import styled from "styled-components";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { updateUser } from "../../../actions/user_actions";
