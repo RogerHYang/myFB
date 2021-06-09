@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import AccountMenu from "./account_menu";
 
-import DropdownButton from "../../utils/dropdown_menu_button";
+import DropdownButton from "../../utils/banner_controls";
 
 export default ({ className }) => {
   const [menuIsOpen, toggleMenuIsOpen] = useState(false);

@@ -4,7 +4,8 @@ import styled from "styled-components";
 import Button from "./button";
 
 const StyledButton = styled(Button)`
-  height: auto;
+  height: 100%;
+  width: 100%;
   padding: 0 8px;
   font-weight: inherit;
 `;

@@ -1,8 +1,27 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 
 import { profileSections } from "../profile_utils";
+
+const FriendCount = () => {
+  const { userId } = useParams();
+  const [user, sessionUser] = useSelector(
+    ({ entities: { users }, session }) => [users[userId], users[session.id]]
+  );
+  const isOwner = sessionUser && sessionUser.id === user.id;
+  const areFriends = sessionUser.friends.includes(user.id);
+  return (
+    <>
+      {(isOwner || areFriends) && (
+        <span style={{ fontWeight: "100", marginLeft: "7px" }}>
+          {sessionUser.friends.length}
+        </span>
+      )}
+    </>
+  );
+};
 
 const Button = styled.div`
   padding: 0 16px;
@@ -29,7 +48,7 @@ const MenuItem = ({ name, className, selected, handleClick }) => {
   return (
     <div className={className}>
       <Button selected={selected} onClick={handleClick}>
-        {name}
+        {name} {name === "friends" && <FriendCount />}
       </Button>
     </div>
   );

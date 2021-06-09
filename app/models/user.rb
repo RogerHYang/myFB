@@ -17,6 +17,25 @@ class User < ApplicationRecord
   
   has_many_attached :photos
 
+  has_many :connections,
+    class_name: 'Connection',
+    foreign_key: :from_user_id
+
+  has_many :friends,
+    -> { merge(Connection.accepted) },
+    through: :connections,
+    source: :to_user
+
+  has_many :received_friend_requests,
+    -> { merge(Connection.pending) },
+    class_name: 'Connection',
+    foreign_key: :to_user_id
+
+  has_many :sent_friend_requests,
+    -> { merge(Connection.not_accepted) },
+    class_name: 'Connection',
+    foreign_key: :from_user_id
+
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)
     if user && user.is_password?(password)

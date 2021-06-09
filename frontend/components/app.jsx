@@ -21,6 +21,10 @@ import {
   faBriefcase,
   faPencilAlt,
   faTimes,
+  faUserCheck,
+  faUserPlus,
+  faUserTimes,
+  faUserClock,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -31,7 +35,11 @@ library.add(
   faGraduationCap,
   faBriefcase,
   faPencilAlt,
-  faTimes
+  faTimes,
+  faUserCheck,
+  faUserPlus,
+  faUserTimes,
+  faUserClock
 );
 
 const App = () => (

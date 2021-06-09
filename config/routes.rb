@@ -5,5 +5,9 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users, only: [:show, :create, :update]
     resource :session, only: [:create, :destroy]
+    
+    post '/friends/:from_user_id/:to_user_id', to: 'friends#create'
+    delete '/friends/:from_user_id/:to_user_id', to: 'friends#destroy'
   end
+
 end

@@ -12,7 +12,8 @@ const Button = styled.button`
   height: 36px;
   padding: 0 12px;
   border-radius: 5px;
-  background-color: ${({ color }) => color.bg};
+  color: ${({ color }) => color.font || "inherit"};
+  background-color: ${({ color }) => color.bg || "inherit"};
   ${({ disabled }) =>
     disabled
       ? css`
@@ -21,7 +22,7 @@ const Button = styled.button`
       : css`
           cursor: pointer;
           &:hover {
-            background-color: ${({ color }) => color.hover};
+            background-color: ${({ color }) => color.hover || "inherit"};
           }
         `}
   ${({ shrinks }) =>

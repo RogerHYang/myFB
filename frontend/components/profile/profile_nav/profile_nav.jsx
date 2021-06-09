@@ -6,13 +6,21 @@ import styled from "styled-components";
 import ProfileMenu from "./profile_menu";
 import EditProfile from "./edit_profile";
 
+import FriendButton from "../../friends/button";
+
 const Nav = ({ className }) => {
   const { userId } = useParams();
-  const isLoggedIn = useSelector(({ session }) => session.id == userId);
+  const [isLoggedIn, isOwner] = useSelector(({ session }) => [
+    Boolean(session.id),
+    session.id == userId,
+  ]);
   return (
     <div className={className}>
       <ProfileMenu />
-      {isLoggedIn ? <EditProfile /> : <div></div>}
+      <div>
+        {isLoggedIn && !isOwner && <FriendButton />}
+        {isOwner && <EditProfile />}
+      </div>
     </div>
   );
 };
