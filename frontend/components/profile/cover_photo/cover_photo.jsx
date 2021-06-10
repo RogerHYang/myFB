@@ -2,18 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
-import Button from "../../utils/button";
+import { StandardButton, ButtonLabel } from "../../utils/buttons";
 
-const Label = styled.div`
-  font-weight: 900;
-  * + * {
-    margin-left: 7px;
-  }
-`;
-
-const EditButton = styled(Button)`
+const EditButton = styled.div`
   position: absolute;
   right: 32px;
   bottom: 17px;
@@ -44,11 +37,13 @@ const CoverPhoto = ({ user, isEditable, className }) => {
     <div className={className}>
       {cover_photo && <img src={cover_photo} style={{ width: "100%" }} />}
       {isEditable && isLoggedIn && (
-        <EditButton onClick={handleClick} color={{ bg: "#fff", hover: "#eee" }}>
-          <Label>
-            <FontAwesomeIcon icon="camera" />
-            <span>{cover_photo ? "Edit Cover Photo" : "Add Cover Photo"}</span>
-          </Label>
+        <EditButton>
+          <StandardButton color="white" onClick={handleClick}>
+            <ButtonLabel
+              icon={faCamera}
+              text={cover_photo ? "Edit Cover Photo" : "Add Cover Photo"}
+            />
+          </StandardButton>
         </EditButton>
       )}
     </div>

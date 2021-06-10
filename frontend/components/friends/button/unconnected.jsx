@@ -10,7 +10,9 @@ import {
 } from "../../../actions/friend_actions";
 
 import Button from "../../utils/button";
-import ButtonLabelWithIcon from "../../utils/button_label_with_icon";
+import ButtonLabelWithIcon from "../../utils/labels";
+
+import { StandardBlueButton, ButtonLabel } from "../../utils/buttons";
 
 export default ({ className }) => {
   const { userId } = useParams();
@@ -22,15 +24,8 @@ export default ({ className }) => {
     dispatch(createFriendConnection(sessionUser.id, user.id));
   };
   return (
-    <Button
-      className={className}
-      onClick={handleClick}
-      color={{ font: "white", bg: "#1877F2", hover: "#1864f2" }}
-    >
-      <ButtonLabelWithIcon>
-        <FontAwesomeIcon icon="user-plus" />
-        <span>Add Friend</span>
-      </ButtonLabelWithIcon>
-    </Button>
+    <StandardBlueButton className={className} onClick={handleClick}>
+      <ButtonLabel icon="user-plus" text="Add Friend" />
+    </StandardBlueButton>
   );
 };

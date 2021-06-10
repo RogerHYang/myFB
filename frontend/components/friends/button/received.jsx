@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCheck } from "@fortawesome/free-solid-svg-icons";
 
 import {
   createFriendConnection,
@@ -11,43 +11,49 @@ import {
 
 import Button from "../../utils/button";
 import MenuButton from "../../utils/menu_button";
-import ButtonLabelWithIcon from "../../utils/button_label_with_icon";
+import ButtonLabelWithIcon from "../../utils/labels";
+import MenuItemLabel from "../../utils/menu_item_label";
 
-const AcceptFriend = ({ closeMenu, className }) => {
+import {
+  StandardButton,
+  StandardBlueButton,
+  ButtonLabel,
+} from "../../utils/buttons";
+
+const AcceptFriend = ({ closeMenu }) => {
   const { userId } = useParams();
   const [user, sessionUser] = useSelector(
     ({ entities: { users }, session }) => [users[userId], users[session.id]]
   );
   const dispatch = useDispatch();
   return (
-    <MenuButton
-      className={className}
+    <StandardButton
+      width="100px"
       onClick={() => {
         closeMenu();
         dispatch(createFriendConnection(sessionUser.id, user.id));
       }}
     >
-      Accept Request
-    </MenuButton>
+      <ButtonLabel text="Accept" />
+    </StandardButton>
   );
 };
 
-const RemoveFriend = ({ closeMenu, className }) => {
+const RemoveFriend = ({ closeMenu }) => {
   const { userId } = useParams();
   const [user, sessionUser] = useSelector(
     ({ entities: { users }, session }) => [users[userId], users[session.id]]
   );
   const dispatch = useDispatch();
   return (
-    <MenuButton
-      className={className}
+    <StandardButton
       onClick={() => {
         closeMenu();
         dispatch(removeFriendConnection(sessionUser.id, user.id));
       }}
     >
-      Reject Request
-    </MenuButton>
+      <span>Reject</span>
+    </StandardButton>
   );
 };
 
@@ -61,9 +67,8 @@ const DropdownMenu = styled(({ closeMenu, className }) => {
 })`
   position: absolute;
   top: 38px;
+  width: 100%;
   right: 0px;
-  height: 97px;
-  width: 150px;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -79,15 +84,12 @@ export default ({ className }) => {
   const [menu, toggleMenu] = useState(false);
   return (
     <div style={{ position: "relative" }}>
-      <Button
+      <StandardBlueButton
         className={className}
         onClick={() => toggleMenu((isOpen) => !isOpen)}
       >
-        <ButtonLabelWithIcon>
-          <FontAwesomeIcon icon="user-clock" />
-          <span>Request Pending</span>
-        </ButtonLabelWithIcon>
-      </Button>
+        <ButtonLabel icon={faUserCheck} text="Respond" />
+      </StandardBlueButton>
       {menu && <DropdownMenu closeMenu={() => toggleMenu(false)} />}
     </div>
   );

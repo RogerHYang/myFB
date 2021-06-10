@@ -11,25 +11,6 @@ import SeeAll from "./utils/see_all";
 
 import Button from "../../../utils/button";
 
-const UnionMutualFriends = ({ id, friends }) => {
-  const sessionUser = useSelector(
-    ({ entities: { users }, session }) => users[session.id]
-  );
-  if (!sessionUser) return null;
-  const count =
-    id === sessionUser.id || sessionUser.friends?.hasOwnProperty(id)
-      ? 0
-      : friends.filter((id) => sessionUser.friends.hasOwnProperty(id)).length;
-  if (count === 0) return null;
-  return (
-    <>
-      <span style={{ fontSize: "0.8rem", fontWeight: "100" }}>
-        {count} mutual {count === 1 ? "friend" : "friends"}
-      </span>
-    </>
-  );
-};
-
 function Friends({ small, preview, className }) {
   const { userId } = useParams();
   const [user, sessionUser] = useSelector(
@@ -48,11 +29,9 @@ function Friends({ small, preview, className }) {
     <Tile className={className}>
       <div
         style={{
-          // height: "51px",
-          padding: "6px 0",
           display: "flex",
           flexDirection: "column",
-          gap: "6px 0",
+          marginBottom: "10px",
         }}
       >
         <div

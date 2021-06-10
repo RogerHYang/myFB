@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCheck } from "@fortawesome/free-solid-svg-icons";
 
 import {
   createFriendConnection,
   removeFriendConnection,
 } from "../../../actions/friend_actions";
 
-import Button from "../../utils/button";
 import MenuButton from "../../utils/menu_button";
-import ButtonLabelWithIcon from "../../utils/button_label_with_icon";
+import MenuItemLabel from "../../utils/menu_item_label";
+
+import { StandardGrayButton, ButtonLabel } from "../../utils/buttons";
 
 const RemoveFriend = ({ closeMenu, className }) => {
   const { userId } = useParams();
@@ -27,7 +28,7 @@ const RemoveFriend = ({ closeMenu, className }) => {
         dispatch(removeFriendConnection(sessionUser.id, user.id));
       }}
     >
-      Remove Friend
+      <MenuItemLabel>Remove Friend</MenuItemLabel>
     </MenuButton>
   );
 };
@@ -39,6 +40,7 @@ const DropdownMenu = styled(({ closeMenu, className }) => {
     </div>
   );
 })`
+  z-index: 300;
   position: absolute;
   top: 38px;
   right: 0px;
@@ -53,16 +55,10 @@ const DropdownMenu = styled(({ closeMenu, className }) => {
 export default ({ className }) => {
   const [menu, toggleMenu] = useState(false);
   return (
-    <div style={{ position: "relative" }}>
-      <Button
-        className={className}
-        onClick={() => toggleMenu((isOpen) => !isOpen)}
-      >
-        <ButtonLabelWithIcon>
-          <FontAwesomeIcon icon="user-check" />
-          <span>Friends</span>
-        </ButtonLabelWithIcon>
-      </Button>
+    <div style={{ position: "relative", height: "100%" }}>
+      <StandardGrayButton onClick={() => toggleMenu((isOpen) => !isOpen)}>
+        <ButtonLabel icon={faUserCheck} text="Friends" />
+      </StandardGrayButton>
       {menu && <DropdownMenu closeMenu={() => toggleMenu(false)} />}
     </div>
   );

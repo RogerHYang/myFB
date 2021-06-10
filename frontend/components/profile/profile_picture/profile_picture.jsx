@@ -2,18 +2,13 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { RoundButton, ButtonLabel } from "../../utils/buttons";
 
-import Button from "../../utils/button";
-
-const EditButton = styled(Button)`
-  height: 36px;
-  width: 36px;
-  border-radius: 50%;
+const EditButton = styled(RoundButton)`
   position: absolute;
   right: 10px;
   bottom: 10px;
-  font-size: 1.3rem;
 `;
 
 const Picture = ({ user, isEditable, className }) => {
@@ -40,8 +35,8 @@ const Picture = ({ user, isEditable, className }) => {
         <img src={profile_picture} style={{ width: "100%", height: "100%" }} />
       )}
       {isEditable && isLoggedIn && (
-        <EditButton onClick={handleClick}>
-          <FontAwesomeIcon icon="camera" />
+        <EditButton height="36px" onClick={handleClick}>
+          <ButtonLabel icon={faCamera} fontSize="1.3rem" />
         </EditButton>
       )}
     </div>

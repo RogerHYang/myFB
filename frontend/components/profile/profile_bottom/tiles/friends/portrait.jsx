@@ -26,26 +26,30 @@ export default ({ user, className }) => {
           />
         )}
       </div>
-      <div style={{ marginTop: "8px", height: "30px", width: "100%" }}>
-        <span
+      <div style={{ margin: "8px 0 0", minHeight: "30px", width: "100%" }}>
+        <div
           style={{
-            fontWeight: "900",
             display: "flex",
             flexDirection: "column",
+            fontWeight: "normal",
+            width: "100%",
+            fontSize: "0.8124rem",
+            lineHeight: "1.2308",
+            overflowWrap: "normal",
           }}
         >
-          <span
+          <div
             style={{
-              width: "100%",
-              fontSize: "0.8rem",
-              fontWeight: "900",
-              overflowWrap: "normal",
+              fontWeight: "600",
+              margin: "0",
             }}
           >
             {first_name} {last_name}
-          </span>
-          <MutualFriends id={id} friends={friends} />
-        </span>
+          </div>
+          <div style={{ margin: "0" }}>
+            <MutualFriends id={id} friends={friends} />
+          </div>
+        </div>
       </div>
     </div>
   );

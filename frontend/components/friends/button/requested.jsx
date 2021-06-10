@@ -2,15 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserTimes } from "@fortawesome/free-solid-svg-icons";
 
 import {
   createFriendConnection,
   removeFriendConnection,
 } from "../../../actions/friend_actions";
 
-import Button from "../../utils/button";
-import ButtonLabelWithIcon from "../../utils/button_label_with_icon";
+import { StandardGrayButton, ButtonLabel } from "../../utils/buttons";
+
+import {
+  RoundCorners,
+  ButtonStandardHeight,
+  GrayBackground,
+  ButtonCenteredLabel,
+} from "../../utils/buttons";
 
 export default ({ className }) => {
   const { userId } = useParams();
@@ -22,11 +28,8 @@ export default ({ className }) => {
     dispatch(removeFriendConnection(sessionUser.id, user.id));
   };
   return (
-    <Button className={className} onClick={handleClick}>
-      <ButtonLabelWithIcon>
-        <FontAwesomeIcon icon="user-times" />
-        <span>Cancel Request</span>
-      </ButtonLabelWithIcon>
-    </Button>
+    <StandardGrayButton className={className} onClick={handleClick}>
+      <ButtonLabel icon={faUserTimes} text="Cancel Request" />
+    </StandardGrayButton>
   );
 };

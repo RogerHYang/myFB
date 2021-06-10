@@ -16,9 +16,7 @@ export default ({ id, friends }) => {
   if (count === 0) return null;
   return (
     <>
-      <span style={{ fontSize: "0.8rem", fontWeight: "100" }}>
-        {count} mutual {count === 1 ? "friend" : "friends"}
-      </span>
+      {count} mutual {count === 1 ? "friend" : "friends"}
     </>
   );
 };

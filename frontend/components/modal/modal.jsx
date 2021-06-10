@@ -3,19 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { closeModal } from "../../actions/modal_actions";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-import Button from "../utils/button";
+import { RoundButton, ButtonLabel } from "../utils/buttons";
 
-const CloseButton = styled(Button)`
-  height: 36px;
-  width: 36px;
-  border-radius: 50%;
+const CloseButton = styled.div`
   position: absolute;
   right: 10px;
   top: 10px;
-  font-size: 1.3rem;
-  font-weight: inherit;
 `;
 
 const ModalBackdrop = styled.div`
@@ -44,8 +39,10 @@ export default () => {
       <ModalBackdrop onClick={close}>
         <ModalChild onClick={(e) => e.stopPropagation()}>
           <Component />
-          <CloseButton onClick={close}>
-            <FontAwesomeIcon icon="times" />
+          <CloseButton>
+            <RoundButton height="36px" onClick={close}>
+              <ButtonLabel icon={faTimes} />
+            </RoundButton>
           </CloseButton>
         </ModalChild>
       </ModalBackdrop>

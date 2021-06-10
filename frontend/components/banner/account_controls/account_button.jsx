@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 import AccountMenu from "./account_menu";
 
-import DropdownButton from "../../utils/banner_controls";
+import { RoundButton, ButtonLabel } from "../../utils/buttons";
 
 export default ({ className }) => {
   const [menuIsOpen, toggleMenuIsOpen] = useState(false);
-  const handleClick = (e) => {
+  const handleClick = () => {
     toggleMenuIsOpen((open) => !open);
   };
   const closeMenu = () => {
@@ -16,13 +16,9 @@ export default ({ className }) => {
   };
   return (
     <div style={{ position: "relative" }}>
-      <DropdownButton
-        className={className}
-        onClick={handleClick}
-        menuIsOpen={menuIsOpen}
-      >
-        <FontAwesomeIcon icon="caret-down" style={{ fontSize: "1.4em" }} />
-      </DropdownButton>
+      <RoundButton onClick={handleClick} isOn={menuIsOpen}>
+        <ButtonLabel icon={faCaretDown} fontSize="1.5em" />
+      </RoundButton>
       {menuIsOpen && <AccountMenu closeMenu={closeMenu} />}
     </div>
   );

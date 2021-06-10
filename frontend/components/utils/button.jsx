@@ -2,29 +2,36 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 const Button = styled.button`
-  /* font-size: 100%;
-  font-family: inherit;
-  font-weight: 900; */
+  padding: 0;
   border: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
-  /* padding: 0 12px; */
-  border-radius: 5px;
-  background-color: transparent;
-  ${({ disabled }) =>
-    disabled
-      ? css`
-          cursor: not-allowed;
-        `
-      : css`
-          cursor: pointer;
-          &:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-          }
-        `}
+  overflow: hidden;
+  height: ${({ height }) => height};
+  width: ${({ width }) => width};
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  position: relative;
+  &:after {
+    display: block;
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+  }
+  &:hover:after {
+    ${({ disabled }) =>
+      disabled
+        ? css`
+            cursor: not-allowed;
+          `
+        : css`
+            background-color: rgba(0, 0, 0, 0.07);
+          `}
+  }
   ${({ shrinks }) =>
     shrinks &&
     css`
@@ -41,18 +48,21 @@ export default ({
   shrinks = true,
   children,
   className,
+  height = "100%",
+  width = "100%",
+  backgroundColor = "transparent",
+  color = "black",
 }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onClick(e);
-  };
   return (
     <Button
+      height={height}
+      width={width}
+      backgroundColor={backgroundColor}
+      color={color}
       className={className}
-      onClick={handleClick}
-      disabled={disabled}
       shrinks={shrinks}
+      onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </Button>
