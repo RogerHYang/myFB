@@ -13,7 +13,7 @@ filenames = [
   ['squirrel-2148641_166.jpg','fall-3089995_1280.jpg'],
   ['racoon-5400581_166.jpg','forest-602880_1280.jpg'],
   ['red-panda-1852830_166.jpg','forest-931706_1280.jpg'],
-  ['moth_166.jpg','landscape-2256585_1280.jpg'],
+  # ['moth_166.jpg','landscape-2256585_1280.jpg'],
   ['beaver-1448389_166.jpg','forest-3194475_1280.jpg'],
 ]
 

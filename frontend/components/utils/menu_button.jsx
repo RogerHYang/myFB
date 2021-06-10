@@ -17,7 +17,6 @@ export default ({ onClick, disabled = false, children, className }) => {
       shrinks={false}
       onClick={onClick}
       className={className}
-      color={{ bg: "#fff", hover: "#eee" }}
     >
       {children}
     </StyledButton>

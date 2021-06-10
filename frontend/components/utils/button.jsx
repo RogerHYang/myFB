@@ -2,18 +2,18 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 const Button = styled.button`
-  font-size: 100%;
+  /* font-size: 100%;
   font-family: inherit;
-  font-weight: 900;
+  font-weight: 900; */
   border: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 36px;
-  padding: 0 12px;
+  height: 100%;
+  width: 100%;
+  /* padding: 0 12px; */
   border-radius: 5px;
-  color: ${({ color }) => color.font || "inherit"};
-  background-color: ${({ color }) => color.bg || "inherit"};
+  background-color: transparent;
   ${({ disabled }) =>
     disabled
       ? css`
@@ -22,7 +22,7 @@ const Button = styled.button`
       : css`
           cursor: pointer;
           &:hover {
-            background-color: ${({ color }) => color.hover || "inherit"};
+            background-color: rgba(0, 0, 0, 0.05);
           }
         `}
   ${({ shrinks }) =>
@@ -41,7 +41,6 @@ export default ({
   shrinks = true,
   children,
   className,
-  color = { bg: "#eee", hover: "#ddd" },
 }) => {
   const handleClick = (e) => {
     e.preventDefault();
@@ -54,7 +53,6 @@ export default ({
       onClick={handleClick}
       disabled={disabled}
       shrinks={shrinks}
-      color={color}
     >
       {children}
     </Button>
