@@ -38,7 +38,7 @@ function ProfileBottom({ className }) {
 }
 
 export default styled(ProfileBottom)`
-  background-color: #ddd;
+  background-color: #f0f2f5;
   width: 100%;
   display: flex;
   align-items: center;

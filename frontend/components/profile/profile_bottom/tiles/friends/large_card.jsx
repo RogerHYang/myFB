@@ -60,7 +60,7 @@ const StyledMutualFriendsCount = styled.div`
 `;
 
 export default ({ user }) => {
-  const { id, firstName, lastName, profilePicture, friends } = user;
+  const { id, firstName, lastName, profilePicture, friendIds } = user;
   const sessionUser = useSelector(
     ({ entities: { users }, session }) => users[session.id]
   );
@@ -123,7 +123,7 @@ export default ({ user }) => {
               {firstName} {lastName}
             </StyledFullname>
             <StyledMutualFriendsCount>
-              <MutualFriends id={id} friends={friends} />
+              <MutualFriends id={id} friendIds={friendIds} />
             </StyledMutualFriendsCount>
           </div>
         </div>

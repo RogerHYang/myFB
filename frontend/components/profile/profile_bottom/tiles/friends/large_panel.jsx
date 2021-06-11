@@ -48,18 +48,18 @@ export default ({ searchPattern }) => {
 
   let filterLabels;
   filterLabels = ["All Friends", "Mutual Friends"];
-  if (user.id === sessionUser.id) {
+  if (user.id === sessionUser?.id) {
     filterLabels = ["All Friends"];
   }
 
   let list = Object.values(user.friends || {});
 
   let mutualList = list.filter((friend) =>
-    sessionUser.friends.hasOwnProperty(friend.id)
+    sessionUser?.friends.hasOwnProperty(friend.id)
   );
 
   let nonMutualList = list.filter(
-    (friend) => !sessionUser.friends.hasOwnProperty(friend.id)
+    (friend) => !sessionUser?.friends.hasOwnProperty(friend.id)
   );
 
   if (filterId === 0) {
@@ -84,6 +84,7 @@ export default ({ searchPattern }) => {
             <ButtonAccent key={i} isSelected={isSelected}>
               <NavButton isSelected={isSelected} onClick={() => setFilterId(i)}>
                 <ButtonLabel
+                  fontSize="0.9375rem"
                   text={label}
                   color={isSelected ? "hsl(214, 89%, 52%)" : "inherit"}
                 />

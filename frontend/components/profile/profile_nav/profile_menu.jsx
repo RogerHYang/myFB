@@ -31,7 +31,7 @@ const Button = styled.div`
   display: flex;
   align-items: center;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: .9375rem;
   border-radius: 10px;
   color: #1876f2;
   text-transform: capitalize;

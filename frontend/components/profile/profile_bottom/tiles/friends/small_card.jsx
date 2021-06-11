@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MutualFriends from "./mutual_friends_count";
 
 export default ({ user, className }) => {
-  const { id, firstName, lastName, profilePicture, friends } = user;
+  const { id, firstName, lastName, profilePicture, friendIds } = user;
   const sessionUser = useSelector(
     ({ entities: { users }, session }) => users[session.id]
   );
@@ -49,9 +49,9 @@ export default ({ user, className }) => {
           >
             {firstName} {lastName}
           </div>
-          {sessionUser.friends?.hasOwnProperty(id) || (
+          {sessionUser?.friends?.hasOwnProperty(id) || (
             <div style={{ margin: "0" }}>
-              <MutualFriends id={id} friends={friends} />
+              <MutualFriends id={id} friendIds={friendIds} />
             </div>
           )}
         </div>

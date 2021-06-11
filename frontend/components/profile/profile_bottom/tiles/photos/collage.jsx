@@ -30,4 +30,5 @@ export default styled(Collage)`
   gap: 4px;
   border-radius: 10px;
   overflow: hidden;
+  margin-top: 12px;
 `;

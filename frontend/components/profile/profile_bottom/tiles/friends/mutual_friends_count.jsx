@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default ({ id, friends }) => {
+export default ({ id, friendIds }) => {
   const sessionUser = useSelector(
     ({ entities: { users }, session }) => users[session.id]
   );
@@ -12,7 +12,7 @@ export default ({ id, friends }) => {
   const count =
     id === sessionUser.id
       ? 0
-      : friends.filter((id) => sessionUser.friends.hasOwnProperty(id)).length;
+      : friendIds.filter((id) => sessionUser.friends.hasOwnProperty(id)).length;
   if (count === 0) return null;
   return (
     <>

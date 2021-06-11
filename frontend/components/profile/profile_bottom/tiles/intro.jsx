@@ -8,29 +8,62 @@ const Item = styled.div`
   padding: 16px 0 0 0;
   height: 32px;
   margin: 0;
-  > *:first-child {
-    width: 32px;
-    font-size: 1.2rem;
-  }
+  display: flex;
+  align-items: center;
 `;
 
 function intro({ user, className }) {
   const { work, school } = user;
   return (
     <Tile className={className}>
-      <h3>Intro</h3>
-      {work && (
-        <Item>
-          <FontAwesomeIcon icon="briefcase" style={{ color: "#aaa" }} /> Works
-          at <em>{work}</em>
-        </Item>
-      )}
-      {school && (
-        <Item>
-          <FontAwesomeIcon icon="graduation-cap" style={{ color: "#aaa" }} />{" "}
-          Studied at <em>{school}</em>
-        </Item>
-      )}
+      <div
+        style={{
+          fontSize: "1.25rem",
+          fontWeight: "700",
+          lineHeight: "1.2",
+        }}
+      >
+        Intro
+      </div>
+      <div style={{ marginBottom: "5px" }}>
+        {work && (
+          <Item>
+            <div
+              style={{
+                width: "30px",
+                display: "flex",
+                // justifyContent: "center",
+                fontSize: "1.3rem",
+              }}
+            >
+              <FontAwesomeIcon icon="briefcase" style={{ color: "#aaa" }} />
+            </div>
+            <div>
+              Works at <em>{work}</em>
+            </div>
+          </Item>
+        )}
+        {school && (
+          <Item>
+            <div
+              style={{
+                width: "30px",
+                display: "flex",
+                // justifyContent: "center",
+                fontSize: "1.3rem",
+              }}
+            >
+              <FontAwesomeIcon
+                icon="graduation-cap"
+                style={{ color: "#aaa" }}
+              />
+            </div>
+            <div>
+              Studied at <em>{school}</em>
+            </div>
+          </Item>
+        )}
+      </div>
     </Tile>
   );
 }

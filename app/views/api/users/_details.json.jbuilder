@@ -12,7 +12,7 @@ json.set! :friends do
     json.set! friend.id do 
       json.extract! friend, :id, :first_name, :last_name
       json.profile_picture url_for(friend.profile_picture) if friend.profile_picture.attached?
-      json.set! :friends do
+      json.set! :friend_ids do
         json.array! friend.friends.pluck(:id)
       end
     end

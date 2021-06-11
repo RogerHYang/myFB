@@ -25,7 +25,7 @@ class Api::UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     if @user.id == current_user.id
       @user.attributes.each do |k, v|
-        if @user_params.include?(k)
+        if user_params.include?(k)
           @user[k] = user_params[k]
         end
       end

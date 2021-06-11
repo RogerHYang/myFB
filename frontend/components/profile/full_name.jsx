@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Span = styled.span`
   font-size: 2rem;
   font-weight: 700;
-  margin: 0 0 8px;
+  margin: 0 0 3px;
 `;
 
 const NameAndBio = ({ className }) => {

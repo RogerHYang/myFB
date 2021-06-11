@@ -7,16 +7,16 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { updateUser } from "../../../actions/user_actions";
 
-import Button from "../../utils/button";
+import { StandardGrayButton, ButtonLabel } from "../../utils/buttons";
 
-const Textarea = styled.textarea`
+const Input = styled.input`
   resize: none;
   border-radius: 5px;
   border: 1px solid #4267b2;
   width: 274px;
-  height: 51px;
+  margin: 5px;
   padding: 8px 12px;
-  text-align: center;
+  text-align: left;
   &:focus {
     outline: none;
   }
@@ -36,15 +36,14 @@ const Footer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 10px;
 `;
 
 const Controls = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  * + * {
-    margin-left: 3px;
-  }
+  gap: 3px;
 `;
 
 export default ({ user, closeEditor, className }) => {
@@ -71,34 +70,54 @@ export default ({ user, closeEditor, className }) => {
     dispatch(updateUser({ ...user, work, school }));
     closeEditor();
   };
-
+  const disabledSave = !hasChanged;
   return (
     <div className={className}>
-      <div style={{ display: "flex" }}>
-        <FontAwesomeIcon icon="briefcase" style={{ color: "#aaa" }} />
-        <input
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            width: "30px",
+            fontSize: "1.2rem",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <FontAwesomeIcon icon="briefcase" style={{ color: "#aaa" }} />
+        </div>
+        <Input
           onChange={handleChange(setWork)}
           placeholder="Works at"
           value={work}
-        ></input>
+        ></Input>
       </div>
-      <div style={{ display: "flex" }}>
-        <FontAwesomeIcon icon="graduation-cap" style={{ color: "#aaa" }} />
-        <input
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            width: "30px",
+            fontSize: "1.2rem",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <FontAwesomeIcon icon="graduation-cap" style={{ color: "#aaa" }} />
+        </div>
+        <Input
           onChange={handleChange(setSchool)}
           placeholder="Studied at"
           value={school}
-        ></input>
+        ></Input>
       </div>
       <Footer>
         <div>
           <FontAwesomeIcon icon="globe-americas" /> Public
         </div>
         <Controls>
-          <Button onClick={closeEditor}>Cancel</Button>
-          <Button onClick={handleSubmit} disabled={!hasChanged}>
-            Save
-          </Button>
+          <StandardGrayButton onClick={closeEditor}>
+            <ButtonLabel text="Cancel" />
+          </StandardGrayButton>
+          <StandardGrayButton onClick={handleSubmit} disabled={disabledSave}>
+            <ButtonLabel text="Save" disabled={disabledSave} />
+          </StandardGrayButton>
         </Controls>
       </Footer>
     </div>

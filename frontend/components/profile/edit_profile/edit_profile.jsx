@@ -9,6 +9,8 @@ import BioEditor from "../biography/biography_editor";
 import IntroEditor from "../intro/intro_editor";
 import Button from "../../utils/button";
 
+import { StandardButton, ButtonLabel } from "../../utils/buttons";
+
 const Header = styled.div`
   height: 59px;
   position: relative;
@@ -46,7 +48,7 @@ const SectionBody = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 50px;
+  min-height: 20px;
 `;
 
 const Item = styled.div`
@@ -83,12 +85,19 @@ const Dialog = ({ userId, className }) => {
       <Section>
         <SectionHeader>
           <span>Biography</span>
-          <Button
-            color={{ bg: "#fff", hover: "#eee" }}
+          <StandardButton
             onClick={() => setBioEditorIsOpen((open) => !open)}
+            width="default"
           >
-            {bioEditorIsOpen ? "Cancel" : user.biography ? "Edit" : "Add"}
-          </Button>
+            <ButtonLabel
+              text={
+                bioEditorIsOpen ? "Cancel" : user.biography ? "Edit" : "Add"
+              }
+              color="#216FDB"
+              fontWeight="normal"
+              fontSize="1.0625rem"
+            />
+          </StandardButton>
         </SectionHeader>
         <SectionBody>
           {!bioEditorIsOpen ? (
@@ -106,12 +115,17 @@ const Dialog = ({ userId, className }) => {
       <Section>
         <SectionHeader>
           <span>Intro</span>
-          <Button
-            color={{ bg: "#fff", hover: "#eee" }}
+          <StandardButton
             onClick={() => setIntroEditorIsOpen((open) => !open)}
+            width="default"
           >
-            {introEditorIsOpen ? "Cancel" : "Edit"}
-          </Button>
+            <ButtonLabel
+              text={introEditorIsOpen ? "Cancel" : "Edit"}
+              color="#216FDB"
+              fontWeight="normal"
+              fontSize="1.0625rem"
+            />
+          </StandardButton>
         </SectionHeader>
         <SectionBody>
           {!introEditorIsOpen ? (
@@ -120,6 +134,7 @@ const Dialog = ({ userId, className }) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
+                margin: "30px",
               }}
             >
               {user.work && (

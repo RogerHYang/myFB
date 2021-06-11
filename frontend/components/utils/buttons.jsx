@@ -2,7 +2,14 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const NavButton = ({ onClick, isSelected, children, className }) => {
+export const NavButton = ({
+  onClick,
+  isSelected,
+  children,
+  className,
+  flexGrow,
+  height,
+}) => {
   return (
     <Button
       onClick={onClick}
@@ -10,6 +17,8 @@ export const NavButton = ({ onClick, isSelected, children, className }) => {
       color="#65676B"
       className={className}
       isSelected={isSelected}
+      flexGrow={flexGrow}
+      height={height}
     >
       {children}
     </Button>
@@ -38,8 +47,10 @@ export const StandardButton = ({
 export const StandardGrayButton = ({
   onClick,
   children,
+  disabled,
   height = "2.25rem",
   width = "default",
+  borderRadius = "6px",
   className,
 }) => {
   return (
@@ -48,6 +59,8 @@ export const StandardGrayButton = ({
       backgroundColor="#e4e6eb"
       height={height}
       width={width}
+      disabled={disabled}
+      borderRadius={borderRadius}
       className={className}
     >
       {children}
@@ -100,59 +113,39 @@ export const RoundButton = ({
   );
 };
 
-export const ButtonStandardHeight = styled.div`
-  height: 2.25rem;
-`;
-
-export const RoundCorners = styled.div`
-  border-radius: 5px;
-  overflow: hidden;
-`;
-
-export const GrayBackground = styled.div`
-  background-color: #e4e6eb;
-  height: 100%;
-  width: 100%;
-`;
-
-export const BlueBackgroundWhiteText = styled.div`
-  color: white;
-  background-color: #1877f2;
-  height: 100%;
-  width: 100%;
-`;
-
-export const ButtonCenteredLabel = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const ButtonLabel = styled(({ icon, text, className }) => {
-  return (
-    <div className={className}>
-      {icon && <FontAwesomeIcon icon={icon} />}
-      {icon && text && <span style={{ marginLeft: "7px" }} />}
-      {text && <span>{text}</span>}
-    </div>
-  );
-})`
+export const ButtonLabel = styled(
+  ({ icon, text, iconColor, iconSize, className }) => {
+    return (
+      <div className={className}>
+        {icon && (
+          <span style={{ color: iconColor, fontSize: iconSize }}>
+            <FontAwesomeIcon icon={icon} />
+          </span>
+        )}
+        {icon && text && <span style={{ marginLeft: "7px" }} />}
+        {text && <span>{text}</span>}
+      </div>
+    );
+  }
+)`
   font-weight: ${({ fontWeight = "600" }) => fontWeight};
-  font-size: 0.9375rem;
+  font-size: ${({ fontSize = "0.9375rem" }) => fontSize};
   line-height: 1.3333;
   padding: 0 12px;
-  color: ${({ color = "inherit" }) => color};
+  color: ${({ color = "inherit", disabled = false }) =>
+    disabled ? "#BCC0C4" : color};
   font-size: ${({ fontSize = ".9375rem" }) => fontSize};
   text-align: ${({ textAlign = "center" }) => textAlign};
+  display: flex;
+  align-items: center;
 `;
 
 const StyledButton = styled.button`
-  padding: 0;
+  padding: ${({ padding }) => padding};
   border: 0;
   display: flex;
-  justify-content: center;
+  flex-grow: ${({ flexGrow = 0 }) => flexGrow};
+  justify-content: ${({ justifyContent = "center" }) => justifyContent};
   align-items: center;
   overflow: hidden;
   border-radius: ${({ borderRadius }) => borderRadius};
@@ -176,7 +169,7 @@ const StyledButton = styled.button`
       !disabled &&
       !isSelected &&
       css`
-        background-color: rgba(0, 0, 0, 0.07);
+        background-color: rgba(0, 0, 0, 0.05);
       `}
   }
   ${({ shrinks }) =>
@@ -201,6 +194,9 @@ export const Button = ({
   backgroundColor = "white",
   color = "inherit",
   borderRadius = "6px",
+  justifyContent = "center",
+  flexGrow = 0,
+  padding = 0,
 }) => {
   return (
     <StyledButton
@@ -214,6 +210,9 @@ export const Button = ({
       onClick={onClick}
       isSelected={isSelected}
       disabled={disabled}
+      justifyContent={justifyContent}
+      padding={padding}
+      flexGrow={flexGrow}
     >
       {children}
     </StyledButton>

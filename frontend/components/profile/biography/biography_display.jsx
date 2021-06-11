@@ -5,11 +5,13 @@ import styled from "styled-components";
 
 const BioText = styled.div`
   padding: 5px;
+  margin: 0;
 `;
 
 const OpenEditor = styled.div`
-  color: #4267b2;
-  font-weight: 900;
+  color: hsl(214, 89%, 52%);
+  font-weight: 600;
+  font-size: 0.9375rem;
   cursor: pointer;
   &:hover {
     text-decoration: underline;

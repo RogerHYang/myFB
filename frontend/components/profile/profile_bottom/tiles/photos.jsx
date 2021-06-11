@@ -13,7 +13,15 @@ function Photos({ user, small, preview, className }) {
   const { work, school } = user;
   return (
     <Tile className={className}>
-      <h3>Photos</h3>
+      <div
+        style={{
+          fontSize: "1.25rem",
+          fontWeight: "700",
+          lineHeight: "1.2",
+        }}
+      >
+        Photos
+      </div>
       {small ? <Collage /> : <Album preview={preview} />}
       {preview && <SeeAll route="photos" />}
     </Tile>

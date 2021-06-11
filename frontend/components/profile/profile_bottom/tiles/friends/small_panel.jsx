@@ -23,4 +23,5 @@ export default styled(Friends)`
   display: flex;
   flex-wrap: wrap;
   gap: 12px 11.015px;
+  margin-top: 12px;
 `;

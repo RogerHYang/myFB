@@ -55,7 +55,7 @@ ActiveRecord::Base.transaction do
     users[i].cover_photo.attach(io: File.open(file), filename: filenames[i][1])
   end
 
-  100.times do |i|
+  1000.times do |i|
     users << User.create!(
       email: SecureRandom.urlsafe_base64,
       password: 123456,
@@ -74,21 +74,21 @@ ActiveRecord::Base.transaction do
   (0...users.size-1).each do |i|
     (i+1...users.size).each do |j|
       if users[i].profile_picture.attached? && users[j].profile_picture.attached?
-        bound = 40
+        bound = 30
       else
         bound = 100
       end
       case rand(bound)
-      when 0...20
+      when 0...30
         Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::ACCEPTED)
         Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::ACCEPTED)
-      when 20...30
-        Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::PENDING)
       when 30...40
-        Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::PENDING)
+        Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::PENDING)
       when 40...50
-        Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::REJECTED)
+        Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::PENDING)
       when 50...60
+        Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::REJECTED)
+      when 60...70
         Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::REJECTED)
       end
     end

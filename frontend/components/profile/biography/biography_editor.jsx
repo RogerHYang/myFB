@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { updateUser } from "../../../actions/user_actions";
 
-import Button from "../../utils/button";
+import { StandardGrayButton, ButtonLabel } from "../../utils/buttons";
 
 const Textarea = styled.textarea`
   resize: none;
@@ -41,9 +41,7 @@ const Controls = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  * + * {
-    margin-left: 3px;
-  }
+  gap: 3px;
 `;
 
 export default ({ user, closeEditor, className }) => {
@@ -70,7 +68,7 @@ export default ({ user, closeEditor, className }) => {
     dispatch(updateUser({ ...user, biography }));
     closeEditor();
   };
-
+  const disabledSave = !hasChanged || biography.length > 101;
   return (
     <div className={className}>
       <Textarea
@@ -84,13 +82,12 @@ export default ({ user, closeEditor, className }) => {
           <FontAwesomeIcon icon="globe-americas" /> Public
         </div>
         <Controls>
-          <Button onClick={closeEditor}>Cancel</Button>
-          <Button
-            onClick={handleSubmit}
-            disabled={!hasChanged || biography.length > 101}
-          >
-            Save
-          </Button>
+          <StandardGrayButton onClick={closeEditor}>
+            <ButtonLabel text="Cancel" />
+          </StandardGrayButton>
+          <StandardGrayButton onClick={handleSubmit} disabled={disabledSave}>
+            <ButtonLabel text="Save" disabled={disabledSave} />
+          </StandardGrayButton>
         </Controls>
       </Footer>
     </div>

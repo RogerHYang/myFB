@@ -8,6 +8,8 @@ import Photos from "../tiles/photos";
 import Friends from "../tiles/friends";
 import Posts from "../tiles/posts";
 
+import PostsPanel from "../../../posts/posts_panel";
+
 const Container = styled.div`
   display: flex;
   /* gap: 12px; */
@@ -32,7 +34,7 @@ export default () => {
         <Photos user={user} small={true} />
       </Column>
       <Column>
-        <Posts user={user} />
+        <PostsPanel width="500px" />
       </Column>
     </Container>
   );
