@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Portrait from "./portrait";
+import Portrait from "./small_card";
 
 const Friends = ({ className }) => {
   const { userId } = useParams();

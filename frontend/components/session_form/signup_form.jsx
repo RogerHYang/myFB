@@ -34,7 +34,7 @@ export default class extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div className="signup-form-fullname">
             <input type="text"
-              value={this.state.first_name}
+              value={this.state.firstName}
               onChange={this.update("first_name")}
               placeholder="First name"
             />            

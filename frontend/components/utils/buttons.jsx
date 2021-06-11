@@ -2,13 +2,14 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const NavButton = ({ onClick, childron, className }) => {
+export const NavButton = ({ onClick, isSelected, children, className }) => {
   return (
     <Button
       onClick={onClick}
       shrinks={false}
       color="#65676B"
       className={className}
+      isSelected={isSelected}
     >
       {children}
     </Button>
@@ -19,10 +20,16 @@ export const StandardButton = ({
   onClick,
   children,
   height = "2.25rem",
+  width,
   className,
 }) => {
   return (
-    <Button onClick={onClick} height={height} className={className}>
+    <Button
+      onClick={onClick}
+      height={height}
+      width={width}
+      className={className}
+    >
       {children}
     </Button>
   );
@@ -32,6 +39,7 @@ export const StandardGrayButton = ({
   onClick,
   children,
   height = "2.25rem",
+  width = "default",
   className,
 }) => {
   return (
@@ -39,6 +47,7 @@ export const StandardGrayButton = ({
       onClick={onClick}
       backgroundColor="#e4e6eb"
       height={height}
+      width={width}
       className={className}
     >
       {children}
@@ -50,14 +59,17 @@ export const StandardBlueButton = ({
   onClick,
   children,
   height = "2.25rem",
+  width = "default",
   className,
+  lightblue = false,
 }) => {
   return (
     <Button
       onClick={onClick}
-      color="white"
-      backgroundColor="#1877f2"
+      color={lightblue ? "#1877f2" : "#ffffff"}
+      backgroundColor={lightblue ? "#bfcfee" : "#1877f2"}
       height={height}
+      width={width}
       className={className}
     >
       {children}
@@ -121,13 +133,13 @@ export const ButtonCenteredLabel = styled.div`
 export const ButtonLabel = styled(({ icon, text, className }) => {
   return (
     <div className={className}>
-      <FontAwesomeIcon icon={icon} />
+      {icon && <FontAwesomeIcon icon={icon} />}
       {icon && text && <span style={{ marginLeft: "7px" }} />}
       {text && <span>{text}</span>}
     </div>
   );
 })`
-  font-weight: 600;
+  font-weight: ${({ fontWeight = "600" }) => fontWeight};
   font-size: 0.9375rem;
   line-height: 1.3333;
   padding: 0 12px;
@@ -157,17 +169,15 @@ const StyledButton = styled.button`
     left: 0;
     right: 0;
     bottom: 0;
-    cursor: pointer;
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   }
   &:hover:after {
-    ${({ disabled }) =>
-      disabled
-        ? css`
-            cursor: not-allowed;
-          `
-        : css`
-            background-color: rgba(0, 0, 0, 0.07);
-          `}
+    ${({ disabled, isSelected }) =>
+      !disabled &&
+      !isSelected &&
+      css`
+        background-color: rgba(0, 0, 0, 0.07);
+      `}
   }
   ${({ shrinks }) =>
     shrinks &&
@@ -181,6 +191,7 @@ const StyledButton = styled.button`
 
 export const Button = ({
   onClick,
+  isSelected = false,
   disabled = false,
   shrinks = true,
   children,
@@ -201,6 +212,7 @@ export const Button = ({
       className={className}
       shrinks={shrinks}
       onClick={onClick}
+      isSelected={isSelected}
       disabled={disabled}
     >
       {children}

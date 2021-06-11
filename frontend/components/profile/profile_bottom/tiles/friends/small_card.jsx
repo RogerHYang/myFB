@@ -4,10 +4,13 @@ import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import MutualFriends from "./mutual_friends";
+import MutualFriends from "./mutual_friends_count";
 
 export default ({ user, className }) => {
-  const { id, first_name, last_name, profile_picture, friends } = user;
+  const { id, firstName, lastName, profilePicture, friends } = user;
+  const sessionUser = useSelector(
+    ({ entities: { users }, session }) => users[session.id]
+  );
   const history = useHistory();
   return (
     <div
@@ -19,9 +22,9 @@ export default ({ user, className }) => {
         className="profile-picture"
         style={{ width: "101.99px", height: "101.99px", borderRadius: "7px" }}
       >
-        {profile_picture && (
+        {profilePicture && (
           <img
-            src={profile_picture}
+            src={profilePicture}
             style={{ width: "100%", height: "100%" }}
           />
         )}
@@ -44,11 +47,13 @@ export default ({ user, className }) => {
               margin: "0",
             }}
           >
-            {first_name} {last_name}
+            {firstName} {lastName}
           </div>
-          <div style={{ margin: "0" }}>
-            <MutualFriends id={id} friends={friends} />
-          </div>
+          {sessionUser.friends?.hasOwnProperty(id) || (
+            <div style={{ margin: "0" }}>
+              <MutualFriends id={id} friends={friends} />
+            </div>
+          )}
         </div>
       </div>
     </div>

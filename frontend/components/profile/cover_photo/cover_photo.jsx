@@ -21,7 +21,7 @@ const CoverPhoto = ({ user, isEditable, className }) => {
   const sessionUserId = useSelector(({ session }) => session.id);
   const isLoggedIn = user && user.id == sessionUserId;
 
-  const { cover_photo } = user;
+  const { coverPhoto } = user;
 
   const handleClick = () => {
     const input = document.createElement("input");
@@ -35,13 +35,13 @@ const CoverPhoto = ({ user, isEditable, className }) => {
 
   return (
     <div className={className}>
-      {cover_photo && <img src={cover_photo} style={{ width: "100%" }} />}
+      {coverPhoto && <img src={coverPhoto} style={{ width: "100%" }} />}
       {isEditable && isLoggedIn && (
         <EditButton>
           <StandardButton color="white" onClick={handleClick}>
             <ButtonLabel
               icon={faCamera}
-              text={cover_photo ? "Edit Cover Photo" : "Add Cover Photo"}
+              text={coverPhoto ? "Edit Cover Photo" : "Add Cover Photo"}
             />
           </StandardButton>
         </EditButton>

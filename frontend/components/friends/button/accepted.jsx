@@ -2,41 +2,21 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { faUserCheck } from "@fortawesome/free-solid-svg-icons";
+import { faUserCheck, faUserTimes } from "@fortawesome/free-solid-svg-icons";
 
-import {
-  createFriendConnection,
-  removeFriendConnection,
-} from "../../../actions/friend_actions";
-
-import MenuButton from "../../utils/menu_button";
-import MenuItemLabel from "../../utils/menu_item_label";
-
+import Friendship, { REMOVE } from "./friendship";
 import { StandardGrayButton, ButtonLabel } from "../../utils/buttons";
-
-const RemoveFriend = ({ closeMenu, className }) => {
-  const { userId } = useParams();
-  const [user, sessionUser] = useSelector(
-    ({ entities: { users }, session }) => [users[userId], users[session.id]]
-  );
-  const dispatch = useDispatch();
-  return (
-    <MenuButton
-      className={className}
-      onClick={() => {
-        closeMenu();
-        dispatch(removeFriendConnection(sessionUser.id, user.id));
-      }}
-    >
-      <MenuItemLabel>Remove Friend</MenuItemLabel>
-    </MenuButton>
-  );
-};
 
 const DropdownMenu = styled(({ closeMenu, className }) => {
   return (
     <div className={className}>
-      <RemoveFriend closeMenu={closeMenu} />
+      <Friendship
+        action={REMOVE}
+        onClick={closeMenu}
+        icon={faUserTimes}
+        text="Unfriend"
+        fontWeight="normal"
+      />
     </div>
   );
 })`
@@ -52,7 +32,7 @@ const DropdownMenu = styled(({ closeMenu, className }) => {
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.25);
 `;
 
-export default ({ className }) => {
+export default () => {
   const [menu, toggleMenu] = useState(false);
   return (
     <div style={{ position: "relative", height: "100%" }}>

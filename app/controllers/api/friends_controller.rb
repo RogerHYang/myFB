@@ -12,8 +12,8 @@ class Api::FriendsController < ApplicationController
       end
       forward.save!
     end
-    @user = current_user
-    render "api/users/show"
+    @users = User.where(id: [from_user_id, to_user_id])
+    render "api/users/show_multiple"
   end
 
   def destroy
@@ -33,7 +33,7 @@ class Api::FriendsController < ApplicationController
         end
       end
     end
-    @user = current_user
-    render "api/users/show"
+    @users = User.where(id: [from_user_id, to_user_id])
+    render "api/users/show_multiple"
   end
 end

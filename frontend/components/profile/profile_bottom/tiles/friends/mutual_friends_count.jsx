@@ -10,7 +10,7 @@ export default ({ id, friends }) => {
   );
   if (!sessionUser) return null;
   const count =
-    id === sessionUser.id || sessionUser.friends?.hasOwnProperty(id)
+    id === sessionUser.id
       ? 0
       : friends.filter((id) => sessionUser.friends.hasOwnProperty(id)).length;
   if (count === 0) return null;

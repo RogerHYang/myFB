@@ -5,6 +5,11 @@ class Api::UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
   end
 
+  def find_users
+    @users = User.where(id: params[:userIds]).includes(:friend_ids)
+    render "api/users/show_multiple"
+  end
+
   def create
     @user = User.new(user_params)
 
@@ -20,7 +25,7 @@ class Api::UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     if @user.id == current_user.id
       @user.attributes.each do |k, v|
-        if user_params.include?(k)
+        if @user_params.include?(k)
           @user[k] = user_params[k]
         end
       end

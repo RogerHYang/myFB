@@ -74,21 +74,21 @@ ActiveRecord::Base.transaction do
   (0...users.size-1).each do |i|
     (i+1...users.size).each do |j|
       if users[i].profile_picture.attached? && users[j].profile_picture.attached?
-        bound = 30
+        bound = 40
       else
         bound = 100
       end
       case rand(bound)
-      when 0...10
+      when 0...20
         Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::ACCEPTED)
         Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::ACCEPTED)
-      when 10...20
-        Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::PENDING)
       when 20...30
-        Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::PENDING)
+        Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::PENDING)
       when 30...40
-        Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::REJECTED)
+        Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::PENDING)
       when 40...50
+        Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::REJECTED)
+      when 50...60
         Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::REJECTED)
       end
     end

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 export default styled.div`
+  position: relative;
   border-radius: 6px;
   padding: 16px;
   background: white;

@@ -43,7 +43,7 @@ export default ({ closeMenu, className }) => {
         <ProfilePicture user={user} isEditable={false} />
         <div>
           <h3>
-            {user.first_name} {user.last_name}
+            {user.firstName} {user.lastName}
           </h3>
           <p>See your profile</p>
         </div>

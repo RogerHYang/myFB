@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { faUserPlus, faUserTimes } from "@fortawesome/free-solid-svg-icons";
 
 import Accepted from "./button/accepted";
-import Requested from "./button/requested";
 import Received from "./button/received";
-import Unconnected from "./button/unconnected";
 
-
+import Friendship, { ADD, REMOVE } from "./button/friendship";
+import { StandardBlueButton, StandardGrayButton } from "../utils/buttons";
 
 export default () => {
   const { userId } = useParams();
@@ -20,13 +20,27 @@ export default () => {
     case sessionUser.friends?.hasOwnProperty(user.id):
       return <Accepted />;
       break;
-    case sessionUser.sent_friend_requests?.includes(user.id):
-      return <Requested />;
+    case sessionUser.sentFriendRequests?.includes(user.id):
+      return (
+        <Friendship
+          action={REMOVE}
+          icon={faUserTimes}
+          text="Cancel Request"
+          Button={StandardGrayButton}
+        />
+      );
       break;
-    case sessionUser.received_friend_requests?.includes(user.id):
+    case sessionUser.receivedFriendRequests?.includes(user.id):
       return <Received />;
       break;
     default:
-      return <Unconnected />;
+      return (
+        <Friendship
+          action={ADD}
+          icon={faUserPlus}
+          text="Add Friend"
+          Button={StandardBlueButton}
+        />
+      );
   }
 };

@@ -19,11 +19,11 @@ const Picture = ({ user, isEditable, className }) => {
     });
   }
 
-  let profile_picture;
+  let profilePicture;
   let isLoggedIn;
 
   if (user) {
-    profile_picture = user.profile_picture;
+    profilePicture = user.profilePicture;
     isLoggedIn = useSelector(({ session }) => session.id == user.id);
   }
 
@@ -31,8 +31,8 @@ const Picture = ({ user, isEditable, className }) => {
 
   return (
     <div className={className + " profile-picture"}>
-      {profile_picture && (
-        <img src={profile_picture} style={{ width: "100%", height: "100%" }} />
+      {profilePicture && (
+        <img src={profilePicture} style={{ width: "100%", height: "100%" }} />
       )}
       {isEditable && isLoggedIn && (
         <EditButton height="36px" onClick={handleClick}>

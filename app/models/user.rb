@@ -26,6 +26,11 @@ class User < ApplicationRecord
     through: :connections,
     source: :to_user
 
+  has_many :friend_ids,
+    -> { merge(Connection.accepted) },
+    class_name: 'Connection',
+    foreign_key: :from_user_id
+
   has_many :received_friend_requests,
     -> { merge(Connection.pending) },
     class_name: 'Connection',

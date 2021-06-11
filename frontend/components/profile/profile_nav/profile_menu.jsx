@@ -10,11 +10,12 @@ const FriendCount = () => {
   const [user, sessionUser] = useSelector(
     ({ entities: { users }, session }) => [users[userId], users[session.id]]
   );
-  const isOwner = sessionUser && sessionUser.id === user.id;
-  const areFriends = sessionUser.friends?.hasOwnProperty(user.id);
+  // const isOwner = sessionUser && sessionUser.id === user.id;
+  // const areFriends = sessionUser.friends?.hasOwnProperty(user.id);
   return (
     <>
-      {(isOwner || areFriends) && user.friends && (
+      {/* {(isOwner || areFriends) && user.friends && ( */}
+      {user.friends && (
         <span style={{ fontWeight: "100", fontSize: "0.9rem" }}>
           {Object.keys(user.friends).length}
         </span>
