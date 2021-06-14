@@ -21,11 +21,6 @@ const Label = styled.div`
     border-radius: 50%;
     background-color: #ddd;
   }
-  h3 {
-    font-weight: 900;
-    text-align: left;
-    font-size: 1.1em;
-  }
 `;
 
 export default ({ closeMenu, className }) => {
@@ -41,11 +36,25 @@ export default ({ closeMenu, className }) => {
     <MenuButton className={className} onClick={handleClick}>
       <Label>
         <ProfilePicture user={user} isEditable={false} />
-        <div>
-          <h3>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
+          <div
+            style={{
+              lineHeight: "1.1765",
+              fontSize: "1.0625rem",
+              fontWeight: "600",
+            }}
+          >
             {user.firstName} {user.lastName}
-          </h3>
-          <p>See your profile</p>
+          </div>
+          <div style={{ fontSize: ".9375rem", color: "#65676B" }}>
+            See your profile
+          </div>
         </div>
       </Label>
     </MenuButton>

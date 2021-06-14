@@ -8,6 +8,7 @@ import { faUserTimes } from "@fortawesome/free-solid-svg-icons";
 import MutualFriends from "./mutual_friends_count";
 import {
   StandardBlueButton,
+  StandardLightBlueButton,
   StandardGrayButton,
   ButtonLabel,
 } from "../../../../utils/buttons";
@@ -70,6 +71,16 @@ export default ({ user }) => {
       case sessionUser.id === id:
         break;
       case sessionUser.friends?.hasOwnProperty(id):
+        break;
+      case sessionUser.receivedFriendRequests?.includes(id):
+        button = (
+          <Friendship
+            action={ADD}
+            text="Respond"
+            Button={StandardLightBlueButton}
+            toUserId={id}
+          />
+        );
         break;
       case sessionUser.sentFriendRequests?.includes(id):
         button = (

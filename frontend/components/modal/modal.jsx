@@ -44,7 +44,7 @@ export default () => {
           <Component />
           <CloseButton>
             <RoundButton height="36px" onClick={close}>
-              <ButtonLabel icon={faTimes} />
+              <ButtonLabel icon={faTimes} fontSize="1.5rem" />
             </RoundButton>
           </CloseButton>
         </ModalChild>

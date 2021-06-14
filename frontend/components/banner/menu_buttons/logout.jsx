@@ -33,10 +33,10 @@ export default ({ className }) => {
   return (
     <MenuButton className={className} onClick={signout}>
       <Label>
-        <div>
+        <div style={{ fontSize: "1.2rem" }}>
           <FontAwesomeIcon icon="sign-out-alt" />
         </div>
-        <div>Log Out</div>
+        <div style={{ fontSize: ".9375rem" }}>Log Out</div>
       </Label>
     </MenuButton>
   );

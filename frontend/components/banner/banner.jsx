@@ -6,6 +6,8 @@ import { faHome, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 
 import AccountControls from "./account_controls/account_controls";
 
+import { NavButton, ButtonLabel } from "../utils/buttons";
+
 const Logo = styled.div`
   height: 100%;
   width: 135px;
@@ -16,6 +18,14 @@ const Nav = styled.div`
   left: 50%;
   transform: translateX(-50%);
   background-color: transparent;
+  display: flex;
+  gap: 10px;
+`;
+
+const Accent = styled.div`
+  height: 56px;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
 `;
 
 function Banner({ className }) {
@@ -24,8 +34,20 @@ function Banner({ className }) {
     <div className={className}>
       <Logo className="logo"></Logo>
       <Nav>
-        <FontAwesomeIcon icon={faHome} />
-        <FontAwesomeIcon icon={faUserFriends} />
+        {/* <Accent>
+          <NavButton height="100%" width="111.59px">
+            <ButtonLabel icon={faHome} iconSize="2rem" iconColor="#bbb" />
+          </NavButton>
+        </Accent> */}
+        {/* <Accent>
+          <NavButton height="100%" width="111.59px">
+            <ButtonLabel
+              icon={faUserFriends}
+              iconSize="2rem"
+              iconColor="#bbb"
+            />
+          </NavButton>
+        </Accent> */}
       </Nav>
       {isLoggedIn && <AccountControls />}
     </div>

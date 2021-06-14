@@ -8,6 +8,7 @@ const StyledButton = styled(Button)`
   width: 100%;
   padding: 0 8px;
   font-weight: inherit;
+  border-radius: 6px;
 `;
 
 export default ({ onClick, disabled = false, children, className }) => {

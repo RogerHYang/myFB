@@ -6,8 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVideo, faPhotoVideo } from "@fortawesome/free-solid-svg-icons";
 import { faGrinBeam } from "@fortawesome/free-regular-svg-icons";
 
+import { openModal, closeModal } from "../../actions/modal_actions";
 import { NavButton, ButtonLabel, Button } from "../utils/buttons";
 import ProfilePicture from "../profile/profile_picture/profile_picture";
+
+import CreatePostForm from "./create_post_form";
 
 const Container = styled.div`
   height: 123px;
@@ -45,13 +48,19 @@ export default () => {
   const [user, sessionUser] = useSelector(
     ({ entities: { users }, session }) => [users[userId], users[session.id]]
   );
-
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(
+      openModal(() => <CreatePostForm user={user} sessionUser={sessionUser} />)
+    );
+  };
   return (
     <Container>
       <Top>
         <Picture height="40px" user={sessionUser} isEditable={false} />
         <div style={{ flexGrow: 1 }}>
           <Button
+            onClick={handleClick}
             height="2.5rem"
             width="100%"
             borderRadius="20px"

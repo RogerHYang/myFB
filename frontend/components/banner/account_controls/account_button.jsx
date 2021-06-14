@@ -17,7 +17,7 @@ export default ({ className }) => {
   return (
     <div style={{ position: "relative" }}>
       <RoundButton onClick={handleClick} isOn={menuIsOpen}>
-        <ButtonLabel icon={faCaretDown} fontSize="1.5em" />
+        <ButtonLabel icon={faCaretDown} fontSize="1.6em" />
       </RoundButton>
       {menuIsOpen && <AccountMenu closeMenu={closeMenu} />}
     </div>

@@ -9,6 +9,7 @@ export const NavButton = ({
   className,
   flexGrow,
   height,
+  width,
 }) => {
   return (
     <Button
@@ -19,6 +20,7 @@ export const NavButton = ({
       isSelected={isSelected}
       flexGrow={flexGrow}
       height={height}
+      width={width}
     >
       {children}
     </Button>
@@ -51,6 +53,7 @@ export const StandardGrayButton = ({
   height = "2.25rem",
   width = "default",
   borderRadius = "6px",
+  shrinks = true,
   className,
 }) => {
   return (
@@ -62,6 +65,7 @@ export const StandardGrayButton = ({
       disabled={disabled}
       borderRadius={borderRadius}
       className={className}
+      shrinks={shrinks}
     >
       {children}
     </Button>
@@ -75,6 +79,28 @@ export const StandardBlueButton = ({
   width = "default",
   className,
   lightblue = false,
+}) => {
+  return (
+    <Button
+      onClick={onClick}
+      color={lightblue ? "#1877f2" : "#ffffff"}
+      backgroundColor={lightblue ? "#bfcfee" : "#1877f2"}
+      height={height}
+      width={width}
+      className={className}
+    >
+      {children}
+    </Button>
+  );
+};
+
+export const StandardLightBlueButton = ({
+  onClick,
+  children,
+  height = "2.25rem",
+  width = "default",
+  className,
+  lightblue = true,
 }) => {
   return (
     <Button
@@ -129,8 +155,10 @@ export const ButtonLabel = styled(
   }
 )`
   font-weight: ${({ fontWeight = "600" }) => fontWeight};
-  font-size: ${({ fontSize = "0.9375rem" }) => fontSize};
-  line-height: 1.3333;
+  font-size: ${({ fontSize, text }) =>
+    fontSize || (!text && "1.2rem") || "0.9375rem"};
+  line-height: ${({ lineHeight, text }) =>
+    lineHeight || (!text && "1") || "1.3333"};
   padding: 0 12px;
   color: ${({ color = "inherit", disabled = false }) =>
     disabled ? "#BCC0C4" : color};

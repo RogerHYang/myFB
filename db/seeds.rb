@@ -13,11 +13,15 @@ filenames = [
   ['squirrel-2148641_166.jpg','fall-3089995_1280.jpg'],
   ['racoon-5400581_166.jpg','forest-602880_1280.jpg'],
   ['red-panda-1852830_166.jpg','forest-931706_1280.jpg'],
-  # ['moth_166.jpg','landscape-2256585_1280.jpg'],
+  ['koala-4756184_166.jpg','landscape-2256585_1280.jpg'],
   ['beaver-1448389_166.jpg','forest-3194475_1280.jpg'],
+  ['tiger-3715664_166.jpg','river-1866579_1920.jpg'],
+  ['sloth-731238_166.jpg','the-1865639_1920.jpg'],
+  ['black-69246_166.jpg','river-1246231_1920.jpg']
 ]
 
 ActiveRecord::Base.transaction do
+  Post.delete_all
   Connection.delete_all
   User.delete_all
   
@@ -55,7 +59,7 @@ ActiveRecord::Base.transaction do
     users[i].cover_photo.attach(io: File.open(file), filename: filenames[i][1])
   end
 
-  1000.times do |i|
+  10.times do |i|
     users << User.create!(
       email: SecureRandom.urlsafe_base64,
       password: 123456,
@@ -69,28 +73,60 @@ ActiveRecord::Base.transaction do
     )
   end
 
-  users = User.all
-
   (0...users.size-1).each do |i|
     (i+1...users.size).each do |j|
       if users[i].profile_picture.attached? && users[j].profile_picture.attached?
-        bound = 30
+        bound = 20
       else
-        bound = 100
+        bound = 50
       end
       case rand(bound)
-      when 0...30
+      when 0...20
         Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::ACCEPTED)
         Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::ACCEPTED)
-      when 30...40
+      when 20...35
         Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::PENDING)
-      when 40...50
+      when 35...50
         Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::PENDING)
-      when 50...60
+      when 50...55
         Connection.create!(from_user_id: users[i].id, to_user_id: users[j].id, status: Connection::REJECTED)
-      when 60...70
+      when 55...60
         Connection.create!(from_user_id: users[j].id, to_user_id: users[i].id, status: Connection::REJECTED)
       end
+    end
+  end
+  
+  (0...users.size).each do |i|
+    (i...users.size).each do |j|
+      case rand(4)
+      when 0
+        content = Faker::Quotes::Shakespeare.hamlet_quote
+      when 1
+        content = Faker::Quotes::Shakespeare.as_you_like_it_quote
+      when 2
+        content = Faker::Quotes::Shakespeare.king_richard_iii_quote
+      when 3
+        content = Faker::Hacker.say_something_smart
+      end
+      Post.create!(author_id: users[j].id, recipient_id: users[i].id, content: content)
+    end
+  end
+
+  users = User.first(10)
+
+  (0...users.size).each do |i|
+    (i...users.size).each do |j|
+      case rand(4)
+      when 0
+        content = Faker::Quotes::Shakespeare.hamlet_quote
+      when 1
+        content = Faker::Quotes::Shakespeare.as_you_like_it_quote
+      when 2
+        content = Faker::Quotes::Shakespeare.king_richard_iii_quote
+      when 3
+        content = Faker::Hacker.say_something_smart
+      end
+      Post.create!(author_id: users[j].id, recipient_id: users[i].id, content: content)
     end
   end
 end
