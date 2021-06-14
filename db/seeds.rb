@@ -42,18 +42,18 @@ ActiveRecord::Base.transaction do
 
     if Rails.env.production?
       basename = File.basename(ActionController::Base.helpers.asset_path(filenames[i][0]))
-      file = Rails.root.join("public", "assets", "seeds", basename)
+      file = Rails.root.join("public", "assets", basename)
     else
-      file = Rails.root.join("app", "assets", "images", "seeds", filenames[i][0])
+      file = Rails.root.join("app", "assets", "images", filenames[i][0])
     end
     
     users[i].profile_picture.attach(io: File.open(file), filename: filenames[i][0])
 
     if Rails.env.production?
       basename = File.basename(ActionController::Base.helpers.asset_path(filenames[i][1]))
-      file = Rails.root.join("public", "assets", "seeds", basename)
+      file = Rails.root.join("public", "assets", basename)
     else
-      file = Rails.root.join("app", "assets", "images", "seeds", filenames[i][1])
+      file = Rails.root.join("app", "assets", "images", filenames[i][1])
     end
     
     users[i].cover_photo.attach(io: File.open(file), filename: filenames[i][1])
