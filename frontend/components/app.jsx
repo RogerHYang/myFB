@@ -5,7 +5,7 @@ import { AuthRoute, ProtectedRoute } from "../util/route_util";
 
 import Modal from "./modal/modal";
 import SignUpPageContainer from "./session_form/signup_page_container";
-import LogInPageContainer from "./session_form/login_page_container";
+import LogInPage from "./session/login_page";
 
 import Home from "./users/home";
 import Profile from "./users/profile";
@@ -49,7 +49,7 @@ const App = () => (
       <ProtectedRoute exact path="/home" component={Home} />
       <Redirect exact from="/users/:userId/" to="/users/:userId/posts" />
       <Route exact path="/users/:userId/:section" component={Profile} />
-      <AuthRoute exact path="/login" component={LogInPageContainer} />
+      <AuthRoute exact path="/login" component={LogInPage} />
       <AuthRoute exact path="/signup" component={SignUpPageContainer} />
       <Route>
         <Redirect to="/home" />
