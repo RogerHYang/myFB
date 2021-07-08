@@ -9,3 +9,8 @@ export const createPost = (post, userId) =>
     method: "POST",
     data: { post },
   });
+
+export const requestFeed = (userId) =>
+  $.ajax({
+    url: `/api/feed/${userId}`,
+  });

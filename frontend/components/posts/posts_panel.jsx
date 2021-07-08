@@ -21,6 +21,7 @@ const Wall = styled.div`
   flex-direction: column;
   gap: 16px;
 `;
+
 export default ({ width }) => {
   const { userId } = useParams();
   const postIds = useSelector(({ entities: { wall } }) => wall[userId]);

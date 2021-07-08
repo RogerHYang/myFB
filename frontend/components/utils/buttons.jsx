@@ -144,7 +144,7 @@ export const ButtonLabel = styled(
     return (
       <div className={className}>
         {icon && (
-          <span style={{ color: iconColor, fontSize: iconSize }}>
+          <span style={{ color: iconColor ?? "inherit", fontSize: iconSize }}>
             <FontAwesomeIcon icon={icon} />
           </span>
         )}

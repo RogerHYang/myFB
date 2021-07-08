@@ -46,7 +46,10 @@ const Text = styled.div`
 export default () => {
   const { userId } = useParams();
   const [user, sessionUser] = useSelector(
-    ({ entities: { users }, session }) => [users[userId], users[session.id]]
+    ({ entities: { users }, session }) => [
+      users[userId ?? session.id],
+      users[session.id],
+    ]
   );
   const dispatch = useDispatch();
   const handleClick = () => {

@@ -1,4 +1,4 @@
-json.set! :feed do
+json.set! :posts do
   json.array!(@posts) do |post|
     json.extract! post, :id, :content, :author_id, :updated_at, :created_at
   end

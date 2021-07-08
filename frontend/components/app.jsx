@@ -6,7 +6,7 @@ import { AuthRoute, ProtectedRoute } from "../util/route_util";
 import Modal from "./modal/modal";
 import LogInPage from "./session/login_page";
 
-import Home from "./feed/home";
+import Home from "./users/home";
 import Profile from "./users/profile";
 
 import { library } from "@fortawesome/fontawesome-svg-core";

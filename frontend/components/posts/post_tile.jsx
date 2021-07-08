@@ -41,6 +41,7 @@ const Header = styled.div`
 `;
 
 const Fullname = styled.div``;
+
 const DateLine = styled.div`
   font-size: 0.8125rem;
   font-weight: 400;

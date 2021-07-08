@@ -5,27 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 
 import AccountControls from "./account_controls/account_controls";
+import Nav from "./center_nav";
 
 import { NavButton, ButtonLabel } from "../utils/buttons";
 
 const Logo = styled.div`
-  height: 100%;
+  height: 80%;
   width: 135px;
+  margin: 0 10px;
 `;
 
-const Nav = styled.div`
+const Centered = styled.div`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  background-color: transparent;
-  display: flex;
-  gap: 10px;
-`;
-
-const Accent = styled.div`
-  height: 56px;
-  border-top: 3px solid transparent;
-  border-bottom: 3px solid transparent;
 `;
 
 function Banner({ className }) {
@@ -33,22 +26,9 @@ function Banner({ className }) {
   return (
     <div className={className}>
       <Logo className="logo"></Logo>
-      <Nav>
-        {/* <Accent>
-          <NavButton height="100%" width="111.59px">
-            <ButtonLabel icon={faHome} iconSize="2rem" iconColor="#bbb" />
-          </NavButton>
-        </Accent> */}
-        {/* <Accent>
-          <NavButton height="100%" width="111.59px">
-            <ButtonLabel
-              icon={faUserFriends}
-              iconSize="2rem"
-              iconColor="#bbb"
-            />
-          </NavButton>
-        </Accent> */}
-      </Nav>
+      <Centered>
+        <Nav></Nav>
+      </Centered>
       {isLoggedIn && <AccountControls />}
     </div>
   );
@@ -61,7 +41,7 @@ export default styled(Banner)`
   height: 56px;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 100vw;
   background-color: white;
   border-bottom: 1px solid #eee;
   z-index: 1;
