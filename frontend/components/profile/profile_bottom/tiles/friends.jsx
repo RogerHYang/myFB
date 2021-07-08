@@ -40,7 +40,7 @@ function Friends({ small, preview, className }) {
     ({ entities: { users }, session }) => [users[userId], users[session.id]]
   );
   const isOwner = sessionUser && sessionUser.id === user.id;
-  const friends = Object.keys(user.friends);
+  const friends = Object.keys(user.friends ?? {});
   const friendsCount = friends.length;
   const mutualFriendsCount =
     sessionUser &&
@@ -105,7 +105,7 @@ function Friends({ small, preview, className }) {
             </SearchBox>
           )}
         </div>
-        {friendsCount && (
+        {friendsCount > 0 && (
           <span style={{ color: "#65676B" }}>
             {friendsCount}
             {(!isOwner && mutualFriendsCount && (
