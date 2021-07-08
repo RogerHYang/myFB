@@ -4,10 +4,9 @@ import { Switch, Link, Route, Redirect } from "react-router-dom";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
 
 import Modal from "./modal/modal";
-import SignUpPageContainer from "./session_form/signup_page_container";
 import LogInPage from "./session/login_page";
 
-import Home from "./users/home";
+import Home from "./feed/home";
 import Profile from "./users/profile";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -48,9 +47,12 @@ const App = () => (
     <Switch>
       <ProtectedRoute exact path="/home" component={Home} />
       <Redirect exact from="/users/:userId/" to="/users/:userId/posts" />
-      <Route exact path="/users/:userId/:section" component={Profile} />
+      <ProtectedRoute
+        exact
+        path="/users/:userId/:section"
+        component={Profile}
+      />
       <AuthRoute exact path="/login" component={LogInPage} />
-      <AuthRoute exact path="/signup" component={SignUpPageContainer} />
       <Route>
         <Redirect to="/home" />
       </Route>

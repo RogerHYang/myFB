@@ -230,7 +230,7 @@ export default ({ className }) => {
               <a href="https://www.linkedin.com/in/roger-y-a35595114/">
                 <FontAwesomeIcon icon={faLinkedin}></FontAwesomeIcon>
               </a>
-              <a href="https://github.com/RogerHYang">
+              <a href="https://github.com/RogerHYang/myFB">
                 <FontAwesomeIcon icon={faGithub}></FontAwesomeIcon>
               </a>
               <a href="https://angel.co/u/roger-yang-11">
