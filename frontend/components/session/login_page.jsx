@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login, clearErrors } from "../../actions/session_actions";
+import { openModal } from "../../actions/modal_actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLinkedin,
@@ -11,6 +12,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 import Button from "./button";
+import SignupForm from "./signup_form";
 
 const Container = styled.div`
   display: flex;
@@ -171,7 +173,7 @@ export default ({ className }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const sessionErrors = useSelector(({ errors }) => errors.session);
+  const loginErrors = useSelector(({ errors }) => errors.session.login);
 
   const dispatch = useDispatch();
 
@@ -188,6 +190,7 @@ export default ({ className }) => {
   const handleSignup = (e) => {
     e.preventDefault();
     dispatch(clearErrors());
+    dispatch(openModal(SignupForm));
   };
 
   return (
@@ -214,7 +217,7 @@ export default ({ className }) => {
                 value={password}
               ></Input>
               <ErrorMessage>
-                {sessionErrors && sessionErrors.map((err) => <p>{err}</p>)}
+                {loginErrors && loginErrors.map((err) => <p>{err}</p>)}
               </ErrorMessage>
               <LoginButton onClick={handleLogin}>Log In</LoginButton>
               <DemoLogin onClick={loginDemoUser}>Log In as Demo User</DemoLogin>
