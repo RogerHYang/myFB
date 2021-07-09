@@ -3,7 +3,7 @@ class Api::PostsController < ApplicationController
 
   def show
     @user_id = Integer(params[:user_id])
-    @posts = Post.where(recipient_id: @user_id).includes(:author)
+    @posts = Post.where(recipient_id: @user_id).includes({author: [{profile_picture_attachment: :blob}, {cover_photo_attachment: :blob}]}, {comments: :child_comments})
     render "api/posts/show"
   end
 

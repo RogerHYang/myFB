@@ -13,7 +13,7 @@ ActiveRecord::Base.transaction do
 
   comments = []
 
-  20.times do
+  10.times do
     comments << Comment.create!(
       content: Faker::Quotes::Shakespeare.hamlet_quote,
       author_id: users.sample(1).first.id,
@@ -21,7 +21,7 @@ ActiveRecord::Base.transaction do
     )
   end
 
-  20.times do
+  100.times do
     comments << Comment.create!(
       content: Faker::Quotes::Shakespeare.hamlet_quote,
       author_id: users.sample(1).first.id,
