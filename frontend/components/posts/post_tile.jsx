@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -125,7 +125,7 @@ export default ({ postId }) => {
           <Fullname>
             {author.firstName} {author.lastName}
           </Fullname>
-          <DateLine>{new Date(createdAt).toLocaleDateString('en-US')}</DateLine>
+          <DateLine>{new Date(createdAt).toLocaleDateString("en-US")}</DateLine>
         </div>
       </Header>
       <Body>{content}</Body>

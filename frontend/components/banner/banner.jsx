@@ -41,7 +41,7 @@ export default styled(Banner)`
   height: 56px;
   position: fixed;
   top: 0;
-  width: 100vw;
+  width: 100%;
   background-color: white;
   border-bottom: 1px solid #eee;
   z-index: 1;
