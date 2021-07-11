@@ -8,25 +8,59 @@
 
 ActiveRecord::Base.transaction do
   Comment.delete_all
-  users = User.limit(3).order('id').includes(:authored_posts)
+  Post.delete_all
+  users = User.first(5)
+
+  (0...users.size).each do |i|
+    (i...users.size).each do |j|
+      case rand(3)
+      when 0
+        content = Faker::Quotes::Shakespeare.hamlet_quote
+      when 1
+        content = Faker::Quotes::Shakespeare.as_you_like_it_quote
+      when 2
+        content = Faker::Quotes::Shakespeare.king_richard_iii_quote
+      end
+      Post.create!(author_id: users[j].id, recipient_id: users[i].id, content: content)
+    end
+  end
+
+  users = User.limit(5).order('id').includes(:authored_posts)
   posts = users.flat_map(&:authored_posts)
 
   comments = []
 
-  10.times do
+  20.times do
+    case rand(3)
+    when 0
+      content = Faker::Quotes::Shakespeare.hamlet_quote
+    when 1
+      content = Faker::Quotes::Shakespeare.as_you_like_it_quote
+    when 2
+      content = Faker::Quotes::Shakespeare.king_richard_iii_quote
+    end
     comments << Comment.create!(
-      content: Faker::Quotes::Shakespeare.hamlet_quote,
+      content: content,
       author_id: users.sample(1).first.id,
       post_id: posts.sample(1).first.id
     )
   end
 
-  100.times do
+  40.times do
+    comment = comments.sample(1).first
+    case rand(3)
+    when 0
+      content = Faker::Quotes::Shakespeare.hamlet_quote
+    when 1
+      content = Faker::Quotes::Shakespeare.as_you_like_it_quote
+    when 2
+      content = Faker::Quotes::Shakespeare.king_richard_iii_quote
+    end
     comments << Comment.create!(
-      content: Faker::Quotes::Shakespeare.hamlet_quote,
+      content: content,
       author_id: users.sample(1).first.id,
-      post_id: posts.sample(1).first.id,
-      parent_comment_id: comments.sample(1).first.id
+      post_id: comment.post_id,
+      parent_comment_id: comment.id
     )
   end
 end

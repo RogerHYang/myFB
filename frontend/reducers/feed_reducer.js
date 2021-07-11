@@ -5,9 +5,7 @@ export default (state = [], { type, payload }) => {
   Object.freeze(state);
   switch (type) {
     case RECEIVE_FEED:
-      let newState = payload.posts.map((post) => post.id);
-      newState.sort((a, b) => b - a);
-      return newState;
+      return payload.feed ?? [];
     case LOGOUT_CURRENT_USER:
       return [];
     default:
