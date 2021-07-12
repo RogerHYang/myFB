@@ -66,8 +66,6 @@ const Control = styled.span`
   }
 `;
 
-const ChildComments = styled.div``;
-
 export default Comment = ({ clasName, commentId, small = false }) => {
   const [comment, { firstName, lastName }, childComments] = useSelector(
     ({ entities: { comments, avatars }, xwalk }) => [
@@ -80,9 +78,6 @@ export default Comment = ({ clasName, commentId, small = false }) => {
   const { createdAt, postId, id } = comment;
   const [isReplying, toggleIsReplying] = useState(false);
   const handleLike = (e) => {};
-  const handleReply = (e) => {
-    toggleIsReplying(true);
-  };
   return (
     <Container>
       <Header small={small}>
@@ -100,7 +95,7 @@ export default Comment = ({ clasName, commentId, small = false }) => {
         </Content>
         <Footer>
           <Control onClick={handleLike}>Like</Control> ·{" "}
-          <Control onClick={handleReply}>Reply</Control> ·{" "}
+          <Control onClick={() => toggleIsReplying(true)}>Reply</Control> ·{" "}
           {new Date(createdAt).toLocaleDateString("en-US")}
         </Footer>
         {childComments?.length > 0 &&
@@ -111,7 +106,7 @@ export default Comment = ({ clasName, commentId, small = false }) => {
           <CommentForm
             postId={postId}
             parentCommentId={id}
-            callback={() => toggleIsReplying(false)}
+            cbBlur={() => toggleIsReplying(false)}
           />
         )}
       </Body>

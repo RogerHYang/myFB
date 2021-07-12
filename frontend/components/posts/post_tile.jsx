@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThumbsUp,
   faComment,
+  faEllipsisH,
   faGrinBeam,
   faStickyNote,
 } from "@fortawesome/free-regular-svg-icons";
@@ -59,60 +60,60 @@ const Body = styled.div`
   padding: 0 0 8px;
 `;
 
-const Extras = styled.div`
-  font-size: 0.9375rem;
-  font-weight: 600;
+const Statistics = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 58px;
-  border: 1px solid #ced0d4;
-  padding: 0 0 8px;
-  /* margin: 0 16px; */
-  border-radius: 6px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  height: 34px;
+  padding: 2px 0px 10px;
 `;
 
-const LikeBar = styled.div`
+const LikeCount = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CommentCount = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--secondary-text);
+  font-weight: normal;
+  font-size: 0.9375rem;
+  line-height: 1.3333;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const ButtonsBar = styled.div`
   display: flex;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
 `;
 
-const Footer = styled.div`
-  padding: 8px 0;
+const HiddenComments = styled.div`
   display: flex;
-  gap: 5px;
-  /* align-items: center; */
+  align-items: center;
+  height: 32px;
+  padding: 4px 0 0;
+`;
+
+const ShowMoreComments = styled.div`
+  color: var(--secondary-text);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.3333;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Comments = styled.div`
-  padding: 8px 0 0;
-`;
-
-const CommentBar = styled.div`
-  border-radius: 20px;
-  background-color: #f0f2f5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px;
-  flex-grow: 1;
-  /* width: default; */
-`;
-
-const CommentInput = styled.input`
-  border: 0;
-  background-color: transparent;
-  font-size: 0.9375rem;
-  overflow-wrap: normal;
-  flex-grow: 1;
-  &:focus {
-    outline: none;
-  }
-  &:focus::placeholder {
-    color: rgba(0, 0, 0, 0.1);
-  }
+  padding: 4px 0 0;
 `;
 
 export default ({ postId }) => {
@@ -122,6 +123,11 @@ export default ({ postId }) => {
       return [post, avatars[post.authorId], xwalk.comments[postId]];
     }
   );
+
+  const [numCommentsShown, setNumCommentsShown] = useState(0);
+
+  const commentCount = comments?.length ?? 0;
+
   const inputRef = useRef();
   return (
     <Container>
@@ -135,8 +141,20 @@ export default ({ postId }) => {
         </div>
       </Header>
       <Body>{content}</Body>
+      {commentCount > 0 && (
+        <Statistics>
+          <LikeCount></LikeCount>
+          {commentCount > 0 && (
+            <CommentCount
+              onClick={(e) => setNumCommentsShown(numCommentsShown > 0 ? 0 : 1)}
+            >
+              {commentCount} Comments
+            </CommentCount>
+          )}
+        </Statistics>
+      )}
       <hr />
-      <LikeBar>
+      <ButtonsBar>
         <StandardButton>
           <ButtonLabel icon={faThumbsUp} text="Like" color="#65676B" />
         </StandardButton>
@@ -145,13 +163,32 @@ export default ({ postId }) => {
         >
           <ButtonLabel icon={faComment} text="Comment" color="#65676B" />
         </StandardButton>
-      </LikeBar>
+      </ButtonsBar>
       <hr />
-      <Comments>
-        {comments?.length > 0 &&
-          comments.map((id) => <Comment key={id} commentId={id} />)}
-      </Comments>
-      <CommentForm postId={postId} inputRef={inputRef} />
+      {numCommentsShown > 0 && (
+        <>
+          {numCommentsShown < commentCount && (
+            <HiddenComments>
+              <ShowMoreComments
+                onClick={(e) => setNumCommentsShown(commentCount)}
+              >
+                View previous comments
+              </ShowMoreComments>
+            </HiddenComments>
+          )}
+          <Comments>
+            {comments?.length > 0 &&
+              comments
+                .slice(-numCommentsShown)
+                .map((id) => <Comment key={id} commentId={id} />)}
+          </Comments>
+        </>
+      )}
+      <CommentForm
+        postId={postId}
+        inputRef={inputRef}
+        cbSubmit={(e) => setNumCommentsShown(numCommentsShown + 1)}
+      />
     </Container>
   );
 };

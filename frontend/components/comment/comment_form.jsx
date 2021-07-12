@@ -52,7 +52,14 @@ const Instruction = styled.div`
   font-size: 12px;
 `;
 
-export default ({ className, postId, parentCommentId, callback, inputRef }) => {
+export default ({
+  className,
+  postId,
+  parentCommentId,
+  inputRef,
+  cbBlur,
+  cbSubmit,
+}) => {
   const userId = useSelector(({ session }) => session.id);
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
@@ -67,6 +74,7 @@ export default ({ className, postId, parentCommentId, callback, inputRef }) => {
         })
       );
       setContent("");
+      cbSubmit && cbSubmit();
     }
   };
   return (
@@ -78,8 +86,8 @@ export default ({ className, postId, parentCommentId, callback, inputRef }) => {
         <CommentBar>
           <CommentInput
             ref={inputRef}
-            autoFocus={callback ? true : false}
-            onBlur={(e) => content.length == 0 && callback && callback()}
+            autoFocus={cbBlur ? true : false}
+            onBlur={(e) => content.length == 0 && cbBlur && cbBlur()}
             onChange={(e) => setContent(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Write a comment..."
