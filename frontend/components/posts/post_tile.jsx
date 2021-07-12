@@ -6,11 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThumbsUp,
   faComment,
-  faEllipsisH,
+  faTrashAlt,
+  faEdit,
   faGrinBeam,
   faStickyNote,
 } from "@fortawesome/free-regular-svg-icons";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
 import ProfilePicture from "../profile/profile_picture/profile_picture";
 import {
@@ -31,9 +32,16 @@ const Container = styled.div`
   background-color: white;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   padding: 0 16px;
+  z-index: 1;
 `;
 
 const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Info = styled.div`
   height: 73px;
   padding: 16px 0;
   display: flex;
@@ -42,15 +50,117 @@ const Header = styled.div`
   font-weight: 600;
   width: 100%;
   gap: 11px;
+  width: fit-content;
 `;
 
-const Fullname = styled.div``;
+const Fullname = styled.div`
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 const DateLine = styled.div`
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.2308;
-  color: #65676b;
+  color: var(--secondary-text);
+`;
+
+const EllipsisButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  color: var(--secondary-text);
+  cursor: pointer;
+  position: relative;
+  &:after {
+    display: block;
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    ${({ menuIsOpen }) =>
+      menuIsOpen &&
+      css`
+        background-color: rgba(0, 0, 0, 0.05);
+      `}
+  }
+  ${({ menuIsOpen }) =>
+    !menuIsOpen &&
+    css`
+      &:hover:after {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    `}
+`;
+
+const EllipsisMenu = styled.div`
+  width: 200px;
+  padding: 8px;
+  border-radius: var(--card-corner-radius);
+  margin-top: 15px;
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background-color: white;
+  z-index: 400;
+  box-shadow: 0 12px 28px 0 var(--shadow-2), 0 2px 4px 0 var(--shadow-1),
+    inset 0 0 0 1px var(--shadow-inset);
+`;
+
+const TriangleUp = styled.div`
+  box-sizing: content-box;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+  position: absolute;
+  right: 8px;
+  top: -10px;
+`;
+
+const MenuButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  &:after {
+    display: block;
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  &:hover:after {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  border-radius: 6px;
+  padding: 8px;
+  min-height: 36px;
+`;
+
+const MenuIcon = styled.div`
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+`;
+
+const MenuText = styled.div`
+  color: var(--primary-text);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.3333;
 `;
 
 const Body = styled.div`
@@ -66,22 +176,23 @@ const Statistics = styled.div`
   align-items: center;
   height: 34px;
   padding: 2px 0px 10px;
+  color: var(--secondary-text);
+  font-weight: normal;
+  font-size: 0.9375rem;
+  line-height: 1.3333;
 `;
 
 const LikeCount = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const CommentCount = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--secondary-text);
-  font-weight: normal;
-  font-size: 0.9375rem;
-  line-height: 1.3333;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -117,13 +228,14 @@ const Comments = styled.div`
 `;
 
 export default ({ postId }) => {
-  const [{ content, createdAt }, author, comments] = useSelector(
-    ({ entities: { posts, avatars }, xwalk }) => {
+  const [{ content, createdAt }, author, comments, sessionUserId] = useSelector(
+    ({ entities: { posts, avatars }, xwalk, session }) => {
       const post = posts[postId];
-      return [post, avatars[post.authorId], xwalk.comments[postId]];
+      return [post, avatars[post.authorId], xwalk.comments[postId], session.id];
     }
   );
 
+  const [menuIsOpen, toggleMenuIsOpen] = useState(false);
   const [numCommentsShown, setNumCommentsShown] = useState(0);
 
   const commentCount = comments?.length ?? 0;
@@ -132,13 +244,42 @@ export default ({ postId }) => {
   return (
     <Container>
       <Header>
-        <ProfilePicture height="40px" userId={author.id} />
-        <div>
-          <Fullname>
-            {author.firstName} {author.lastName}
-          </Fullname>
-          <DateLine>{new Date(createdAt).toLocaleDateString("en-US")}</DateLine>
-        </div>
+        <Info>
+          <ProfilePicture height="40px" userId={author.id} />
+          <div>
+            <Fullname>
+              {author.firstName} {author.lastName}
+            </Fullname>
+            <DateLine>
+              {new Date(createdAt).toLocaleDateString("en-US")}
+            </DateLine>
+          </div>
+        </Info>
+        {author.id === sessionUserId && (
+          <EllipsisButton
+            menuIsOpen={menuIsOpen}
+            onClick={(e) => toggleMenuIsOpen(!menuIsOpen)}
+          >
+            <FontAwesomeIcon icon={faEllipsisH}></FontAwesomeIcon>
+            {menuIsOpen && (
+              <EllipsisMenu>
+                <TriangleUp />
+                <MenuButton>
+                  <MenuIcon>
+                    <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                  </MenuIcon>
+                  <MenuText>Edit post</MenuText>
+                </MenuButton>
+                <MenuButton>
+                  <MenuIcon>
+                    <FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon>
+                  </MenuIcon>
+                  <MenuText>Delete post</MenuText>
+                </MenuButton>
+              </EllipsisMenu>
+            )}
+          </EllipsisButton>
+        )}
       </Header>
       <Body>{content}</Body>
       {commentCount > 0 && (

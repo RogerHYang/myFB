@@ -1,3 +1,7 @@
+:root {
+  --card-corner-radius: 8px;
+}
+
 $z-loading-indicator: 100;
 $z-nav-menu: 200;
 $z-dropdown-menu: 300;
@@ -29,4 +33,13 @@ hr {
   border-top: 1px solid #ccc;
   margin: 0;
   padding: 0;
+}
+
+.triangle-up {
+  box-sizing: content-box;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
 }

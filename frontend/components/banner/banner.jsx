@@ -44,6 +44,6 @@ export default styled(Banner)`
   width: 100%;
   background-color: white;
   border-bottom: 1px solid #eee;
-  z-index: 1;
+  z-index: 100;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 `;

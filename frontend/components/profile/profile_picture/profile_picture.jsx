@@ -52,6 +52,7 @@ export default styled(Picture)`
   border-radius: 50%;
   border: 1px solid #ccc;
   background-color: #eee;
+  cursor: pointer;
   height: ${({ height = "168px" }) => height};
   width: ${({ height = "168px" }) => height};
 `;
