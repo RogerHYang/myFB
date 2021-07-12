@@ -20,6 +20,8 @@ import {
 } from "../utils/buttons";
 import { openModal, closeModal } from "../../actions/modal_actions";
 
+import Comment from "../comment/comment";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -77,10 +79,14 @@ const LikeBar = styled.div`
 `;
 
 const Footer = styled.div`
-  padding: 16px 0;
+  padding: 8px 0;
   display: flex;
   gap: 5px;
   /* align-items: center; */
+`;
+
+const Comments = styled.div`
+  padding: 8px 0 0;
 `;
 
 const CommentBar = styled.div`
@@ -108,12 +114,12 @@ const CommentInput = styled.input`
 `;
 
 export default ({ postId }) => {
-  const [content, createdAt, author, sessionUser] = useSelector(
+  const [{ content, createdAt, comments }, author, sessionUser] = useSelector(
     ({ entities: { posts, avatars }, session }) => {
       const post = posts[postId];
       const author = avatars[post.authorId];
       const sessionUser = avatars[session.id];
-      return [post.content, post.createdAt, author, sessionUser];
+      return [post, author, sessionUser];
     }
   );
 
@@ -139,6 +145,10 @@ export default ({ postId }) => {
         </StandardButton>
       </LikeBar>
       <hr />
+      <Comments>
+        {comments?.length > 0 &&
+          comments.map((id) => <Comment key={id} commentId={id} />)}
+      </Comments>
       <Footer>
         <ProfilePicture height="40px" user={sessionUser} isEditable={false} />
         <CommentBar>

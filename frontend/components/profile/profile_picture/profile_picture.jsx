@@ -11,20 +11,25 @@ const EditButton = styled(RoundButton)`
   bottom: 10px;
 `;
 
-const Picture = ({ user, isEditable, className }) => {
-  if (!user) {
-    const { userId } = useParams();
-    user = useSelector(({ entities }) => {
-      return entities.users[userId];
-    });
-  }
-
+const Picture = ({ userId, user, isEditable, className }) => {
   let profilePicture;
   let isLoggedIn;
 
-  if (user) {
-    profilePicture = user.profilePicture;
-    isLoggedIn = useSelector(({ session }) => session.id == user.id);
+  if (userId) {
+    profilePicture = useSelector(
+      ({ entities: { avatars } }) => avatars[userId]?.profilePicture
+    );
+  } else {
+    if (!user) {
+      const { userId } = useParams();
+      user = useSelector(({ entities }) => {
+        return entities.users[userId];
+      });
+    }
+    if (user) {
+      profilePicture = user.profilePicture;
+      isLoggedIn = useSelector(({ session }) => session.id == user.id);
+    }
   }
 
   const handleClick = () => {};

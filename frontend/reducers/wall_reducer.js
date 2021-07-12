@@ -5,10 +5,8 @@ export default (state = {}, { type, payload }) => {
   Object.freeze(state);
   switch (type) {
     case RECEIVE_POSTS:
-      const { posts } = payload;
-      const newState = Object.assign({}, state);
-      newState[payload.userId] = posts.map((post) => post.id);
-      return newState;
+      const { wall } = payload;
+      return Object.assign({}, state, wall);
     case LOGOUT_CURRENT_USER:
       return {};
     default:
