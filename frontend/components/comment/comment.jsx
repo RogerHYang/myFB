@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 
 import ProfilePicture from "../profile/profile_picture/profile_picture";
+import CommentForm from "./comment_form";
 
 const Container = styled.div`
   min-height: 72.5px;
@@ -23,9 +24,12 @@ const Header = styled.div`
         `}
 `;
 
-const Body = styled.div``;
+const Body = styled.div`
+  width: 100%;
+`;
 
 const Content = styled.div`
+  width: fit-content;
   padding: 8px 12px;
   color: var(--primary-text);
   border-radius: 18px;
@@ -54,16 +58,31 @@ const Footer = styled.div`
   color: var(--secondary-text);
 `;
 
+const Control = styled.span`
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const ChildComments = styled.div``;
 
 export default Comment = ({ clasName, commentId, small = false }) => {
-  const [comment, { firstName, lastName }] = useSelector(
-    ({ entities: { comments, avatars } }) => [
+  const [comment, { firstName, lastName }, childComments] = useSelector(
+    ({ entities: { comments, avatars }, xwalk }) => [
       comments[commentId],
       avatars[comments[commentId].authorId],
+      xwalk.childComments[commentId],
     ]
   );
-  const { childComments, createdAt } = comment;
+  if (!comment) return null;
+  const { createdAt, postId, id } = comment;
+  const [isReplying, toggleIsReplying] = useState(false);
+  const handleLike = (e) => {};
+  const handleReply = (e) => {
+    toggleIsReplying(true);
+  };
   return (
     <Container>
       <Header small={small}>
@@ -80,13 +99,21 @@ export default Comment = ({ clasName, commentId, small = false }) => {
           <Text>{comment.content}</Text>
         </Content>
         <Footer>
-          <span>Like</span> · <span>Reply</span> ·{" "}
+          <Control onClick={handleLike}>Like</Control> ·{" "}
+          <Control onClick={handleReply}>Reply</Control> ·{" "}
           {new Date(createdAt).toLocaleDateString("en-US")}
         </Footer>
         {childComments?.length > 0 &&
           childComments?.map((id) => (
             <Comment key={id} commentId={id} small={true} />
           ))}
+        {isReplying && (
+          <CommentForm
+            postId={postId}
+            parentCommentId={id}
+            callback={() => toggleIsReplying(false)}
+          />
+        )}
       </Body>
     </Container>
   );

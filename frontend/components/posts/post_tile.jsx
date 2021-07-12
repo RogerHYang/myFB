@@ -21,6 +21,7 @@ import {
 import { openModal, closeModal } from "../../actions/modal_actions";
 
 import Comment from "../comment/comment";
+import CommentForm from "../comment/comment_form";
 
 const Container = styled.div`
   display: flex;
@@ -104,6 +105,7 @@ const CommentInput = styled.input`
   border: 0;
   background-color: transparent;
   font-size: 0.9375rem;
+  overflow-wrap: normal;
   flex-grow: 1;
   &:focus {
     outline: none;
@@ -114,19 +116,17 @@ const CommentInput = styled.input`
 `;
 
 export default ({ postId }) => {
-  const [{ content, createdAt, comments }, author, sessionUser] = useSelector(
-    ({ entities: { posts, avatars }, session }) => {
+  const [{ content, createdAt }, author, comments] = useSelector(
+    ({ entities: { posts, avatars }, xwalk }) => {
       const post = posts[postId];
-      const author = avatars[post.authorId];
-      const sessionUser = avatars[session.id];
-      return [post, author, sessionUser];
+      return [post, avatars[post.authorId], xwalk.comments[postId]];
     }
   );
-
+  const inputRef = useRef();
   return (
     <Container>
       <Header>
-        <ProfilePicture height="40px" user={author} isEditable={false} />
+        <ProfilePicture height="40px" userId={author.id} />
         <div>
           <Fullname>
             {author.firstName} {author.lastName}
@@ -140,7 +140,9 @@ export default ({ postId }) => {
         <StandardButton>
           <ButtonLabel icon={faThumbsUp} text="Like" color="#65676B" />
         </StandardButton>
-        <StandardButton>
+        <StandardButton
+          onClick={(e) => inputRef.current && inputRef.current.focus()}
+        >
           <ButtonLabel icon={faComment} text="Comment" color="#65676B" />
         </StandardButton>
       </LikeBar>
@@ -149,23 +151,7 @@ export default ({ postId }) => {
         {comments?.length > 0 &&
           comments.map((id) => <Comment key={id} commentId={id} />)}
       </Comments>
-      <Footer>
-        <ProfilePicture height="40px" user={sessionUser} isEditable={false} />
-        <CommentBar>
-          <CommentInput placeholder="Write a comment..."></CommentInput>
-          <div style={{ display: "flex" }}>
-            <RoundButton backgroundColor="transparent" height="30px">
-              <ButtonLabel icon={faGrinBeam} color="#65676B" />
-            </RoundButton>
-            <RoundButton backgroundColor="transparent" height="30px">
-              <ButtonLabel icon={faCamera} color="#65676B" />
-            </RoundButton>
-            <RoundButton backgroundColor="transparent" height="30px">
-              <ButtonLabel icon={faStickyNote} color="#65676B" />
-            </RoundButton>
-          </div>
-        </CommentBar>
-      </Footer>
+      <CommentForm postId={postId} inputRef={inputRef} />
     </Container>
   );
 };

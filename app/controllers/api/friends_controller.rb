@@ -1,4 +1,5 @@
 class Api::FriendsController < ApplicationController
+  before_action :require_logged_in, only: [:create, :destroy]
 
   def create
     from_user_id, to_user_id = params.values_at(:from_user_id, :to_user_id)

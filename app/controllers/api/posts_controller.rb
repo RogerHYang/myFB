@@ -1,5 +1,5 @@
 class Api::PostsController < ApplicationController
-  # before_action :require_logged_in, only: [:destroy]
+  before_action :require_logged_in, only: [:create, :update, :destroy]
 
   def show
     @user_id = Integer(params[:user_id])
@@ -27,6 +27,12 @@ class Api::PostsController < ApplicationController
     else
       render json: @post.errors.full_messages, status: 422
     end
+  end
+
+  def update
+  end
+
+  def destroy
   end
 
   private

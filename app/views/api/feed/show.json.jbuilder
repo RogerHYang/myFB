@@ -16,3 +16,15 @@ json.set! :comments do
     json.set! :child_comments, comment.child_comments.pluck(:id).sort
   end
 end
+json.set! :xwalk do
+  json.set! :comments do
+    @posts.each do |post|
+      json.set! post.id, post.comments.select {|comment| comment.parent_comment_id.nil?}.pluck(:id).sort if post.comments.length > 0
+    end
+  end
+  json.set! :child_comments do
+    @posts.flat_map(&:comments).each do |comment|
+      json.set! comment.id, comment.child_comments.pluck(:id).sort if comment.child_comments.length > 0
+    end
+  end
+end

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :users, only: [:show, :create, :update]
     resource :session, only: [:create, :destroy]
     resources :posts, only: [:update]
+    resources :comments, only: [:create]
     
     post '/posts/:user_id', to: 'posts#create'
     get '/posts/:user_id', to: 'posts#show'
