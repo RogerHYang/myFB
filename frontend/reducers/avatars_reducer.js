@@ -6,12 +6,11 @@ export default (state = {}, { type, payload }) => {
   switch (type) {
     case RECEIVE_POSTS:
     case RECEIVE_FEED:
-      const newState = Object.assign({}, state);
       const { avatars } = payload;
-      avatars.forEach((avatar) => {
-        newState[avatar.id] = avatar;
-      });
-      return newState;
+      if (avatars) {
+        return Object.assign({}, state, avatars);
+      }
+      return state;
     case LOGOUT_CURRENT_USER:
       return {};
     default:

@@ -106,7 +106,11 @@ export default ({ user, sessionUser, closeEditor }) => {
           {sessionUser.firstName} {sessionUser.lastName}
         </div>
       </Header>
-      <Body placeholder="What's on your mind?" onChange={handleChange}></Body>
+      <Body
+        autoFocus
+        placeholder="What's on your mind?"
+        onChange={handleChange}
+      ></Body>
       <Footer>
         <Extras>
           <div>Add to your post</div>

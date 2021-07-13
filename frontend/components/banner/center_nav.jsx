@@ -4,7 +4,11 @@ import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faUserFriends } from "@fortawesome/free-solid-svg-icons";
-import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import {
+  faLinkedin,
+  faGithub,
+  faAngellist,
+} from "@fortawesome/free-brands-svg-icons";
 
 import { NavButton, ButtonLabel } from "../utils/buttons";
 
@@ -51,10 +55,41 @@ export default ({ className }) => {
         </NavButton>
       </Accent>
       <Accent>
-        <NavButton height="100%" width="111.59px">
+        <NavButton
+          height="100%"
+          width="111.59px"
+          onClick={() =>
+            window.open("https://github.com/RogerHYang/myFB/", "_blank")
+          }
+        >
+          <ButtonLabel icon={faGithub} iconSize="2rem" iconColor="#bbb" />
+        </NavButton>
+      </Accent>
+      <Accent>
+        <NavButton
+          height="100%"
+          width="111.59px"
+          onClick={() =>
+            window.open(
+              "https://www.linkedin.com/in/roger-y-a35595114/",
+              "_blank"
+            )
+          }
+        >
           <ButtonLabel icon={faLinkedin} iconSize="2rem" iconColor="#bbb" />
         </NavButton>
       </Accent>
+      {/* <Accent>
+        <NavButton
+          height="100%"
+          width="111.59px"
+          onClick={() =>
+            window.open("https://angel.co/u/roger-yang-11", "_blank")
+          }
+        >
+          <ButtonLabel icon={faAngellist} iconSize="2rem" iconColor="#bbb" />
+        </NavButton>
+      </Accent> */}
     </Container>
   );
 };

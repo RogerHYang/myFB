@@ -25,6 +25,8 @@ import { openModal, closeModal } from "../../actions/modal_actions";
 import Comment from "../comment/comment";
 import CommentForm from "../comment/comment_form";
 
+import { deletePost } from "../../actions/post_actions";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -228,17 +230,27 @@ const Comments = styled.div`
 `;
 
 export default ({ postId }) => {
-  const [{ content, createdAt }, author, comments, sessionUserId] = useSelector(
-    ({ entities: { posts, avatars }, xwalk, session }) => {
-      const post = posts[postId];
-      return [post, avatars[post.authorId], xwalk.comments[postId], session.id];
-    }
-  );
+  const [
+    { content, createdAt },
+    author,
+    comments,
+    commentCount,
+    sessionUserId,
+  ] = useSelector(({ entities, xwalk, stats, session }) => {
+    const post = entities.posts[postId];
+    return [
+      post,
+      entities.avatars[post.authorId],
+      xwalk.comments[postId],
+      stats.postCommentCount[postId],
+      session.id,
+    ];
+  });
+
+  const dispatch = useDispatch();
 
   const [menuIsOpen, toggleMenuIsOpen] = useState(false);
   const [numCommentsShown, setNumCommentsShown] = useState(0);
-
-  const commentCount = comments?.length ?? 0;
 
   const inputRef = useRef();
   return (
@@ -270,7 +282,7 @@ export default ({ postId }) => {
                   </MenuIcon>
                   <MenuText>Edit post</MenuText>
                 </MenuButton>
-                <MenuButton>
+                <MenuButton onClick={() => dispatch(deletePost(postId))}>
                   <MenuIcon>
                     <FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon>
                   </MenuIcon>
@@ -308,10 +320,10 @@ export default ({ postId }) => {
       <hr />
       {numCommentsShown > 0 && (
         <>
-          {numCommentsShown < commentCount && (
+          {numCommentsShown < (comments?.length ?? 0) && (
             <HiddenComments>
               <ShowMoreComments
-                onClick={(e) => setNumCommentsShown(commentCount)}
+                onClick={(e) => setNumCommentsShown(comments?.length ?? 0)}
               >
                 View previous comments
               </ShowMoreComments>

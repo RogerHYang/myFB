@@ -8,21 +8,19 @@ class Api::PostsController < ApplicationController
       .includes(
         {author: {profile_picture_attachment: :blob}},
         {comments: [{author: {profile_picture_attachment: :blob}}, :child_comments]})
-    render "api/posts/show"
+    render "api/wall/show"
   end
 
   def find_posts
     @posts = Post.where(id: params[:postIds]).includes(:friend_ids)
-    render "api/posts/show"
+    render "api/wall/show"
   end
 
   def create
     @post = Post.new(post_params)
-    @post.recipient_id = Integer(params[:user_id])
+    @post.recipient_id = Integer(params[:recipient_id])
     @post.author_id = current_user.id
-    if @post.save      
-      @user_id = @post.recipient_id
-      @posts = Post.where(recipient_id: @user_id).includes(:author)
+    if @post.save
       render "api/posts/show"
     else
       render json: @post.errors.full_messages, status: 422
@@ -30,9 +28,29 @@ class Api::PostsController < ApplicationController
   end
 
   def update
+    @post = Post.find_by(id: params[:id])
+    if @post&.author_id == current_user.id
+      if @post.update(post_params)
+        render "api/posts/show"
+      else
+        render json: @post.errors.full_messages, status: 422
+      end
+    else
+      render json: ['Forbidden'], status: 403
+    end
   end
 
   def destroy
+    @post = Post.find_by(id: params[:id])
+    if @post&.author_id == current_user.id
+      if @post.destroy
+        render "api/posts/show"
+      else
+        render json: @post.errors.full_messages, status: 422
+      end
+    else
+      render json: ['Forbidden'], status: 403
+    end
   end
 
   private

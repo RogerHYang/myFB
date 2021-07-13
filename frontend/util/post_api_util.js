@@ -1,16 +1,29 @@
+export const requestFeed = (userId) =>
+  $.ajax({
+    url: `/api/feed/${userId}`,
+  });
+
 export const requestPosts = (userId) =>
   $.ajax({
     url: `/api/posts/${userId}`,
   });
 
-export const createPost = (post, userId) =>
+export const createPost = (post, recipientId) =>
   $.ajax({
-    url: `/api/posts/${userId}`,
+    url: `/api/posts/${recipientId}`,
     method: "POST",
     data: { post },
   });
 
-export const requestFeed = (userId) =>
+export const deletePost = (postId) =>
   $.ajax({
-    url: `/api/feed/${userId}`,
+    url: `/api/posts/${postId}`,
+    method: "DELETE",
+  });
+
+export const updatePost = (post) =>
+  $.ajax({
+    url: `/api/posts/${post.id}`,
+    method: "PATCH",
+    data: { post },
   });

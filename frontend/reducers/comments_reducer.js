@@ -13,12 +13,8 @@ export default (state = {}, { type, payload, comment }) => {
     case RECEIVE_POSTS:
     case RECEIVE_FEED:
       const { comments } = payload;
-      if (comments?.length > 0) {
-        const newState = Object.assign({}, state);
-        comments.forEach((comment) => {
-          newState[comment.id] = comment;
-        });
-        return newState;
+      if (comments) {
+        return Object.assign({}, state, comments);
       }
       return state;
     case LOGOUT_CURRENT_USER:

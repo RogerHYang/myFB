@@ -5,10 +5,10 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users, only: [:show, :create, :update]
     resource :session, only: [:create, :destroy]
-    resources :posts, only: [:update]
+    resources :posts, only: [:update, :destroy]
     resources :comments, only: [:create]
     
-    post '/posts/:user_id', to: 'posts#create'
+    post '/posts/:recipient_id', to: 'posts#create'    
     get '/posts/:user_id', to: 'posts#show'
     get '/feed/:user_id', to: 'feed#show'
 

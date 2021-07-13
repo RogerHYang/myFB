@@ -1,4 +1,7 @@
-json.set! :feed, @posts.pluck(:id).sort { |a, b| b <=> a }.uniq
+json.set! :user_id, @user_id;
+json.set! :wall do
+  json.set! @user_id, @posts.pluck(:id).sort { |a, b| b <=> a }.uniq
+end
 json.set! :posts do
   @posts.each do |post|
     json.set! post.id do
