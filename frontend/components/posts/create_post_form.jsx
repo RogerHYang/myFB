@@ -9,7 +9,7 @@ import ProfilePicture from "../profile/profile_picture/profile_picture";
 import { ButtonLabel, StandardGrayButton, RoundButton } from "../utils/buttons";
 import { openModal, closeModal } from "../../actions/modal_actions";
 
-import { createPost } from "../../actions/post_actions";
+import { createPost, patchPost } from "../../actions/post_actions";
 
 const Container = styled.div`
   display: flex;
@@ -49,6 +49,7 @@ const Body = styled.textarea`
   font-size: 1.5rem;
   text-align: left;
   padding: 8px 16px;
+  font-family: sans-serif;
   &:focus {
     outline: none;
   }
@@ -79,8 +80,17 @@ const Footer = styled.div`
   justify-content: space-between;
 `;
 
-export default ({ user, sessionUser, closeEditor }) => {
-  const [content, setContent] = useState("");
+export default ({ postId }) => {
+  const post =
+    postId && useSelector(({ entities: { posts } }) => posts[postId]);
+
+  const { userId } = useParams();
+
+  const sessionUser = useSelector(
+    ({ entities: { users }, session }) => users[session.id]
+  );
+
+  const [content, setContent] = useState(() => post?.content ?? "");
   const [hasChanged, setHasChanged] = useState(false);
 
   const handleChange = (e) => {
@@ -93,15 +103,18 @@ export default ({ user, sessionUser, closeEditor }) => {
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.stopPropagation();
-    dispatch(createPost({ content }, user.id));
+    if (post) {
+      const { id } = post;
+      dispatch(patchPost({ id, content }));
+    } else dispatch(createPost({ content }, userId ?? sessionUser.id));
     dispatch(closeModal());
   };
   const disabledPost = !hasChanged;
   return (
     <Container>
-      <Title>Create Post</Title>
+      <Title>{post ? "Edit" : "Create"} Post</Title>
       <Header>
-        <ProfilePicture height="40px" user={sessionUser} isEditable={false} />
+        <ProfilePicture height="40px" userId={sessionUser.id} />
         <div>
           {sessionUser.firstName} {sessionUser.lastName}
         </div>
@@ -110,6 +123,7 @@ export default ({ user, sessionUser, closeEditor }) => {
         autoFocus
         placeholder="What's on your mind?"
         onChange={handleChange}
+        value={content}
       ></Body>
       <Footer>
         <Extras>
@@ -137,7 +151,10 @@ export default ({ user, sessionUser, closeEditor }) => {
           disabled={disabledPost}
           shrinks={false}
         >
-          <ButtonLabel text="Post" disabled={disabledPost} />
+          <ButtonLabel
+            text={post ? "Update" : "Post"}
+            disabled={disabledPost}
+          />
         </StandardGrayButton>
       </Footer>
     </Container>

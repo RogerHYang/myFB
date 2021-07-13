@@ -21,7 +21,7 @@ export const deletePost = (postId) =>
     method: "DELETE",
   });
 
-export const updatePost = (post) =>
+export const patchPost = (post) =>
   $.ajax({
     url: `/api/posts/${post.id}`,
     method: "PATCH",

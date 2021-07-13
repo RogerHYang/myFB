@@ -3,6 +3,7 @@ import * as APIUtil from "../util/post_api_util";
 export const RECEIVE_FEED = "RECEIVE_FEED";
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
 export const RECEIVE_POST = "RECEIVE_POST";
+export const UPDATE_POST = "UPDATE_POST";
 export const DESTROY_POST = "DESTROY_POST";
 export const RECEIVE_POST_ERRORS = "RECEIVE_POST_ERRORS";
 
@@ -13,6 +14,11 @@ export const receiveFeed = (payload) => ({
 
 export const receivePost = (post) => ({
   type: RECEIVE_POST,
+  post,
+});
+
+export const updatePost = (post) => ({
+  type: UPDATE_POST,
   post,
 });
 
@@ -46,9 +52,9 @@ export const createPost = (post, recipientId) => (dispatch) =>
     .then((post) => dispatch(receivePost(post)))
     .fail((err) => dispatch(receiveErrors(err.responseJSON)));
 
-export const updatePost = (post) => (dispatch) =>
-  APIUtil.updatePost(post)
-    .then((post) => dispatch(receivePost(post)))
+export const patchPost = (post) => (dispatch) =>
+  APIUtil.patchPost(post)
+    .then((post) => dispatch(updatePost(post)))
     .fail((err) => dispatch(receiveErrors(err.responseJSON)));
 
 export const deletePost = (postId) => (dispatch) =>

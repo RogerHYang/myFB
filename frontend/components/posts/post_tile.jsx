@@ -20,10 +20,12 @@ import {
   StandardGrayButton,
   RoundButton,
 } from "../utils/buttons";
-import { openModal, closeModal } from "../../actions/modal_actions";
 
 import Comment from "../comment/comment";
 import CommentForm from "../comment/comment_form";
+
+import { openModal, closeModal } from "../../actions/modal_actions";
+import CreatePostForm from "./create_post_form";
 
 import { deletePost } from "../../actions/post_actions";
 
@@ -276,7 +278,13 @@ export default ({ postId }) => {
             {menuIsOpen && (
               <EllipsisMenu>
                 <TriangleUp />
-                <MenuButton>
+                <MenuButton
+                  onClick={() =>
+                    dispatch(
+                      openModal(() => <CreatePostForm postId={postId} />)
+                    )
+                  }
+                >
                   <MenuIcon>
                     <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
                   </MenuIcon>

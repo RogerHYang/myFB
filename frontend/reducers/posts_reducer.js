@@ -1,6 +1,7 @@
 import { LOGOUT_CURRENT_USER } from "../actions/session_actions";
 import {
   RECEIVE_POST,
+  UPDATE_POST,
   RECEIVE_POSTS,
   RECEIVE_FEED,
   DESTROY_POST,
@@ -14,6 +15,7 @@ export default (state = {}, { type, payload, post }) => {
       delete newState[post.id];
       return newState;
     }
+    case UPDATE_POST:
     case RECEIVE_POST: {
       const newState = Object.assign({}, state);
       newState[post.id] = post;

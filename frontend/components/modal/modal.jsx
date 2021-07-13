@@ -39,8 +39,11 @@ export default () => {
   const close = () => dispatch(closeModal());
   return (
     Component && (
-      <ModalBackdrop onClick={close}>
-        <ModalChild onClick={(e) => e.stopPropagation()}>
+      <ModalBackdrop onMouseDown={close}>
+        <ModalChild
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
           <Component />
           <CloseButton>
             <RoundButton height="36px" onClick={close}>
