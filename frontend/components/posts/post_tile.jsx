@@ -72,19 +72,20 @@ const DateLine = styled.div`
 `;
 
 const EllipsisButton = styled.div`
+  height: 36px;
+  width: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 36px;
-  width: 36px;
   border-radius: 50%;
   color: var(--secondary-text);
-  cursor: pointer;
   position: relative;
   &:after {
+    position: absolute;
+    z-index: 901;
+    cursor: pointer;
     display: block;
     content: " ";
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -103,18 +104,33 @@ const EllipsisButton = styled.div`
         background-color: rgba(0, 0, 0, 0.05);
       }
     `}
+  ${({ menuIsOpen }) =>
+    menuIsOpen &&
+    css`
+      &:before {
+        position: fixed;
+        z-index: 900;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: transparent;
+        cursor: default;
+        content: " ";
+      }
+    `}
 `;
 
 const EllipsisMenu = styled.div`
+  position: absolute;
+  z-index: 901;
   width: 200px;
   padding: 8px;
   border-radius: var(--card-corner-radius);
   margin-top: 15px;
-  position: absolute;
   top: 32px;
   right: 0;
   background-color: white;
-  z-index: 400;
   box-shadow: 0 12px 28px 0 var(--shadow-2), 0 2px 4px 0 var(--shadow-1),
     inset 0 0 0 1px var(--shadow-inset);
 `;
@@ -138,9 +154,9 @@ const MenuButton = styled.div`
   position: relative;
   overflow: hidden;
   &:after {
+    position: absolute;
     display: block;
     content: " ";
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;

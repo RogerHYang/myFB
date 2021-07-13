@@ -7,29 +7,51 @@ import {
 import {
   RECEIVE_COMMENTS,
   RECEIVE_COMMENT,
+  DESTROY_COMMENT,
 } from "../../actions/comment_actions";
 
-export default (state = {}, { type, payload, comment, post }) => {
+export default (
+  state = {},
+  { type, payload, comment, deletedComment, deletedPost }
+) => {
   Object.freeze(state);
   switch (type) {
-    case DESTROY_POST:
-      if (state.hasOwnProperty(post?.id)) {
+    case DESTROY_COMMENT: {
+      const { postId, postCommentCount } = deletedComment;
+      if (state.hasOwnProperty(postId)) {
         const newState = Object.assign({}, state);
-        delete newState[post.id];
+        if (postCommentCount > 0) {
+          newState[postId] = postCommentCount;
+        } else {
+          delete newState[postId];
+        }
+        return newState;
+      }
+      return state;
+    }
+    case DESTROY_POST:
+      const { id } = deletedPost;
+      if (state.hasOwnProperty(id)) {
+        const newState = Object.assign({}, state);
+        delete newState[id];
         return newState;
       }
       return state;
     case RECEIVE_COMMENT: {
+      const { postId } = comment;
       const newState = Object.assign({}, state);
-      newState[comment.postId] = (newState[comment.postId] ?? 0) + 1;
+      newState[postId] = (newState[postId] ?? 0) + 1;
       return newState;
     }
     case RECEIVE_COMMENTS:
     case RECEIVE_POSTS:
     case RECEIVE_FEED: {
       const { postCommentCount } = payload.stats ?? {};
-      const newState = Object.assign({}, postCommentCount ?? {});
-      return newState;
+      if (postCommentCount) {
+        const newState = Object.assign({}, postCommentCount);
+        return newState;
+      }
+      return state;
     }
     case LOGOUT_CURRENT_USER:
       return {};

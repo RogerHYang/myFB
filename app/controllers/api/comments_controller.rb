@@ -15,6 +15,16 @@ class Api::CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = Comment.where(id: params[:id]).includes(:post).first
+    if @comment&.author_id == current_user.id
+      if @comment.destroy
+        render "api/comments/deleted"
+      else
+        render json: @comment.errors.full_messages, status: 422
+      end
+    else
+      render json: ['Forbidden'], status: 403
+    end
   end
 
   private

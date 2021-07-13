@@ -36,7 +36,10 @@ const ModalChild = styled.div`
 export default () => {
   const Component = useSelector((state) => state.ui.modal);
   const dispatch = useDispatch();
-  const close = () => dispatch(closeModal());
+  const close = (e) => {
+    e.stopPropagation();
+    dispatch(closeModal());
+  };
   return (
     Component && (
       <ModalBackdrop onMouseDown={close}>

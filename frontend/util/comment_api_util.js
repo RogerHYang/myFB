@@ -4,3 +4,9 @@ export const createComment = (comment) =>
     method: "POST",
     data: { comment },
   });
+
+export const deleteComment = (commentId) =>
+  $.ajax({
+    url: `/api/comments/${commentId}`,
+    method: "DELETE",
+  });

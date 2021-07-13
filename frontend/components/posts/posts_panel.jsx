@@ -14,6 +14,8 @@ const Container = styled.div`
   gap: 16px;
   margin: 8px;
   width: ${({ width }) => width};
+  z-index: 1;
+  position: relative;
 `;
 
 const Wall = styled.div`

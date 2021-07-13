@@ -44,7 +44,7 @@ class Api::PostsController < ApplicationController
     @post = Post.find_by(id: params[:id])
     if @post&.author_id == current_user.id
       if @post.destroy
-        render "api/posts/show"
+        render "api/posts/deleted"
       else
         render json: @post.errors.full_messages, status: 422
       end

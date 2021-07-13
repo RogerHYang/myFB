@@ -6,13 +6,15 @@ Rails.application.routes.draw do
     resources :users, only: [:show, :create, :update]
     resource :session, only: [:create, :destroy]
     resources :posts, only: [:update, :destroy]
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :update, :destroy]
     
-    post '/posts/:recipient_id', to: 'posts#create'    
+    post '/posts/:recipient_id', to: 'posts#create'
+
     get '/posts/:user_id', to: 'posts#show'
     get '/feed/:user_id', to: 'feed#show'
 
     post '/find_users', to: 'users#find_users'
+    
     post '/friends/:from_user_id/:to_user_id', to: 'friends#create'
     delete '/friends/:from_user_id/:to_user_id', to: 'friends#destroy'
   end

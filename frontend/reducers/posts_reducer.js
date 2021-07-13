@@ -7,12 +7,12 @@ import {
   DESTROY_POST,
 } from "../actions/post_actions";
 
-export default (state = {}, { type, payload, post }) => {
+export default (state = {}, { type, payload, post, deletedPost }) => {
   Object.freeze(state);
   switch (type) {
     case DESTROY_POST: {
       const newState = Object.assign({}, state);
-      delete newState[post.id];
+      delete newState[deletedPost.id];
       return newState;
     }
     case UPDATE_POST:

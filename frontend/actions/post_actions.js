@@ -22,9 +22,9 @@ export const updatePost = (post) => ({
   post,
 });
 
-export const destroyPost = (post) => ({
+export const destroyPost = (deletedPost) => ({
   type: DESTROY_POST,
-  post,
+  deletedPost,
 });
 
 export const receivePosts = (payload) => ({
@@ -59,5 +59,5 @@ export const patchPost = (post) => (dispatch) =>
 
 export const deletePost = (postId) => (dispatch) =>
   APIUtil.deletePost(postId)
-    .then((post) => dispatch(destroyPost(post)))
+    .then((deletedPost) => dispatch(destroyPost(deletedPost)))
     .fail((err) => dispatch(receiveErrors(err.responseJSON)));
