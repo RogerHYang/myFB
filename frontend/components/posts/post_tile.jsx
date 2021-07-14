@@ -342,7 +342,7 @@ export default ({ postId }) => {
         )}
       </Header>
       <Body>{content}</Body>
-      {commentCount > 0 && (
+      {(commentCount > 0 || likeCount > 0) && (
         <Statistics>
           <LikeCount>
             {likeCount > 0 && (
