@@ -19,6 +19,7 @@ const Container = styled.div`
 `;
 
 const Wall = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -33,9 +34,7 @@ export default ({ width }) => {
       <CreatePostTile />
       <Wall>
         {postIds &&
-          postIds
-            .sort((a, b) => b - a)
-            .map((postId) => <PostTile key={postId} postId={postId} />)}
+          postIds.map((postId) => <PostTile key={postId} postId={postId} />)}
       </Wall>
     </Container>
   );

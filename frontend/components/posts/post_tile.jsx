@@ -38,7 +38,8 @@ const Container = styled.div`
   background-color: white;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   padding: 0 16px;
-  z-index: 1;
+  /* z-index: 1; */
+  width: 100%;
 `;
 
 const Header = styled.div`
