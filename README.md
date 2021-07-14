@@ -7,3 +7,10 @@ myFB is a clone of the social media app Facebook, allowing users to
 * create, update, and delete comments on posts
 * see the posts created by friends in a news feed
 * like posts and comments 
+
+## Technologies used
+* Ruby on Rails
+* React and Redux
+* PostgreSQL
+* AWS S3
+* Heroku
