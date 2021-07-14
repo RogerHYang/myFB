@@ -36,12 +36,12 @@ export const createComment = (comment) => (dispatch) =>
     .then((comment) => dispatch(receiveComment(comment)))
     .fail((err) => dispatch(receiveErrors(err.responseJSON)));
 
-export const patchComment = (comment) => (dispatch) =>
-  APIUtil.patchComment(comment)
-    .then((comment) => dispatch(updateComment(comment)))
-    .fail((err) => dispatch(receiveErrors(err.responseJSON)));
-
 export const deleteComment = (commentId) => (dispatch) =>
   APIUtil.deleteComment(commentId)
     .then((deletedComment) => dispatch(destroyComment(deletedComment)))
+    .fail((err) => dispatch(receiveErrors(err.responseJSON)));
+
+export const patchComment = (comment) => (dispatch) =>
+  APIUtil.patchComment(comment)
+    .then((comment) => dispatch(updateComment(comment)))
     .fail((err) => dispatch(receiveErrors(err.responseJSON)));

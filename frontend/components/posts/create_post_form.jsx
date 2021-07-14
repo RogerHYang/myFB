@@ -84,7 +84,7 @@ export default ({ postId, recipientId }) => {
     postId && useSelector(({ entities: { posts } }) => posts[postId]);
 
   const sessionUser = useSelector(
-    ({ entities: { users }, session }) => users[session.id]
+    ({ entities: { avatars }, session }) => avatars[session.id]
   );
 
   const [content, setContent] = useState(() => post?.content ?? "");

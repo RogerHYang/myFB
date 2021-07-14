@@ -46,9 +46,9 @@ const Text = styled.div`
 export default () => {
   const { userId } = useParams();
   const [user, sessionUser] = useSelector(
-    ({ entities: { users }, session }) => [
-      users[userId ?? session.id],
-      users[session.id],
+    ({ entities: { avatars }, session }) => [
+      avatars[userId ?? session.id],
+      avatars[session.id],
     ]
   );
   const recipientId = userId ?? sessionUser.id;
@@ -59,7 +59,7 @@ export default () => {
   return (
     <Container>
       <Top>
-        <Picture height="40px" user={sessionUser} isEditable={false} />
+        <Picture height="40px" userId={sessionUser.id} />
         <div style={{ flexGrow: 1 }}>
           <Button
             onClick={handleClick}

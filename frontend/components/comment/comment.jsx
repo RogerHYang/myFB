@@ -11,7 +11,7 @@ import {
   faGrinBeam,
   faStickyNote,
 } from "@fortawesome/free-regular-svg-icons";
-import { faCamera, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import * as faSolid from "@fortawesome/free-solid-svg-icons";
 
 import ProfilePicture from "../profile/profile_picture/profile_picture";
 import CommentForm from "./comment_form";
@@ -49,12 +49,14 @@ const Trunk = styled.div`
 
 const Content = styled.div`
   width: fit-content;
+  min-width: 180px;
   padding: 8px 12px;
   color: var(--primary-text);
   border-radius: 18px;
   display: flex;
   flex-direction: column;
   background-color: var(--comment-background);
+  position: relative;
 `;
 
 const Name = styled.div`
@@ -204,14 +206,53 @@ const MenuText = styled.div`
   line-height: 1.3333;
 `;
 
+const LikeCount = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 4px 2px 2px;
+  height: 20px;
+  border-radius: 10px;
+  position: absolute;
+  right: 5px;
+  bottom: -12px;
+  font-weight: normal;
+  font-size: 0.8125rem;
+  line-height: 1.2308;
+  color: var(--secondary-text);
+  box-shadow: 0 1px 2px var(--shadow-2);
+  background-color: white;
+`;
+
+const LikeIcon = styled.div`
+  background: linear-gradient(#29b4ff, #0064e1);
+  border-radius: 50%;
+  color: white;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 8px;
+  justify-content: center;
+  margin-right: 4px;
+`;
+
 export default Comment = ({ clasName, commentId, small = false }) => {
-  const [comment, { firstName, lastName }, childComments, sessionUserId] =
-    useSelector(({ entities: { comments, avatars }, xwalk, session }) => [
+  const [
+    comment,
+    { firstName, lastName },
+    childComments,
+    sessionUserId,
+    likeCount,
+  ] = useSelector(
+    ({ entities: { comments, avatars }, xwalk, session, stats }) => [
       comments[commentId],
       avatars[comments[commentId].authorId],
       xwalk.childComments[commentId],
       session.id,
-    ]);
+      stats.commentLikeCount[commentId],
+    ]
+  );
   if (!comment) return null;
 
   const history = useHistory();
@@ -241,6 +282,14 @@ export default Comment = ({ clasName, commentId, small = false }) => {
               {firstName} {lastName}
             </Name>
             <Text>{comment.content}</Text>
+            {likeCount && (
+              <LikeCount>
+                <LikeIcon>
+                  <FontAwesomeIcon icon={faSolid.faThumbsUp} />
+                </LikeIcon>
+                <span>{likeCount}</span>
+              </LikeCount>
+            )}
           </Content>
           {authorId === sessionUserId && (
             <EllipsisButton
@@ -248,7 +297,7 @@ export default Comment = ({ clasName, commentId, small = false }) => {
               menuIsOpen={menuIsOpen}
               onClick={(e) => toggleMenuIsOpen(!menuIsOpen)}
             >
-              <FontAwesomeIcon icon={faEllipsisH}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faSolid.faEllipsisH} />
               {menuIsOpen && (
                 <EllipsisMenu>
                   <TriangleUp />
@@ -260,7 +309,7 @@ export default Comment = ({ clasName, commentId, small = false }) => {
                     }
                   >
                     <MenuIcon>
-                      <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faEdit} />
                     </MenuIcon>
                     <MenuText>Edit comment</MenuText>
                   </MenuButton>

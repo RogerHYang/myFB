@@ -11,7 +11,7 @@ import {
   faGrinBeam,
   faStickyNote,
 } from "@fortawesome/free-regular-svg-icons";
-import { faCamera, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import * as faSolid from "@fortawesome/free-solid-svg-icons";
 
 import ProfilePicture from "../profile/profile_picture/profile_picture";
 import {
@@ -206,7 +206,19 @@ const LikeCount = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+`;
+
+const LikeIcon = styled.div`
+  background: linear-gradient(#29b4ff, #0064e1);
+  border-radius: 50%;
+  color: white;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  justify-content: center;
+  margin-right: 6px;
 `;
 
 const CommentCount = styled.div`
@@ -254,6 +266,7 @@ export default ({ postId }) => {
     comments,
     commentCount,
     sessionUserId,
+    likeCount,
   ] = useSelector(({ entities, xwalk, stats, session }) => {
     const post = entities.posts[postId];
     return [
@@ -262,6 +275,7 @@ export default ({ postId }) => {
       xwalk.comments[postId],
       stats.postCommentCount[postId],
       session.id,
+      stats.postLikeCount[postId],
     ];
   });
 
@@ -291,7 +305,7 @@ export default ({ postId }) => {
             menuIsOpen={menuIsOpen}
             onClick={(e) => toggleMenuIsOpen(!menuIsOpen)}
           >
-            <FontAwesomeIcon icon={faEllipsisH}></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faSolid.faEllipsisH} />
             {menuIsOpen && (
               <EllipsisMenu>
                 <TriangleUp />
@@ -321,7 +335,16 @@ export default ({ postId }) => {
       <Body>{content}</Body>
       {commentCount > 0 && (
         <Statistics>
-          <LikeCount></LikeCount>
+          <LikeCount>
+            {likeCount && (
+              <>
+                <LikeIcon>
+                  <FontAwesomeIcon icon={faSolid.faThumbsUp} />
+                </LikeIcon>
+                <span>{likeCount}</span>
+              </>
+            )}
+          </LikeCount>
           {commentCount > 0 && (
             <CommentCount
               onClick={() => setNumCommentsShown(numCommentsShown > 0 ? 0 : 1)}

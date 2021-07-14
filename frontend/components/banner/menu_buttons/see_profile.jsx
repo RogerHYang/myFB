@@ -25,7 +25,7 @@ const Label = styled.div`
 
 export default ({ closeMenu, className }) => {
   const user = useSelector(
-    ({ entities, session }) => entities.users[session.id]
+    ({ entities, session }) => entities.avatars[session.id]
   );
   const history = useHistory();
   const handleClick = () => {

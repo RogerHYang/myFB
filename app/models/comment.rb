@@ -1,4 +1,6 @@
 class Comment < ApplicationRecord
+  include Likeable
+  
   validates :content, :author_id, :post_id, presence: true
 
   belongs_to :author,

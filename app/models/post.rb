@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  include Likeable
+  
   validates :content, :author_id, :recipient_id, presence: true
 
   belongs_to :recipient,

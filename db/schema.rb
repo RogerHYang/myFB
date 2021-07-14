@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_09_174824) do
+ActiveRecord::Schema.define(version: 2021_07_14_043812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,15 @@ ActiveRecord::Schema.define(version: 2021_07_09_174824) do
     t.index ["to_user_id"], name: "index_connections_on_to_user_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "likeable_type", null: false
+    t.bigint "likeable_id", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id"
+    t.index ["user_id", "likeable_id", "likeable_type"], name: "index_likes_on_user_id_and_likeable_id_and_likeable_type", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "content", null: false
     t.bigint "author_id", null: false
@@ -90,6 +99,7 @@ ActiveRecord::Schema.define(version: 2021_07_09_174824) do
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "connections", "users", column: "from_user_id"
   add_foreign_key "connections", "users", column: "to_user_id"
+  add_foreign_key "likes", "users"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "posts", "users", column: "recipient_id"
 end

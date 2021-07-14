@@ -5,6 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
 def quote()
   case rand(4)
   when 0
@@ -18,93 +19,20 @@ def quote()
   end
 end
 
+filenames = [
+  ['owl-6310386_166.jpg', 'forest-1072828_1280.jpg'],
+  ['fox-715588_166.jpg','wintry-2993370_1280.jpg'],
+  ['squirrel-2148641_166.jpg','fall-3089995_1280.jpg'],
+  ['racoon-5400581_166.jpg','forest-602880_1280.jpg'],
+  ['red-panda-1852830_166.jpg','forest-931706_1280.jpg'],
+  ['koala-4756184_166.jpg','landscape-2256585_1280.jpg'],
+  ['beaver-1448389_166.jpg','forest-3194475_1280.jpg'],
+  ['tiger-3715664_166.jpg','river-1866579_1920.jpg'],
+  ['sloth-731238_166.jpg','the-1865639_1920.jpg'],
+  ['black-69246_166.jpg','river-1246231_1920.jpg']
+]
+
 ActiveRecord::Base.transaction do
-  Comment.delete_all
-  Post.delete_all
-  users = User.first(5)
-  
-  pairs = []
-  (0...users.size).each do |i|
-    (0...users.size).each do |j|
-      pairs << [Faker::Time.backward(days: 180), i, j]
-      if i == j
-        2.times do
-          pairs << [Faker::Time.backward(days: 180), i, j] 
-        end
-      end
-    end
-  end
-
-  pairs.sort.each do |t, i, j|
-    post = Post.create!(author_id: users[j].id, recipient_id: users[i].id, content: quote)
-    post.update_attributes(created_at: t)
-  end
-
-  users = User.limit(10).order('id').includes(:authored_posts)
-  posts = users.flat_map(&:authored_posts)
-
-  comments = []
-
-  (0...200).map do
-    post = posts.sample
-    t = Faker::Time.between(from: post.created_at, to: DateTime.now)
-    [t, post]
-  end.sort.each do |t, post|
-    comments << Comment.create!(
-      content: quote,
-      author_id: users.sample.id,
-      post_id: post.id
-    )
-    comments.last.update_attributes(created_at: t)
-  end
-
-  replies = []
-
-  (0...200).map do
-    comment = comments.sample
-    t = Faker::Time.between(from: comment.created_at, to: DateTime.now)
-    [t, comment]
-  end.sort.each do |t, comment|
-    replies << Comment.create!(
-      content: quote,
-      author_id: users.sample.id,
-      post_id: comment.post_id,
-      parent_comment_id: comment.id
-    )
-    replies.last.update_attributes(created_at: t)
-  end
-
-  (0...25).map do
-    comment = replies.sample
-    t = Faker::Time.between(from: comment.created_at, to: DateTime.now)
-    [t, comment]
-  end.sort.each do |t, comment|
-    reply = Comment.create!(
-      content: quote,
-      author_id: users.sample.id,
-      post_id: comment.post_id,
-      parent_comment_id: comment.id
-    )
-    reply.update_attributes(created_at: t)
-  end
-end
-
-
-# filenames = [
-#   ['owl-6310386_166.jpg', 'forest-1072828_1280.jpg'],
-#   ['fox-715588_166.jpg','wintry-2993370_1280.jpg'],
-#   ['squirrel-2148641_166.jpg','fall-3089995_1280.jpg'],
-#   ['racoon-5400581_166.jpg','forest-602880_1280.jpg'],
-#   ['red-panda-1852830_166.jpg','forest-931706_1280.jpg'],
-#   ['koala-4756184_166.jpg','landscape-2256585_1280.jpg'],
-#   ['beaver-1448389_166.jpg','forest-3194475_1280.jpg'],
-#   ['tiger-3715664_166.jpg','river-1866579_1920.jpg'],
-#   ['sloth-731238_166.jpg','the-1865639_1920.jpg'],
-#   ['black-69246_166.jpg','river-1246231_1920.jpg']
-# ]
-
-# ActiveRecord::Base.transaction do
-#   Post.delete_all
 #   Connection.delete_all
 #   User.delete_all
   
@@ -178,38 +106,96 @@ end
 #       end
 #     end
 #   end
+
+  Like.delete_all
+  Comment.delete_all
+  Post.delete_all
+
+  users = User.first(5)
   
-#   (0...users.size).each do |i|
-#     (i...users.size).each do |j|
-#       case rand(4)
-#       when 0
-#         content = Faker::Quotes::Shakespeare.hamlet_quote
-#       when 1
-#         content = Faker::Quotes::Shakespeare.as_you_like_it_quote
-#       when 2
-#         content = Faker::Quotes::Shakespeare.king_richard_iii_quote
-#       when 3
-#         content = Faker::Hacker.say_something_smart
-#       end
-#       Post.create!(author_id: users[j].id, recipient_id: users[i].id, content: content)
-#     end
-#   end
+  pairs = []
 
-#   users = User.first(10)
+  (0...users.size).each do |i|
+    (0...users.size).each do |j|
+      pairs << [Faker::Time.backward(days: 180), i, j]
+      if i == j
+        2.times do
+          pairs << [Faker::Time.backward(days: 180), i, j] 
+        end
+      end
+    end
+  end
 
-#   (0...users.size).each do |i|
-#     (i...users.size).each do |j|
-#       case rand(4)
-#       when 0
-#         content = Faker::Quotes::Shakespeare.hamlet_quote
-#       when 1
-#         content = Faker::Quotes::Shakespeare.as_you_like_it_quote
-#       when 2
-#         content = Faker::Quotes::Shakespeare.king_richard_iii_quote
-#       when 3
-#         content = Faker::Hacker.say_something_smart
-#       end
-#       Post.create!(author_id: users[j].id, recipient_id: users[i].id, content: content)
-#     end
-#   end
-# end
+  posts = []
+
+  pairs.sort.each do |t, i, j|
+    posts << Post.create!(author_id: users[j].id, recipient_id: users[i].id, content: quote)
+    posts.last.update_attributes(created_at: t)
+  end
+
+  users = User.limit(10).order('id').includes(:authored_posts)
+  posts = users.flat_map(&:authored_posts)
+
+  comments = []
+
+  (0...200).map do
+    post = posts.sample
+    t = Faker::Time.between(from: post.created_at, to: DateTime.now)
+    [t, post]
+  end.sort.each do |t, post|
+    comments << Comment.create!(
+      content: quote,
+      author_id: users.sample.id,
+      post_id: post.id
+    )
+    comments.last.update_attributes(created_at: t)
+  end
+
+  replies = []
+
+  (0...200).map do
+    comment = comments.sample
+    t = Faker::Time.between(from: comment.created_at, to: DateTime.now)
+    [t, comment]
+  end.sort.each do |t, comment|
+    replies << Comment.create!(
+      content: quote,
+      author_id: users.sample.id,
+      post_id: comment.post_id,
+      parent_comment_id: comment.id
+    )
+    replies.last.update_attributes(created_at: t)
+  end
+
+  (0...25).map do
+    comment = replies.sample
+    t = Faker::Time.between(from: comment.created_at, to: DateTime.now)
+    [t, comment]
+  end.sort.each do |t, comment|
+    replies << Comment.create!(
+      content: quote,
+      author_id: users.sample.id,
+      post_id: comment.post_id,
+      parent_comment_id: comment.id
+    )
+    replies.last.update_attributes(created_at: t)
+  end
+
+  comments += replies
+
+  likes = []
+
+  users = User.all
+
+  (0...200).map do
+    [users.sample.id, comments.sample.id]
+  end.sort.uniq.each do |u, c|
+    likes << Like.create(user_id: u, likeable_id: c, likeable_type: 'Comment')
+  end
+
+  (0...100).map do
+    [users.sample.id, posts.sample.id]
+  end.sort.uniq.each do |u, p|
+    likes << Like.create(user_id: u, likeable_id: p, likeable_type: 'Post')
+  end
+end
