@@ -1,24 +1,9 @@
-# README
+# [myFB](https://my-forest-buddies.herokuapp.com/)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+myFB is a clone of the social media app Facebook, allowing users to 
+* create and edit profiles
+* make, accept, and delete friend requests
+* create, update, and delete posts on walls
+* create, update, and delete comments on posts
+* see the posts created by friends in a news feed
+* like posts and comments 
