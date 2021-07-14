@@ -47,8 +47,8 @@ export const requestFeed = (userId) => (dispatch) =>
     .then((payload) => dispatch(receiveFeed(payload)))
     .fail((err) => dispatch(receiveErrors(err.responseJSON)));
 
-export const createPost = (post, recipientId) => (dispatch) =>
-  APIUtil.createPost(post, recipientId)
+export const createPost = (post) => (dispatch) =>
+  APIUtil.createPost(post)
     .then((post) => dispatch(receivePost(post)))
     .fail((err) => dispatch(receiveErrors(err.responseJSON)));
 

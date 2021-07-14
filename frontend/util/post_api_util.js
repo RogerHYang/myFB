@@ -8,9 +8,9 @@ export const requestPosts = (userId) =>
     url: `/api/posts/${userId}`,
   });
 
-export const createPost = (post, recipientId) =>
+export const createPost = (post) =>
   $.ajax({
-    url: `/api/posts/${recipientId}`,
+    url: "/api/posts/",
     method: "POST",
     data: { post },
   });

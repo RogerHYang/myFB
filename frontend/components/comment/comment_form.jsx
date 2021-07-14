@@ -9,7 +9,6 @@ const Container = styled.div`
   padding: 8px 0;
   display: flex;
   gap: 5px;
-  /* align-items: center; */
 `;
 
 const Header = styled.div``;
@@ -54,13 +53,14 @@ const Instruction = styled.div`
 
 export default ({
   className,
+  commentId,
   postId,
   parentCommentId,
   inputRef,
   cbBlur,
   cbSubmit,
 }) => {
-  const userId = useSelector(({ session }) => session.id);
+  const sessionUserId = useSelector(({ session }) => session.id);
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
   const handleKeyDown = (e) => {
@@ -80,7 +80,7 @@ export default ({
   return (
     <Container>
       <Header>
-        <ProfilePicture height="40px" userId={userId} />
+        <ProfilePicture height="40px" userId={sessionUserId} />
       </Header>
       <Body>
         <CommentBar>

@@ -49,11 +49,11 @@ export default ({ className }) => {
           />
         </NavButton>
       </Accent>
-      <Accent>
+      {/* <Accent>
         <NavButton height="100%" width="111.59px">
           <ButtonLabel icon={faUserFriends} iconSize="2rem" iconColor="#bbb" />
         </NavButton>
-      </Accent>
+      </Accent> */}
       <Accent>
         <NavButton
           height="100%"

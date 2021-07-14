@@ -57,7 +57,7 @@ const Info = styled.div`
   width: fit-content;
 `;
 
-const Fullname = styled.div`
+const Name = styled.div`
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -265,10 +265,11 @@ export default ({ postId }) => {
     ];
   });
 
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const [menuIsOpen, toggleMenuIsOpen] = useState(false);
-  const [numCommentsShown, setNumCommentsShown] = useState(0);
+  const [numCommentsShown, setNumCommentsShown] = useState(1);
 
   const inputRef = useRef();
   return (
@@ -277,9 +278,9 @@ export default ({ postId }) => {
         <Info>
           <ProfilePicture height="40px" userId={author.id} />
           <div>
-            <Fullname>
+            <Name onClick={() => history.replace(`/users/${author.id}`)}>
               {author.firstName} {author.lastName}
-            </Fullname>
+            </Name>
             <DateLine>
               {new Date(createdAt).toLocaleDateString("en-US")}
             </DateLine>
@@ -323,7 +324,7 @@ export default ({ postId }) => {
           <LikeCount></LikeCount>
           {commentCount > 0 && (
             <CommentCount
-              onClick={(e) => setNumCommentsShown(numCommentsShown > 0 ? 0 : 1)}
+              onClick={() => setNumCommentsShown(numCommentsShown > 0 ? 0 : 1)}
             >
               {commentCount} Comments
             </CommentCount>
@@ -347,7 +348,7 @@ export default ({ postId }) => {
           {numCommentsShown < (comments?.length ?? 0) && (
             <HiddenComments>
               <ShowMoreComments
-                onClick={(e) => setNumCommentsShown(comments?.length ?? 0)}
+                onClick={() => setNumCommentsShown(comments?.length ?? 0)}
               >
                 View previous comments
               </ShowMoreComments>
@@ -364,7 +365,7 @@ export default ({ postId }) => {
       <CommentForm
         postId={postId}
         inputRef={inputRef}
-        cbSubmit={(e) => setNumCommentsShown(numCommentsShown + 1)}
+        cbSubmit={() => setNumCommentsShown(numCommentsShown + 1)}
       />
     </Container>
   );

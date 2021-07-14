@@ -13,7 +13,7 @@ import ProfilePicture from "../profile/profile_picture/profile_picture";
 import CreatePostForm from "./create_post_form";
 
 const Container = styled.div`
-  height: 123px;
+  /* height: 123px; */
   width: 100%;
   border-radius: 8px;
   padding: 12px 16px 10px;
@@ -51,11 +51,10 @@ export default () => {
       users[session.id],
     ]
   );
+  const recipientId = userId ?? sessionUser.id;
   const dispatch = useDispatch();
   const handleClick = () => {
-    dispatch(
-      openModal(() => <CreatePostForm user={user} sessionUser={sessionUser} />)
-    );
+    dispatch(openModal(() => <CreatePostForm recipientId={recipientId} />));
   };
   return (
     <Container>
@@ -75,12 +74,12 @@ export default () => {
             <Text>
               {sessionUser.id === user.id
                 ? `What's on your mind, ${sessionUser.firstName}?`
-                : `Write somethinng to ${user.firstName}...`}
+                : `Write something to ${user.firstName}...`}
             </Text>
           </Button>
         </div>
       </Top>
-      <hr />
+      {/* <hr />
       <Bottom>
         <NavButton height="40px" flexGrow="1">
           <ButtonLabel
@@ -106,7 +105,7 @@ export default () => {
             iconSize="1.4rem"
           />
         </NavButton>
-      </Bottom>
+      </Bottom> */}
     </Container>
   );
 };

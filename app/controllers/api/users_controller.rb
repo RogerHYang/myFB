@@ -2,7 +2,7 @@ class Api::UsersController < ApplicationController
   # before_action :require_logged_in, only: [:destroy]
 
   def show
-    @user = User.find_by(id: params[:id])
+    @user = User.where(id: params[:id]).includes({friends: [:friend_ids, {profile_picture_attachment: :blob}]}).first
   end
 
   def find_users

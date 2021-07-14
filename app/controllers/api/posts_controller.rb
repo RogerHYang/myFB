@@ -17,8 +17,7 @@ class Api::PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.recipient_id = Integer(params[:recipient_id])
+    @post = Post.new(post_create_params)
     @post.author_id = current_user.id
     if @post.save
       render "api/posts/show"
@@ -30,7 +29,7 @@ class Api::PostsController < ApplicationController
   def update
     @post = Post.find_by(id: params[:id])
     if @post&.author_id == current_user.id
-      if @post.update(post_params)
+      if @post.update(post_update_params)
         render "api/posts/show"
       else
         render json: @post.errors.full_messages, status: 422
@@ -55,7 +54,11 @@ class Api::PostsController < ApplicationController
 
   private
 
-  def post_params
+  def post_create_params
+    params.require(:post).permit(:content, :recipient_id)
+  end
+
+  def post_update_params
     params.require(:post).permit(:content)
   end
 end

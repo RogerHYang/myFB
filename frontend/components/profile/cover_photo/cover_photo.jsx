@@ -36,7 +36,7 @@ const CoverPhoto = ({ user, isEditable, className }) => {
   return (
     <div className={className}>
       {coverPhoto && <img src={coverPhoto} style={{ width: "100%" }} />}
-      {isEditable && isLoggedIn && (
+      {/* {isEditable && isLoggedIn && (
         <EditButton>
           <StandardButton color="white" onClick={handleClick}>
             <ButtonLabel
@@ -45,7 +45,7 @@ const CoverPhoto = ({ user, isEditable, className }) => {
             />
           </StandardButton>
         </EditButton>
-      )}
+      )} */}
     </div>
   );
 };

@@ -2,7 +2,7 @@ class Api::CommentsController < ApplicationController
   before_action :require_logged_in, only: [:create, :update, :destroy]
 
   def create
-    @comment = Comment.new(comment_params)
+    @comment = Comment.new(comment_create_params)
     @comment.author_id = current_user.id
     if @comment.save
       render "api/comments/show"
@@ -12,10 +12,20 @@ class Api::CommentsController < ApplicationController
   end
 
   def update
+    @comment = Comment.find_by(id: params[:id])
+    if @comment&.author_id == current_user.id
+      if @comment.update(comment_update_params)
+        render "api/comments/show"
+      else
+        render json: @comment.errors.full_messages, status: 422
+      end
+    else
+      render json: ['Forbidden'], status: 403
+    end
   end
 
   def destroy
-    @comment = Comment.where(id: params[:id]).includes(:post).first
+    @comment = Comment.find_by(id: params[:id])
     if @comment&.author_id == current_user.id
       if @comment.destroy
         render "api/comments/deleted"
@@ -29,7 +39,11 @@ class Api::CommentsController < ApplicationController
 
   private
 
-  def comment_params
-    params.require(:comment).permit(:post_id, :parent_comment_id, :content)
+  def comment_create_params
+    params.require(:comment).permit(:content, :post_id, :parent_comment_id)
+  end
+
+  def comment_update_params
+    params.require(:comment).permit(:content)
   end
 end

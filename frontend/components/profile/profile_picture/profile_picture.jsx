@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
@@ -32,18 +32,18 @@ const Picture = ({ userId, user, isEditable, className }) => {
     }
   }
 
-  const handleClick = () => {};
+  const history = useHistory();
 
   return (
     <div className={className + " profile-picture"}>
       {profilePicture && (
         <img src={profilePicture} style={{ width: "100%", height: "100%" }} />
       )}
-      {isEditable && isLoggedIn && (
+      {/* {isEditable && isLoggedIn && (
         <EditButton height="36px" onClick={handleClick}>
           <ButtonLabel icon={faCamera} fontSize="1.3rem" />
         </EditButton>
-      )}
+      )} */}
     </div>
   );
 };
@@ -52,7 +52,6 @@ export default styled(Picture)`
   border-radius: 50%;
   border: 1px solid #ccc;
   background-color: #eee;
-  cursor: pointer;
   height: ${({ height = "168px" }) => height};
   width: ${({ height = "168px" }) => height};
 `;

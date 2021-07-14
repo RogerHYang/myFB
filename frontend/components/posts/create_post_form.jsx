@@ -14,7 +14,7 @@ import { createPost, patchPost } from "../../actions/post_actions";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 428px;
+  /* min-height: 428px; */
   border-radius: 8px;
   width: 500px;
   background-color: white;
@@ -67,24 +67,21 @@ const Extras = styled.div`
   height: 58px;
   border: 1px solid #ced0d4;
   padding: 8px 16px;
-  /* margin: 0 16px; */
   border-radius: 6px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 `;
 
 const Footer = styled.div`
-  height: 142px;
+  /* height: 142px; */
   padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-export default ({ postId }) => {
+export default ({ postId, recipientId }) => {
   const post =
     postId && useSelector(({ entities: { posts } }) => posts[postId]);
-
-  const { userId } = useParams();
 
   const sessionUser = useSelector(
     ({ entities: { users }, session }) => users[session.id]
@@ -105,8 +102,8 @@ export default ({ postId }) => {
     e.stopPropagation();
     if (post) {
       const { id } = post;
-      dispatch(patchPost({ id, content }));
-    } else dispatch(createPost({ content }, userId ?? sessionUser.id));
+      dispatch(patchPost({ content, id }));
+    } else dispatch(createPost({ content, recipient_id: recipientId }));
     dispatch(closeModal());
   };
   const disabledPost = !hasChanged;
@@ -126,7 +123,7 @@ export default ({ postId }) => {
         value={content}
       ></Body>
       <Footer>
-        <Extras>
+        {/* <Extras>
           <div>Add to your post</div>
           <div style={{ display: "flex", gap: "3px" }}>
             <RoundButton height="36px" backgroundColor="white">
@@ -144,7 +141,7 @@ export default ({ postId }) => {
               />
             </RoundButton>
           </div>
-        </Extras>
+        </Extras> */}
         <StandardGrayButton
           width="100%"
           onClick={handleSubmit}

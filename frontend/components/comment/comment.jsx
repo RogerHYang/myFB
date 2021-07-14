@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -60,6 +61,10 @@ const Name = styled.div`
   font-weight: 600;
   font-size: 0.8125rem;
   line-height: 1.2308;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Text = styled.div`
@@ -200,28 +205,29 @@ const MenuText = styled.div`
 `;
 
 export default Comment = ({ clasName, commentId, small = false }) => {
-  const [comment, { firstName, lastName }, childComments] = useSelector(
-    ({ entities: { comments, avatars }, xwalk }) => [
+  const [comment, { firstName, lastName }, childComments, sessionUserId] =
+    useSelector(({ entities: { comments, avatars }, xwalk, session }) => [
       comments[commentId],
       avatars[comments[commentId].authorId],
       xwalk.childComments[commentId],
-    ]
-  );
+      session.id,
+    ]);
   if (!comment) return null;
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const [menuIsOpen, toggleMenuIsOpen] = useState(false);
 
   const [isHovered, toggleIsHovered] = useState(false);
 
-  const { createdAt, postId, id } = comment;
+  const { createdAt, postId, id, authorId } = comment;
   const [isReplying, toggleIsReplying] = useState(false);
   const handleLike = (e) => {};
   return (
     <Container>
       <Header small={small}>
         <ProfilePicture
-          userId={comment.authorId}
+          userId={authorId}
           height={small ? "24px" : "32px"}
         ></ProfilePicture>
       </Header>
@@ -231,41 +237,45 @@ export default Comment = ({ clasName, commentId, small = false }) => {
           onMouseLeave={() => toggleIsHovered(false)}
         >
           <Content>
-            <Name>
+            <Name onClick={() => history.replace(`/users/${authorId}`)}>
               {firstName} {lastName}
             </Name>
             <Text>{comment.content}</Text>
           </Content>
-          <EllipsisButton
-            isHovered={isHovered}
-            menuIsOpen={menuIsOpen}
-            onClick={(e) => toggleMenuIsOpen(!menuIsOpen)}
-          >
-            <FontAwesomeIcon icon={faEllipsisH}></FontAwesomeIcon>
-            {menuIsOpen && (
-              <EllipsisMenu>
-                <TriangleUp />
-                <MenuButton
-                  onClick={() =>
-                    dispatch(
-                      openModal(() => <CreatePostForm postId={postId} />)
-                    )
-                  }
-                >
-                  <MenuIcon>
-                    <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
-                  </MenuIcon>
-                  <MenuText>Edit comment</MenuText>
-                </MenuButton>
-                <MenuButton onClick={() => dispatch(deleteComment(commentId))}>
-                  <MenuIcon>
-                    <FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon>
-                  </MenuIcon>
-                  <MenuText>Delete comment</MenuText>
-                </MenuButton>
-              </EllipsisMenu>
-            )}
-          </EllipsisButton>
+          {authorId === sessionUserId && (
+            <EllipsisButton
+              isHovered={isHovered}
+              menuIsOpen={menuIsOpen}
+              onClick={(e) => toggleMenuIsOpen(!menuIsOpen)}
+            >
+              <FontAwesomeIcon icon={faEllipsisH}></FontAwesomeIcon>
+              {menuIsOpen && (
+                <EllipsisMenu>
+                  <TriangleUp />
+                  <MenuButton
+                    onClick={() =>
+                      dispatch(
+                        openModal(() => <CreatePostForm postId={postId} />)
+                      )
+                    }
+                  >
+                    <MenuIcon>
+                      <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                    </MenuIcon>
+                    <MenuText>Edit comment</MenuText>
+                  </MenuButton>
+                  <MenuButton
+                    onClick={() => dispatch(deleteComment(commentId))}
+                  >
+                    <MenuIcon>
+                      <FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon>
+                    </MenuIcon>
+                    <MenuText>Delete comment</MenuText>
+                  </MenuButton>
+                </EllipsisMenu>
+              )}
+            </EllipsisButton>
+          )}
         </Trunk>
         <Footer>
           <Control onClick={handleLike}>Like</Control> ·{" "}

@@ -5,63 +5,87 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+def quote()
+  case rand(4)
+  when 0
+    return Faker::Quotes::Shakespeare.hamlet_quote
+  when 1
+    return Faker::Quotes::Shakespeare.as_you_like_it_quote
+  when 2
+    return Faker::Quotes::Shakespeare.king_richard_iii_quote
+  when 3
+    return Faker::Quotes::Shakespeare.romeo_and_juliet_quote 
+  end
+end
 
 ActiveRecord::Base.transaction do
   Comment.delete_all
   Post.delete_all
   users = User.first(5)
-
+  
+  pairs = []
   (0...users.size).each do |i|
-    (i...users.size).each do |j|
-      case rand(3)
-      when 0
-        content = Faker::Quotes::Shakespeare.hamlet_quote
-      when 1
-        content = Faker::Quotes::Shakespeare.as_you_like_it_quote
-      when 2
-        content = Faker::Quotes::Shakespeare.king_richard_iii_quote
+    (0...users.size).each do |j|
+      pairs << [Faker::Time.backward(days: 180), i, j]
+      if i == j
+        2.times do
+          pairs << [Faker::Time.backward(days: 180), i, j] 
+        end
       end
-      Post.create!(author_id: users[j].id, recipient_id: users[i].id, content: content)
     end
   end
 
-  users = User.limit(5).order('id').includes(:authored_posts)
+  pairs.sort.each do |t, i, j|
+    post = Post.create!(author_id: users[j].id, recipient_id: users[i].id, content: quote)
+    post.update_attributes(created_at: t)
+  end
+
+  users = User.limit(10).order('id').includes(:authored_posts)
   posts = users.flat_map(&:authored_posts)
 
   comments = []
 
-  20.times do
-    case rand(3)
-    when 0
-      content = Faker::Quotes::Shakespeare.hamlet_quote
-    when 1
-      content = Faker::Quotes::Shakespeare.as_you_like_it_quote
-    when 2
-      content = Faker::Quotes::Shakespeare.king_richard_iii_quote
-    end
+  (0...200).map do
+    post = posts.sample
+    t = Faker::Time.between(from: post.created_at, to: DateTime.now)
+    [t, post]
+  end.sort.each do |t, post|
     comments << Comment.create!(
-      content: content,
-      author_id: users.sample(1).first.id,
-      post_id: posts.sample(1).first.id
+      content: quote,
+      author_id: users.sample.id,
+      post_id: post.id
     )
+    comments.last.update_attributes(created_at: t)
   end
 
-  40.times do
-    comment = comments.sample(1).first
-    case rand(3)
-    when 0
-      content = Faker::Quotes::Shakespeare.hamlet_quote
-    when 1
-      content = Faker::Quotes::Shakespeare.as_you_like_it_quote
-    when 2
-      content = Faker::Quotes::Shakespeare.king_richard_iii_quote
-    end
-    comments << Comment.create!(
-      content: content,
-      author_id: users.sample(1).first.id,
+  replies = []
+
+  (0...200).map do
+    comment = comments.sample
+    t = Faker::Time.between(from: comment.created_at, to: DateTime.now)
+    [t, comment]
+  end.sort.each do |t, comment|
+    replies << Comment.create!(
+      content: quote,
+      author_id: users.sample.id,
       post_id: comment.post_id,
       parent_comment_id: comment.id
     )
+    replies.last.update_attributes(created_at: t)
+  end
+
+  (0...25).map do
+    comment = replies.sample
+    t = Faker::Time.between(from: comment.created_at, to: DateTime.now)
+    [t, comment]
+  end.sort.each do |t, comment|
+    reply = Comment.create!(
+      content: quote,
+      author_id: users.sample.id,
+      post_id: comment.post_id,
+      parent_comment_id: comment.id
+    )
+    reply.update_attributes(created_at: t)
   end
 end
 
