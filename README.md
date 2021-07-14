@@ -17,6 +17,7 @@ myFB is a clone of the social media app Facebook, allowing users to
 
 ## Features
 ### Profiles
+User can update their biographies, where they work and where they went to school.
 
 ### Posts
 <img src="https://user-images.githubusercontent.com/80478925/125618052-6eea5bc1-d3f0-4c85-8a35-d5a26d12cac8.gif" width="50%">
