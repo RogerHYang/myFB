@@ -14,3 +14,10 @@ myFB is a clone of the social media app Facebook, allowing users to
 * PostgreSQL
 * AWS S3
 * Heroku
+
+## Features
+### Profiles
+### Posts
+### News Feed
+### Comments
+### Likes
