@@ -9,7 +9,7 @@ import ProfilePicture from "../profile/profile_picture/profile_picture";
 import { ButtonLabel, StandardGrayButton, RoundButton } from "../utils/buttons";
 import { openModal, closeModal } from "../../actions/modal_actions";
 
-import { createPost, patchPost } from "../../actions/post_actions";
+import { patchComment } from "../../actions/comment_actions";
 
 const Container = styled.div`
   display: flex;
@@ -58,36 +58,23 @@ const Body = styled.textarea`
   }
 `;
 
-const Extras = styled.div`
-  font-size: 0.9375rem;
-  font-weight: 600;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 58px;
-  border: 1px solid #ced0d4;
-  padding: 8px 16px;
-  border-radius: 6px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-`;
-
 const Footer = styled.div`
-  /* height: 142px; */
   padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-export default ({ postId, recipientId }) => {
-  const post =
-    postId && useSelector(({ entities: { posts } }) => posts[postId]);
+export default ({ commentId }) => {
+  const comment =
+    commentId &&
+    useSelector(({ entities: { comments } }) => comments[commentId]);
 
   const sessionUser = useSelector(
     ({ entities: { avatars }, session }) => avatars[session.id]
   );
 
-  const [content, setContent] = useState(() => post?.content ?? "");
+  const [content, setContent] = useState(() => comment?.content ?? "");
   const [hasChanged, setHasChanged] = useState(false);
 
   const handleChange = (e) => {
@@ -100,16 +87,14 @@ export default ({ postId, recipientId }) => {
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.stopPropagation();
-    if (post) {
-      const { id } = post;
-      dispatch(patchPost({ content, id }));
-    } else dispatch(createPost({ content, recipient_id: recipientId }));
+    const { id } = comment;
+    dispatch(patchComment({ content, id }));
     dispatch(closeModal());
   };
   const disabledPost = !hasChanged || content.length === 0;
   return (
     <Container>
-      <Title>{post ? "Edit" : "Create"} Post</Title>
+      <Title>Edit Comment</Title>
       <Header>
         <ProfilePicture height="40px" userId={sessionUser.id} />
         <div>
@@ -118,40 +103,18 @@ export default ({ postId, recipientId }) => {
       </Header>
       <Body
         autoFocus
-        placeholder="What's on your mind?"
+        placeholder="Write a comment..."
         onChange={handleChange}
         value={content}
       ></Body>
       <Footer>
-        {/* <Extras>
-          <div>Add to your post</div>
-          <div style={{ display: "flex", gap: "3px" }}>
-            <RoundButton height="36px" backgroundColor="white">
-              <ButtonLabel
-                icon={faImages}
-                iconColor="green"
-                iconSize="1.4rem"
-              />
-            </RoundButton>
-            <RoundButton height="36px" backgroundColor="white">
-              <ButtonLabel
-                icon={faGrinBeam}
-                iconColor="orange"
-                iconSize="1.4rem"
-              />
-            </RoundButton>
-          </div>
-        </Extras> */}
         <StandardGrayButton
           width="100%"
           onClick={handleSubmit}
           disabled={disabledPost}
           shrinks={false}
         >
-          <ButtonLabel
-            text={post ? "Update" : "Post"}
-            disabled={disabledPost}
-          />
+          <ButtonLabel text="Update" disabled={disabledPost} />
         </StandardGrayButton>
       </Footer>
     </Container>

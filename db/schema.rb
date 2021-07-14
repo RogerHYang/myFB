@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_07_14_043812) do
     t.bigint "likeable_id", null: false
     t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id"
     t.index ["user_id", "likeable_id", "likeable_type"], name: "index_likes_on_user_id_and_likeable_id_and_likeable_type", unique: true
+    t.index ["user_id", "likeable_type"], name: "index_likes_on_user_id_and_likeable_type"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 

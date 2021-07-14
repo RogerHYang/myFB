@@ -3,6 +3,7 @@ import { RECEIVE_POSTS, RECEIVE_FEED } from "../actions/post_actions";
 import {
   RECEIVE_COMMENTS,
   RECEIVE_COMMENT,
+  UPDATE_COMMENT,
   DESTROY_COMMENT,
 } from "../actions/comment_actions";
 
@@ -18,6 +19,7 @@ export default (state = {}, { type, payload, comment, deletedComment }) => {
       }
       return state;
     }
+    case UPDATE_COMMENT:
     case RECEIVE_COMMENT:
       const newState = Object.assign({}, state);
       newState[comment.id] = comment;

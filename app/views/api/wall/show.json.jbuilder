@@ -34,11 +34,23 @@ json.set! :xwalk do
       json.set! comment.id, comment.child_comments.pluck(:id).sort if comment.child_comments.length > 0
     end
   end
+  json.set! :liked_posts, current_user.liked_posts.pluck(:id)
+  json.set! :liked_comments, current_user.liked_comments.pluck(:id)
 end
 json.set! :stats do
-  json.set! :postCommentCount do
+  json.set! :post_comment_count do
     @posts.each do |post|
       json.set! post.id, post.comments.size if post.comments.size > 0
+    end
+  end
+  json.set! :post_like_count do
+    @posts.each do |post|
+      json.set! post.id, post.likes.size if post.likes.size > 0
+    end
+  end
+  json.set! :comment_like_count do
+    @posts.flat_map(&:comments).each do |comment|
+      json.set! comment.id, comment.likes.size if comment.likes.size > 0
     end
   end
 end

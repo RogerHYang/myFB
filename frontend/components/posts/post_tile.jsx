@@ -29,6 +29,8 @@ import CreatePostForm from "./create_post_form";
 
 import { deletePost } from "../../actions/post_actions";
 
+import { toggleLike } from "../../actions/like_actions";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -206,6 +208,11 @@ const LikeCount = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${({ liked }) =>
+    liked &&
+    css`
+      color: var(--accent);
+    `}
 `;
 
 const LikeIcon = styled.div`
@@ -267,6 +274,7 @@ export default ({ postId }) => {
     commentCount,
     sessionUserId,
     likeCount,
+    likedPosts,
   ] = useSelector(({ entities, xwalk, stats, session }) => {
     const post = entities.posts[postId];
     return [
@@ -276,6 +284,7 @@ export default ({ postId }) => {
       stats.postCommentCount[postId],
       session.id,
       stats.postLikeCount[postId],
+      xwalk.likedPosts,
     ];
   });
 
@@ -336,7 +345,7 @@ export default ({ postId }) => {
       {commentCount > 0 && (
         <Statistics>
           <LikeCount>
-            {likeCount && (
+            {likeCount > 0 && (
               <>
                 <LikeIcon>
                   <FontAwesomeIcon icon={faSolid.faThumbsUp} />
@@ -356,11 +365,23 @@ export default ({ postId }) => {
       )}
       <hr />
       <ButtonsBar>
-        <StandardButton>
-          <ButtonLabel icon={faThumbsUp} text="Like" color="#65676B" />
+        <StandardButton
+          onClick={() =>
+            dispatch(toggleLike({ likeable_type: "Post", likeable_id: postId }))
+          }
+        >
+          {likedPosts.includes(postId) ? (
+            <ButtonLabel
+              icon={faSolid.faThumbsUp}
+              text="Liked"
+              color="hsl(214, 89%, 52%)"
+            />
+          ) : (
+            <ButtonLabel icon={faThumbsUp} text="Like" color="#65676B" />
+          )}
         </StandardButton>
         <StandardButton
-          onClick={(e) => inputRef.current && inputRef.current.focus()}
+          onClick={() => inputRef.current && inputRef.current.focus()}
         >
           <ButtonLabel icon={faComment} text="Comment" color="#65676B" />
         </StandardButton>

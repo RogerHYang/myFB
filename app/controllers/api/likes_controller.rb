@@ -2,7 +2,7 @@ class Api::LikesController < ApplicationController
   before_action :require_logged_in, only: [:create, :destroy]
 
   def toggle
-    @like = Like.find_by(like_params)
+    @like = Like.where(like_params).where(user_id: current_user.id).first
     if @like.nil?
       @like = Like.new(like_params)
       @like.user_id = current_user.id
@@ -13,7 +13,7 @@ class Api::LikesController < ApplicationController
       end
     else
       if @like.destroy
-        render "api/likes/deleted"
+        render "api/likes/show"
       else
         render json: @like.errors.full_messages, status: 422
       end

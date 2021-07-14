@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :posts, only: [:create, :update, :destroy]
     resources :comments, only: [:create, :update, :destroy]
 
-    post '/likes/', to: 'posts#toggle'
+    post '/likes/', to: 'likes#toggle'
 
     get '/posts/:user_id', to: 'posts#show'
     

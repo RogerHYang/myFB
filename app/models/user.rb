@@ -62,6 +62,16 @@ class User < ApplicationRecord
   has_many :likes,
     dependent: :destroy
 
+  has_many :liked_posts,
+    through: :likes,
+    source: :likeable,
+    source_type: "Post"
+
+  has_many :liked_comments,
+    through: :likes,
+    source: :likeable,
+    source_type: "Comment"
+
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)
     if user && user.is_password?(password)

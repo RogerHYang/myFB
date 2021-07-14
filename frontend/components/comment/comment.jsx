@@ -17,6 +17,11 @@ import ProfilePicture from "../profile/profile_picture/profile_picture";
 import CommentForm from "./comment_form";
 
 import { deleteComment } from "../../actions/comment_actions";
+import { toggleLike } from "../../actions/like_actions";
+
+import { openModal, closeModal } from "../../actions/modal_actions";
+
+import EditCommentForm from "./edit_comment_form";
 
 const Container = styled.div`
   min-height: 72.5px;
@@ -88,6 +93,24 @@ const Control = styled.span`
   cursor: pointer;
   &:hover {
     text-decoration: underline;
+  }
+`;
+
+const Like = styled(Control)`
+  ${({ liked }) =>
+    liked &&
+    css`
+      color: var(--accent);
+    `};
+  &:after {
+    ${({ liked }) =>
+      liked
+        ? css`
+            content: "Liked";
+          `
+        : css`
+            content: "Like";
+          `}
   }
 `;
 
@@ -214,7 +237,7 @@ const LikeCount = styled.div`
   height: 20px;
   border-radius: 10px;
   position: absolute;
-  right: 5px;
+  right: 0;
   bottom: -12px;
   font-weight: normal;
   font-size: 0.8125rem;
@@ -244,6 +267,7 @@ export default Comment = ({ clasName, commentId, small = false }) => {
     childComments,
     sessionUserId,
     likeCount,
+    likedComments,
   ] = useSelector(
     ({ entities: { comments, avatars }, xwalk, session, stats }) => [
       comments[commentId],
@@ -251,6 +275,7 @@ export default Comment = ({ clasName, commentId, small = false }) => {
       xwalk.childComments[commentId],
       session.id,
       stats.commentLikeCount[commentId],
+      xwalk.likedComments,
     ]
   );
   if (!comment) return null;
@@ -263,7 +288,7 @@ export default Comment = ({ clasName, commentId, small = false }) => {
 
   const { createdAt, postId, id, authorId } = comment;
   const [isReplying, toggleIsReplying] = useState(false);
-  const handleLike = (e) => {};
+
   return (
     <Container>
       <Header small={small}>
@@ -282,7 +307,7 @@ export default Comment = ({ clasName, commentId, small = false }) => {
               {firstName} {lastName}
             </Name>
             <Text>{comment.content}</Text>
-            {likeCount && (
+            {likeCount > 0 && (
               <LikeCount>
                 <LikeIcon>
                   <FontAwesomeIcon icon={faSolid.faThumbsUp} />
@@ -304,7 +329,9 @@ export default Comment = ({ clasName, commentId, small = false }) => {
                   <MenuButton
                     onClick={() =>
                       dispatch(
-                        openModal(() => <CreatePostForm postId={postId} />)
+                        openModal(() => (
+                          <EditCommentForm commentId={commentId} />
+                        ))
                       )
                     }
                   >
@@ -327,8 +354,15 @@ export default Comment = ({ clasName, commentId, small = false }) => {
           )}
         </Trunk>
         <Footer>
-          <Control onClick={handleLike}>Like</Control> ·{" "}
-          <Control onClick={() => toggleIsReplying(true)}>Reply</Control> ·{" "}
+          <Like
+            liked={likedComments.includes(commentId)}
+            onClick={() =>
+              dispatch(
+                toggleLike({ likeable_id: commentId, likeable_type: "Comment" })
+              )
+            }
+          ></Like>{" "}
+          · <Control onClick={() => toggleIsReplying(true)}>Reply</Control> ·{" "}
           {new Date(createdAt).toLocaleDateString("en-US")}
         </Footer>
         {childComments?.length > 0 &&

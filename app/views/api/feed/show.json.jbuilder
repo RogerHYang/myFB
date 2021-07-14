@@ -31,6 +31,8 @@ json.set! :xwalk do
       json.set! comment.id, comment.child_comments.pluck(:id).sort if comment.child_comments.length > 0
     end
   end
+  json.set! :liked_posts, current_user.liked_posts.pluck(:id)
+  json.set! :liked_comments, current_user.liked_comments.pluck(:id)
 end
 json.set! :stats do
   json.set! :post_comment_count do

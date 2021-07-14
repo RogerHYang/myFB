@@ -4,9 +4,9 @@ export const RECEIVE_LIKE = "RECEIVE_LIKE";
 export const DESTROY_LIKE = "DESTROY_LIKE";
 export const RECEIVE_LIKE_ERRORS = "RECEIVE_LIKE_ERRORS";
 
-export const receiveLike = (like) => ({
+export const receiveLike = (payload) => ({
   type: RECEIVE_LIKE,
-  like,
+  payload,
 });
 
 export const receiveErrors = (errors) => ({
@@ -16,5 +16,5 @@ export const receiveErrors = (errors) => ({
 
 export const toggleLike = (like) => (dispatch) =>
   APIUtil.toggleLike(like)
-    .then((like) => dispatch(receiveLike(like)))
+    .then((payload) => dispatch(receiveLike(payload)))
     .fail((err) => dispatch(receiveErrors(err.responseJSON)));
