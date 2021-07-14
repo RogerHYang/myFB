@@ -22,7 +22,7 @@ export default () => {
   return (
     <Container>
       <Friends user={user} />
-      <Photos user={user} preview={true} />
+      {/* <Photos user={user} preview={true} /> */}
     </Container>
   );
 };

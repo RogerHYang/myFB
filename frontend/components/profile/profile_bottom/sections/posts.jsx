@@ -31,7 +31,7 @@ export default () => {
       <Column>
         <Intro user={user} />
         <Friends user={user} small={true} />
-        <Photos user={user} small={true} />
+        {/* <Photos user={user} small={true} /> */}
       </Column>
       <Column>
         <PostsPanel width="500px" />

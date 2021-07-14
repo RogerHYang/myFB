@@ -5,9 +5,9 @@ import { useParams } from "react-router-dom";
 import { profileSections } from "./profile_utils";
 
 import Posts from "./profile_bottom/sections/posts";
-import About from "./profile_bottom/sections/about";
+// import About from "./profile_bottom/sections/about";
 import Friends from "./profile_bottom/sections/friends";
-import Photos from "./profile_bottom/sections/photos";
+// import Photos from "./profile_bottom/sections/photos";
 
 function ProfileBottom({ className }) {
   let { section } = useParams();
@@ -23,12 +23,12 @@ function ProfileBottom({ className }) {
     case "posts":
       content = <Posts />;
       break;
-    case "about":
-      content = <About />;
-      break;
-    case "photos":
-      content = <Photos />;
-      break;
+    // case "about":
+    //   content = <About />;
+    //   break;
+    // case "photos":
+    //   content = <Photos />;
+    //   break;
     case "friends":
       content = <Friends />;
       break;
