@@ -38,6 +38,18 @@ Users can create and remove likes on posts and comments.
 
 Friendship is modeled as two `connection` objects between two users. A `connection` represents a arrow directing from one user to another. When both directions have the status of `ACCEPTED`, the friendship is established. When a user initates a friend request, a `connection` object with a pending status is created pointing from the requestor to the requestee. If there already exits a `connection` in the opposite direction, a complete cycle is created and both `connection` are flagged as `ACCEPTED` and a friendship is established. Otherwise, a single direction `connection` is counted as an pending request.
 
+#### `connection` schema
+
+```
+create_table "connections", force: :cascade do |t|
+  t.string "status", null: false
+  t.bigint "from_user_id", null: false
+  t.bigint "to_user_id", null: false
+end
+```
+
+#### `#create` in the friendship controller
+
 ```
 def create
   from_user_id, to_user_id = params.values_at(:from_user_id, :to_user_id)
