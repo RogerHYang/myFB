@@ -33,3 +33,23 @@ Users can create, update, and delete comments on posts.
 Users can create and remove likes on posts and comments.
 
 <img src="https://user-images.githubusercontent.com/80478925/125618002-4c1b15cc-a990-4d31-b15e-d2bb7a396aa5.gif" width="50%">
+
+### Friending
+
+Friendship is modeled as two `connection` objects between two users. A `connection` represents a arrow directing from one user to another. When both directions have the status of `ACCEPTED`, the friendship is established. When a user initates a friend request, a `connection` object with a pending status is created pointing from the requestor to the requestee. If there already exits a `connection` in the opposite direction, a complete cycle is created and both `connection` are flagged as `ACCEPTED` and a friendship is established. Otherwise, a single direction `connection` is counted as an pending request.
+
+```
+def create
+  from_user_id, to_user_id = params.values_at(:from_user_id, :to_user_id)
+  unless current_user.id == params[:from_user_id]
+    forward = Connection.create(from_user_id: from_user_id, to_user_id: to_user_id, status: Connection::PENDING)
+    backward = Connection.find_by(from_user_id: to_user_id, to_user_id: from_user_id)
+    unless backward.nil?
+      backward.status = Connection::ACCEPTED
+      backward.save!
+      forward.status = Connection::ACCEPTED
+    end
+    forward.save!
+  end
+end
+```
