@@ -32,6 +32,35 @@ Users can create, update, and delete comments on posts.
 ### Likes
 Users can create and remove likes on posts and comments.
 
+Polymorphic associations for `Like`
+
+```
+class Like < ApplicationRecord
+  belongs_to :likeable,
+    polymorphic: true
+    
+  belongs_to :user
+end
+```
+
+`likeable` as as concern
+
+```
+module Likeable
+  extend ActiveSupport::Concern
+
+  included do
+    has_many :likes,
+      as: :likeable,
+      dependent: :destroy
+
+    has_many :likers,
+      through: :likes,
+      source: :user
+  end
+end
+```
+
 <img src="https://user-images.githubusercontent.com/80478925/125618002-4c1b15cc-a990-4d31-b15e-d2bb7a396aa5.gif" width="50%">
 
 ### Friending
