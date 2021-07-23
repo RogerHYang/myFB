@@ -22,6 +22,14 @@ Users can update their biographies, where they work and where they went to schoo
 ### Posts
 Users can create, update, and delete posts on walls.
 
+The post editor is invoked by dispatching a component to the redux state. When the `modal` component detects presence of a child component in the redux store, it will present the child component on the screen. It's the user of the modal component that decides what the modal component displays.
+
+```
+const handleClick = () => {
+  dispatch(openModal(() => <CreatePostForm recipientId={recipientId} />));
+};
+```
+
 <img src="https://user-images.githubusercontent.com/80478925/125618052-6eea5bc1-d3f0-4c85-8a35-d5a26d12cac8.gif" width="50%">
 
 ### Comments
