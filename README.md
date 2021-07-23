@@ -27,6 +27,27 @@ Users can create, update, and delete posts on walls.
 ### Comments
 Users can create, update, and delete comments on posts.
 
+Child comments are implement recursively.
+
+```
+export default Comment = ({ ... }) => {
+  ...
+  return (
+    <Container>
+      ...
+      <Body>
+        ...
+        {childComments?.length > 0 &&
+          childComments?.map((id) => (
+            <Comment key={id} commentId={id} small={true} />
+          ))}
+        ...
+      </Body>
+    </Container>
+  );
+};
+```
+
 <img src="https://user-images.githubusercontent.com/80478925/125617684-6f7d013d-c81f-49e0-ab35-daaa996701d8.gif" width="50%">
 
 ### Likes
