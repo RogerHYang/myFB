@@ -43,7 +43,7 @@ class Like < ApplicationRecord
 end
 ```
 
-`likeable` as as concern
+`likeable` as as concern/mixin
 
 ```
 module Likeable
