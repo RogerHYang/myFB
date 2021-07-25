@@ -21,7 +21,7 @@ export default (state = {}, { type, payload, post, deletedPost }) => {
     }
     case RECEIVE_POST: {
       const { id, recipientId } = post;
-      if (state.hasOwnProperty(recipientId)) {
+      if (Object.prototype.hasOwnProperty.call(state, recipientId)) {
         const newState = Object.assign({}, state);
         newState[recipientId] = [id].concat(state[recipientId] ?? []);
         return newState;

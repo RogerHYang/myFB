@@ -7,12 +7,13 @@ import { RECEIVE_USER, RECEIVE_USERS } from "../actions/user_actions";
 export default (state = {}, { type, user, users }) => {
   Object.freeze(state);
   switch (type) {
-    case RECEIVE_USERS:
+    case RECEIVE_USERS: {
       const newState = Object.assign({}, state);
       users.forEach((user) => {
         newState[user.id] = user;
       });
       return newState;
+    }
     case RECEIVE_CURRENT_USER:
     case RECEIVE_USER:
       return Object.assign({}, state, { [user.id]: user });

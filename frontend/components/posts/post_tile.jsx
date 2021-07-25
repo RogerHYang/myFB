@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import styled, { css } from "styled-components";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,23 +8,16 @@ import {
   faComment,
   faTrashAlt,
   faEdit,
-  faGrinBeam,
-  faStickyNote,
 } from "@fortawesome/free-regular-svg-icons";
 import * as faSolid from "@fortawesome/free-solid-svg-icons";
 
 import ProfilePicture from "../profile/profile_picture/profile_picture";
-import {
-  StandardButton,
-  ButtonLabel,
-  StandardGrayButton,
-  RoundButton,
-} from "../utils/buttons";
+import { StandardButton, ButtonLabel } from "../utils/buttons";
 
 import Comment from "../comment/comment";
 import CommentForm from "../comment/comment_form";
 
-import { openModal, closeModal } from "../../actions/modal_actions";
+import { openModal } from "../../actions/modal_actions";
 import CreatePostForm from "./create_post_form";
 
 import { deletePost } from "../../actions/post_actions";
@@ -267,7 +260,7 @@ const Comments = styled.div`
   padding: 4px 0 0;
 `;
 
-export default ({ postId }) => {
+const PostTile = ({ postId }) => {
   const [
     { content, createdAt },
     author,
@@ -313,7 +306,7 @@ export default ({ postId }) => {
         {author.id === sessionUserId && (
           <EllipsisButton
             menuIsOpen={menuIsOpen}
-            onClick={(e) => toggleMenuIsOpen(!menuIsOpen)}
+            onClick={() => toggleMenuIsOpen(!menuIsOpen)}
           >
             <FontAwesomeIcon icon={faSolid.faEllipsisH} />
             {menuIsOpen && (
@@ -415,3 +408,4 @@ export default ({ postId }) => {
     </Container>
   );
 };
+export default PostTile;

@@ -11,7 +11,7 @@ const StyledButton = styled(Button)`
   border-radius: 6px;
 `;
 
-export default ({ onClick, disabled = false, children, className }) => {
+const MenuButton = ({ onClick, disabled = false, children, className }) => {
   return (
     <StyledButton
       disabled={disabled}
@@ -23,3 +23,5 @@ export default ({ onClick, disabled = false, children, className }) => {
     </StyledButton>
   );
 };
+
+export default MenuButton;
