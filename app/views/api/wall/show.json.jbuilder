@@ -5,7 +5,7 @@ end
 json.set! :posts do
   @posts.each do |post|
     json.set! post.id do
-      json.extract! post, :id, :content, :author_id, :updated_at, :created_at
+      json.extract! post, :id, :content, :author_id, :recipient_id, :updated_at, :created_at
     end
   end
 end

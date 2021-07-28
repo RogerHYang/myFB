@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import styled, { css } from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -31,7 +31,6 @@ const Container = styled.div`
   background-color: white;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   padding: 0 16px;
-  /* z-index: 1; */
   width: 100%;
 `;
 
@@ -51,6 +50,12 @@ const Info = styled.div`
   width: 100%;
   gap: 11px;
   width: fit-content;
+`;
+
+const AuthorAndRecipient = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 const Name = styled.div`
@@ -264,6 +269,7 @@ const PostTile = ({ postId }) => {
   const [
     { content, createdAt },
     author,
+    recipient,
     comments,
     commentCount,
     sessionUserId,
@@ -274,6 +280,7 @@ const PostTile = ({ postId }) => {
     return [
       post,
       entities.avatars[post.authorId],
+      entities.avatars[post.recipientId],
       xwalk.comments[postId],
       stats.postCommentCount[postId],
       session.id,
@@ -282,6 +289,7 @@ const PostTile = ({ postId }) => {
     ];
   });
 
+  const { userId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -289,15 +297,30 @@ const PostTile = ({ postId }) => {
   const [numCommentsShown, setNumCommentsShown] = useState(1);
 
   const inputRef = useRef();
+
   return (
     <Container>
       <Header>
         <Info>
           <ProfilePicture height="40px" userId={author.id} />
           <div>
-            <Name onClick={() => history.replace(`/users/${author.id}`)}>
-              {author.firstName} {author.lastName}
-            </Name>
+            <AuthorAndRecipient>
+              <Name onClick={() => history.replace(`/users/${author.id}`)}>
+                {author.firstName} {author.lastName}
+              </Name>
+              {author.id !== recipient.id &&
+                recipient.id !== sessionUserId &&
+                recipient.id !== parseInt(userId) && (
+                  <>
+                    <FontAwesomeIcon icon={faSolid.faCaretRight} />
+                    <Name
+                      onClick={() => history.replace(`/users/${recipient.id}`)}
+                    >
+                      {recipient.firstName} {recipient.lastName}
+                    </Name>
+                  </>
+                )}
+            </AuthorAndRecipient>
             <DateLine>
               {new Date(createdAt).toLocaleDateString("en-US")}
             </DateLine>
