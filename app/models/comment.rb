@@ -9,7 +9,8 @@ class Comment < ApplicationRecord
 
   belongs_to :post,
     class_name: 'Post',
-    foreign_key: :post_id
+    foreign_key: :post_id,
+    counter_cache: true
 
   belongs_to :parent_comment,
     class_name: 'Comment',

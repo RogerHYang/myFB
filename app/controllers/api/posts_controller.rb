@@ -6,9 +6,8 @@ class Api::PostsController < ApplicationController
     @posts = Post
       .where(recipient_id: @user_id)
       .includes(
-        :likes,
         {author: {profile_picture_attachment: :blob}},
-        {comments: [{author: {profile_picture_attachment: :blob}}, :child_comments, :likes]})
+        {comments: [{author: {profile_picture_attachment: :blob}}, :child_comments]})
     render "api/wall/show"
   end
 

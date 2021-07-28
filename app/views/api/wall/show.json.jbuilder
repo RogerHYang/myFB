@@ -40,17 +40,17 @@ end
 json.set! :stats do
   json.set! :post_comment_count do
     @posts.each do |post|
-      json.set! post.id, post.comments.size if post.comments.size > 0
+      json.set! post.id, post.comments_count if post.comments_count > 0
     end
   end
   json.set! :post_like_count do
     @posts.each do |post|
-      json.set! post.id, post.likes.size if post.likes.size > 0
+      json.set! post.id, post.likes_count if post.likes_count > 0
     end
   end
   json.set! :comment_like_count do
     @posts.flat_map(&:comments).each do |comment|
-      json.set! comment.id, comment.likes.size if comment.likes.size > 0
+      json.set! comment.id, comment.likes_count if comment.likes_count > 0
     end
   end
 end
