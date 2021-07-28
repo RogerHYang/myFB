@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { createComment } from "../../actions/comment_actions";
 import ProfilePicture from "../profile/profile_picture/profile_picture";
@@ -51,9 +51,7 @@ const Instruction = styled.div`
   font-size: 12px;
 `;
 
-export default ({
-  className,
-  commentId,
+const CommentForm = ({
   postId,
   parentCommentId,
   inputRef,
@@ -87,7 +85,7 @@ export default ({
           <CommentInput
             ref={inputRef}
             autoFocus={cbBlur ? true : false}
-            onBlur={(e) => content.length == 0 && cbBlur && cbBlur()}
+            onBlur={() => content.length == 0 && cbBlur && cbBlur()}
             onChange={(e) => setContent(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Write a comment..."
@@ -113,3 +111,5 @@ export default ({
   </RoundButton>
 </div> */
 }
+
+export default CommentForm;

@@ -3,14 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faThumbsUp,
-  faComment,
-  faTrashAlt,
-  faEdit,
-  faGrinBeam,
-  faStickyNote,
-} from "@fortawesome/free-regular-svg-icons";
+import { faTrashAlt, faEdit } from "@fortawesome/free-regular-svg-icons";
 import * as faSolid from "@fortawesome/free-solid-svg-icons";
 
 import ProfilePicture from "../profile/profile_picture/profile_picture";
@@ -19,7 +12,7 @@ import CommentForm from "./comment_form";
 import { deleteComment } from "../../actions/comment_actions";
 import { toggleLike } from "../../actions/like_actions";
 
-import { openModal, closeModal } from "../../actions/modal_actions";
+import { openModal } from "../../actions/modal_actions";
 
 import EditCommentForm from "./edit_comment_form";
 
@@ -260,7 +253,7 @@ const LikeIcon = styled.div`
   margin-right: 4px;
 `;
 
-export default Comment = ({ clasName, commentId, small = false }) => {
+const Comment = ({ commentId, small = false }) => {
   const [
     comment,
     { firstName, lastName },
@@ -278,16 +271,15 @@ export default Comment = ({ clasName, commentId, small = false }) => {
       xwalk.likedComments,
     ]
   );
-  if (!comment) return null;
 
   const history = useHistory();
   const dispatch = useDispatch();
   const [menuIsOpen, toggleMenuIsOpen] = useState(false);
-
   const [isHovered, toggleIsHovered] = useState(false);
-
-  const { createdAt, postId, id, authorId } = comment;
   const [isReplying, toggleIsReplying] = useState(false);
+
+  if (!comment) return null;
+  const { createdAt, postId, id, authorId } = comment;
 
   return (
     <Container>
@@ -320,7 +312,7 @@ export default Comment = ({ clasName, commentId, small = false }) => {
             <EllipsisButton
               isHovered={isHovered}
               menuIsOpen={menuIsOpen}
-              onClick={(e) => toggleMenuIsOpen(!menuIsOpen)}
+              onClick={() => toggleMenuIsOpen(!menuIsOpen)}
             >
               <FontAwesomeIcon icon={faSolid.faEllipsisH} />
               {menuIsOpen && (
@@ -380,3 +372,5 @@ export default Comment = ({ clasName, commentId, small = false }) => {
     </Container>
   );
 };
+
+export default Comment;

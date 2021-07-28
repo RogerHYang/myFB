@@ -1,20 +1,16 @@
-import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImages, faGrinBeam } from "@fortawesome/free-regular-svg-icons";
 
 import ProfilePicture from "../profile/profile_picture/profile_picture";
-import { ButtonLabel, StandardGrayButton, RoundButton } from "../utils/buttons";
-import { openModal, closeModal } from "../../actions/modal_actions";
+import { ButtonLabel, StandardGrayButton } from "../utils/buttons";
+import { closeModal } from "../../actions/modal_actions";
 
 import { patchComment } from "../../actions/comment_actions";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  /* min-height: 428px; */
   border-radius: 8px;
   width: 500px;
   background-color: white;
@@ -65,10 +61,10 @@ const Footer = styled.div`
   justify-content: space-between;
 `;
 
-export default ({ commentId }) => {
-  const comment =
-    commentId &&
-    useSelector(({ entities: { comments } }) => comments[commentId]);
+const EditCommentForm = ({ commentId }) => {
+  const comment = useSelector(
+    ({ entities: { comments } }) => comments[commentId]
+  );
 
   const sessionUser = useSelector(
     ({ entities: { avatars }, session }) => avatars[session.id]
@@ -120,3 +116,5 @@ export default ({ commentId }) => {
     </Container>
   );
 };
+
+export default EditCommentForm;
